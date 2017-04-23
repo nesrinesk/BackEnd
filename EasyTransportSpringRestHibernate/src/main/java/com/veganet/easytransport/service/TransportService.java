@@ -47,9 +47,8 @@ public class TransportService {
     public void deleteById(int id) {
         transportDao.deleteById(id);
     }
-    
-//isdeleted
 
+//isdeleted
     @Transactional
     public void delete2(int id) {
         transportDao.delete2(id);
@@ -64,10 +63,10 @@ public class TransportService {
     public List<Transport> getAll(short isdeleted) {
         return transportDao.getAll(isdeleted);
     }
-    
-    //
+
+    //not deleted by type
     @Transactional
-    public List<Transport> getAllByAccessType(short type, short isdeleted) {
-        return transportDao.getAllByAccessType(type,isdeleted);
+    public List<Transport> getAllByType(short type, short isdeleted) {
+        return transportDao.getAllByType(type, isdeleted);
     }
 }

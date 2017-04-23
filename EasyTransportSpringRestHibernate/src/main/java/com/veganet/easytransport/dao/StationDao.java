@@ -59,4 +59,12 @@ public class StationDao extends AbstractHibernateDao<Station> {
         session.update(object);
         object.setIsdeleted((short) 0);
     }
+    // Stations not deleted (type=0) by  type
+    public List<Station> getAllByType(short type, short isdeleted) {
+        Session session = this.sessionFactory.getCurrentSession();
+        List<Station> list = session.createQuery("SELECT s FROM Station s WHERE s.type = :type and s.isdeleted = :isdeleted")
+                .setParameter("type", type)
+                .setParameter("isdeleted", isdeleted).list();
+        return list;
+    }
 }

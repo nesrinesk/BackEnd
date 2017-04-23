@@ -111,5 +111,33 @@ public class StationController {
         stationService.delete2(id);
     }
     
+    //trains
+   
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getTrainStations", method = RequestMethod.GET)
+    public List<Station> getTrainStations() {
+        logger.info("getting all trains");
+
+        List<Station> list = stationService.getAllByType((short) 0, (short) 0);
+        if (list == null || list.isEmpty()) {
+            logger.info("no train found");
+        }
+        return list;
+    }
     
+    
+    //bus
+     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getBusStop", method = RequestMethod.GET)
+    public List<Station> getBusStop() {
+        logger.info("getting all trains");
+
+        List<Station> list = stationService.getAllByType((short) 1, (short) 0);
+        if (list == null || list.isEmpty()) {
+            logger.info("no train found");
+        }
+        return list;
+    }
 }

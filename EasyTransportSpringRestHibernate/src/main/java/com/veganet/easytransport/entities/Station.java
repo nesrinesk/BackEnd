@@ -43,7 +43,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Station.findByLongitude", query = "SELECT s FROM Station s WHERE s.longitude = :longitude"),
     @NamedQuery(name = "Station.findByLatitude", query = "SELECT s FROM Station s WHERE s.latitude = :latitude"),
     @NamedQuery(name = "Station.findByCreationDate", query = "SELECT s FROM Station s WHERE s.creationDate = :creationDate"),
-    @NamedQuery(name = "Station.findByIsdeleted", query = "SELECT s FROM Station s WHERE s.isdeleted = :isdeleted")})
+    @NamedQuery(name = "Station.findByIsdeleted", query = "SELECT s FROM Station s WHERE s.isdeleted = :isdeleted"),
+    @NamedQuery(name = "Station.findByType", query = "SELECT s FROM Station s WHERE s.type = :type")})
+
 public class Station implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,6 +57,17 @@ public class Station implements Serializable {
     @Size(max = 254)
     @Column(name = "STATION_NAME")
     private String stationName;
+    
+    @Column(name = "TYPE")
+    private Short type;
+
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
+    }
     
     @Size(max = 254)
     @Column(name = "ADDRESS")

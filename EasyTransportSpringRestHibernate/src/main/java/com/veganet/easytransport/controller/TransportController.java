@@ -119,7 +119,7 @@ public class TransportController {
     public List<Transport> getTrains() {
         logger.info("getting all trains");
 
-        List<Transport> list = transportService.getAllByAccessType((short) 0, (short) 0);
+        List<Transport> list = transportService.getAllByType((short) 0, (short) 0);
         if (list == null || list.isEmpty()) {
             logger.info("no train found");
         }
@@ -134,7 +134,7 @@ public class TransportController {
     public List<Transport> getBus() {
         logger.info("getting all trains");
 
-        List<Transport> list = transportService.getAllByAccessType((short) 1, (short) 0);
+        List<Transport> list = transportService.getAllByType((short) 1, (short) 0);
         if (list == null || list.isEmpty()) {
             logger.info("no train found");
         }

@@ -60,8 +60,8 @@ public class TransportDao extends AbstractHibernateDao<Transport>{
     
     //SELECT t FROM Transport t WHERE t.type = :type
     
-    // users not deleted (isdeleted=0) by access level 
-    public List<Transport> getAllByAccessType(short type, short isdeleted) {
+    // Transports not deleted (type=0) by  type
+    public List<Transport> getAllByType(short type, short isdeleted) {
         Session session = this.sessionFactory.getCurrentSession();
         List<Transport> list = session.createQuery("SELECT t FROM Transport t WHERE t.type = :type and t.isdeleted = :isdeleted")
                 .setParameter("type", type)

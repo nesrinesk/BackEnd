@@ -16,39 +16,40 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author asus
  */
-    
- @Service("stationService")
+@Service("stationService")
 public class StationService {
 
-	@Autowired
-	StationDao stationDao;
-	
-	@Transactional
-	public List<Station> findAll() {
-		return stationDao.findAll();
-	}
+    @Autowired
+    StationDao stationDao;
 
-	@Transactional
-	public Station findOne(int id) {
-		return stationDao.findOne(id);
-	}
+    @Transactional
+    public List<Station> findAll() {
+        return stationDao.findAll();
+    }
 
-	@Transactional
-	public void create(Station station) {
-		stationDao.create(station);
-	}
+    @Transactional
+    public Station findOne(int id) {
+        return stationDao.findOne(id);
+    }
 
-	@Transactional
-	public void update2(Station station) {
-		stationDao.update(station);
+    @Transactional
+    public void create(Station station) {
+        stationDao.create(station);
+    }
 
-	}
+    @Transactional
+    public void update2(Station station) {
+        stationDao.update(station);
 
-	@Transactional
-	public void deleteById(int id) {
-		stationDao.deleteById(id);
-	}
-     //isdeleted
+    }
+
+    @Transactional
+    public void deleteById(int id) {
+        stationDao.deleteById(id);
+    }
+
+    //isdeleted
+
     @Transactional
     public void delete2(int id) {
         stationDao.delete2(id);
@@ -58,11 +59,17 @@ public class StationService {
     public void add(Station station) {
         stationDao.add(station);
     }
+//not deleted
 
     @Transactional
     public List<Station> getAll(short isdeleted) {
         return stationDao.getAll(isdeleted);
     }
-       
-}
 
+    //not deleted by type
+
+    @Transactional
+    public List<Station> getAllByType(short type, short isdeleted) {
+        return stationDao.getAllByType(type, isdeleted);
+    }
+}
