@@ -98,10 +98,10 @@ public class JourneyController {
     //add
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void add(@RequestBody Journey user) {
+    public void add(@RequestBody Journey journey) {
         logger.info("creating new object: {}");
 
-        journeyService.add(user);
+        journeyService.add(journey);
 
     }
     
@@ -110,5 +110,35 @@ public class JourneyController {
     @RequestMapping(value = "/delete2/{id}", method = RequestMethod.POST, headers = "Accept=application/json")
     public void delete2(@PathVariable("id") int id) {
         journeyService.delete2(id);
+    }
+    
+    //trains
+   
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getTrainJourneys", method = RequestMethod.GET)
+    public List<Journey> getTrainJourneys() {
+        logger.info("getting all trains");
+
+        List<Journey> list = journeyService.getAllByType((short) 0, (short) 0);
+        if (list == null || list.isEmpty()) {
+            logger.info("no train found");
+        }
+        return list;
+    }
+    
+    
+    //bus
+     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getBusJourneys", method = RequestMethod.GET)
+    public List<Journey> getBusJourneys() {
+        logger.info("getting all trains");
+
+        List<Journey> list = journeyService.getAllByType((short) 1, (short) 0);
+        if (list == null || list.isEmpty()) {
+            logger.info("no train found");
+        }
+        return list;
     }
 }
