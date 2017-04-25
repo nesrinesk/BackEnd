@@ -58,4 +58,13 @@ public class JourneyDao extends AbstractHibernateDao<Journey> {
         session.update(object);
         object.setIsdeleted((short) 0);
     }
+    
+    // Stations not deleted (type=0) by  type
+    public List<Journey> getAllByType(short type, short isdeleted) {
+        Session session = this.sessionFactory.getCurrentSession();
+        List<Journey> list = session.createQuery("SELECT j FROM Journey j WHERE j.type = :type and j.isdeleted = :isdeleted")
+                .setParameter("type", type)
+                .setParameter("isdeleted", isdeleted).list();
+        return list;
+    }
 }
