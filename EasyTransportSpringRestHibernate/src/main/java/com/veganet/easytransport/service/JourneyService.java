@@ -63,4 +63,11 @@ public class JourneyService {
     public void delete2(int id) {
         journeyDao.delete2(id);
     }
+    
+     //not deleted by type
+
+    @Transactional
+    public List<Journey> getAllByType(short type, short isdeleted) {
+        return journeyDao.getAllByType(type, isdeleted);
+    }
 }
