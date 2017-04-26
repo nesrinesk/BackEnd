@@ -63,4 +63,9 @@ public class LineService {
     public List<Line> getAll(short isdeleted) {
         return lineDao.getAll(isdeleted);
     }
+    
+    @Transactional
+    public List<Line> getAllByType(short type, short isdeleted) {
+        return lineDao.getAllByType(type, isdeleted);
+    }
 }
