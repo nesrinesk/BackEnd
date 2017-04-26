@@ -55,4 +55,13 @@ public class LineDao extends AbstractHibernateDao<Line>{
         session.update(object);
         object.setIsdeleted((short) 0);
     }
+    
+    // Lines not deleted (type=0) by  type
+    public List<Line> getAllByType(short type, short isdeleted) {
+        Session session = this.sessionFactory.getCurrentSession();
+        List<Line> list = session.createQuery("SELECT l FROM Line l WHERE l.type = :type and l.isdeleted = :isdeleted")
+                .setParameter("type", type)
+                .setParameter("isdeleted", isdeleted).list();
+        return list;
+    }
 }
