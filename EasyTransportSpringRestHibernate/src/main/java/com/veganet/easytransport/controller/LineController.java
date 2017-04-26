@@ -111,5 +111,33 @@ public class LineController {
         lineService.delete2(id);
     }
     
+    //trains
+   
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getTrainLines", method = RequestMethod.GET)
+    public List<Line> getTrainLines() {
+        logger.info("getting all trains");
+
+        List<Line> list = lineService.getAllByType((short) 0, (short) 0);
+        if (list == null || list.isEmpty()) {
+            logger.info("no train found");
+        }
+        return list;
+    }
     
+    
+    //bus
+     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getBusLines", method = RequestMethod.GET)
+    public List<Line> getBusLines() {
+        logger.info("getting all trains");
+
+        List<Line> list = lineService.getAllByType((short) 1, (short) 0);
+        if (list == null || list.isEmpty()) {
+            logger.info("no train found");
+        }
+        return list;
+    }
 }
