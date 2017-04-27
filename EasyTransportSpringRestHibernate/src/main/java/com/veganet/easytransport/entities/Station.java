@@ -43,9 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Station.findByLongitude", query = "SELECT s FROM Station s WHERE s.longitude = :longitude"),
     @NamedQuery(name = "Station.findByLatitude", query = "SELECT s FROM Station s WHERE s.latitude = :latitude"),
     @NamedQuery(name = "Station.findByCreationDate", query = "SELECT s FROM Station s WHERE s.creationDate = :creationDate"),
-    @NamedQuery(name = "Station.findByIsdeleted", query = "SELECT s FROM Station s WHERE s.isdeleted = :isdeleted"),
-    @NamedQuery(name = "Station.findByType", query = "SELECT s FROM Station s WHERE s.type = :type")})
-
+    @NamedQuery(name = "Station.findByIsdeleted", query = "SELECT s FROM Station s WHERE s.isdeleted = :isdeleted")})
 public class Station implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,76 +51,37 @@ public class Station implements Serializable {
     @Basic(optional = false)
     @Column(name = "STATION_ID")
     private Integer stationId;
-    
     @Size(max = 254)
     @Column(name = "STATION_NAME")
     private String stationName;
-    
-    @Column(name = "TYPE")
-    private Short type;
-
-    public Short getType() {
-        return type;
-    }
-
-    public void setType(Short type) {
-        this.type = type;
-    }
-    
     @Size(max = 254)
     @Column(name = "ADDRESS")
     private String address;
-    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "ALTITUDE")
     private Double altitude;
-    
     @Column(name = "LONGITUDE")
     private Double longitude;
-    
     @Column(name = "LATITUDE")
     private Double latitude;
-    
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
-    
     @Column(name = "ISDELETED")
     private Short isdeleted;
-    
-    @JsonIgnore
     @OneToMany(mappedBy = "stationStartId")
     private Collection<Journey> journeyCollection;
-    
-    @JsonIgnore
     @OneToMany(mappedBy = "stationEndId")
     private Collection<Journey> journeyCollection1;
-    
-    @JsonIgnore
     @OneToMany(mappedBy = "stationId")
     private Collection<Passage> passageCollection;
-    
-    @JsonIgnore
-    @OneToMany(mappedBy = "stationEndId")
-    private Collection<Line> lineCollection;
-    
-    @JsonIgnore
-    @OneToMany(mappedBy = "stationStartId")
-    private Collection<Line> lineCollection1;
-    
-    @JsonIgnore
     @OneToMany(mappedBy = "stationId")
     private Collection<Relatedto> relatedtoCollection;
-    
-    @JsonIgnore
     @OneToMany(mappedBy = "stationId")
     private Collection<Alert> alertCollection;
-    
     @JoinColumn(name = "ADDED_BY", referencedColumnName = "USER_ID")
     @ManyToOne
     private User addedBy;
-    
-    @JsonIgnore
     @OneToMany(mappedBy = "stationId")
     private Collection<Favorite> favoriteCollection;
 
@@ -197,79 +156,47 @@ public class Station implements Serializable {
         this.isdeleted = isdeleted;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Journey> getJourneyCollection() {
         return journeyCollection;
     }
 
-    @JsonIgnore
     public void setJourneyCollection(Collection<Journey> journeyCollection) {
         this.journeyCollection = journeyCollection;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Journey> getJourneyCollection1() {
         return journeyCollection1;
     }
 
-    @JsonIgnore
     public void setJourneyCollection1(Collection<Journey> journeyCollection1) {
         this.journeyCollection1 = journeyCollection1;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Passage> getPassageCollection() {
         return passageCollection;
     }
 
-    @JsonIgnore
     public void setPassageCollection(Collection<Passage> passageCollection) {
         this.passageCollection = passageCollection;
     }
 
-    @JsonIgnore
-    @XmlTransient
-    public Collection<Line> getLineCollection() {
-        return lineCollection;
-    }
-
-    @JsonIgnore
-    public void setLineCollection(Collection<Line> lineCollection) {
-        this.lineCollection = lineCollection;
-    }
-
-    @JsonIgnore
-    @XmlTransient
-    public Collection<Line> getLineCollection1() {
-        return lineCollection1;
-    }
-
-    @JsonIgnore
-    public void setLineCollection1(Collection<Line> lineCollection1) {
-        this.lineCollection1 = lineCollection1;
-    }
-
-    @JsonIgnore
     @XmlTransient
     public Collection<Relatedto> getRelatedtoCollection() {
         return relatedtoCollection;
     }
 
-    @JsonIgnore
     public void setRelatedtoCollection(Collection<Relatedto> relatedtoCollection) {
         this.relatedtoCollection = relatedtoCollection;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Alert> getAlertCollection() {
         return alertCollection;
     }
 
-    @JsonIgnore
     public void setAlertCollection(Collection<Alert> alertCollection) {
         this.alertCollection = alertCollection;
     }
@@ -282,13 +209,11 @@ public class Station implements Serializable {
         this.addedBy = addedBy;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Favorite> getFavoriteCollection() {
         return favoriteCollection;
     }
 
-    @JsonIgnore
     public void setFavoriteCollection(Collection<Favorite> favoriteCollection) {
         this.favoriteCollection = favoriteCollection;
     }
@@ -315,7 +240,7 @@ public class Station implements Serializable {
 
     @Override
     public String toString() {
-        return "com.veganet.easytransport.mavenproject5.Station[ stationId=" + stationId + " ]";
+        return "a.Station[ stationId=" + stationId + " ]";
     }
     
 }
