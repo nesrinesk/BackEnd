@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Line.findByType", query = "SELECT l FROM Line l WHERE l.type = :type"),
     @NamedQuery(name = "Line.findByIsdeleted", query = "SELECT l FROM Line l WHERE l.isdeleted = :isdeleted")})
 public class Line implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,13 +50,19 @@ public class Line implements Serializable {
     private Short type;
     @Column(name = "ISDELETED")
     private Short isdeleted;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "lineId")
     private Collection<Journeylocalisation> journeylocalisationCollection;
     @JoinColumn(name = "ADDED_BY", referencedColumnName = "USER_ID")
     @ManyToOne
     private User addedBy;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "lineId")
     private Collection<Relatedto> relatedtoCollection;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "lineId")
     private Collection<Alert> alertCollection;
 
@@ -90,11 +97,12 @@ public class Line implements Serializable {
         this.isdeleted = isdeleted;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Journeylocalisation> getJourneylocalisationCollection() {
         return journeylocalisationCollection;
     }
 
+    @JsonIgnore
     public void setJourneylocalisationCollection(Collection<Journeylocalisation> journeylocalisationCollection) {
         this.journeylocalisationCollection = journeylocalisationCollection;
     }
@@ -107,20 +115,22 @@ public class Line implements Serializable {
         this.addedBy = addedBy;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Relatedto> getRelatedtoCollection() {
         return relatedtoCollection;
     }
 
+    @JsonIgnore
     public void setRelatedtoCollection(Collection<Relatedto> relatedtoCollection) {
         this.relatedtoCollection = relatedtoCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Alert> getAlertCollection() {
         return alertCollection;
     }
 
+    @JsonIgnore
     public void setAlertCollection(Collection<Alert> alertCollection) {
         this.alertCollection = alertCollection;
     }
@@ -149,5 +159,5 @@ public class Line implements Serializable {
     public String toString() {
         return "a.Line[ lineId=" + lineId + " ]";
     }
-    
+
 }
