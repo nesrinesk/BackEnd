@@ -50,6 +50,8 @@ public class RelatedtoService {
         relatedtoDao.deleteById(id);
     }
 
-    
-
+@Transactional
+    public List<Relatedto> getAllByType(short type) {
+        return relatedtoDao.getAllByType(type);
+    }    
 }
