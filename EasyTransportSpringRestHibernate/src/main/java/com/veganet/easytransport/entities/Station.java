@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Station.findByCreationDate", query = "SELECT s FROM Station s WHERE s.creationDate = :creationDate"),
     @NamedQuery(name = "Station.findByIsdeleted", query = "SELECT s FROM Station s WHERE s.isdeleted = :isdeleted")})
 public class Station implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,24 +65,39 @@ public class Station implements Serializable {
     private Double longitude;
     @Column(name = "LATITUDE")
     private Double latitude;
+
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
+
     @Column(name = "ISDELETED")
     private Short isdeleted;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "stationStartId")
     private Collection<Journey> journeyCollection;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "stationEndId")
     private Collection<Journey> journeyCollection1;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "stationId")
     private Collection<Passage> passageCollection;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "stationId")
     private Collection<Relatedto> relatedtoCollection;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "stationId")
     private Collection<Alert> alertCollection;
+
     @JoinColumn(name = "ADDED_BY", referencedColumnName = "USER_ID")
     @ManyToOne
     private User addedBy;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "stationId")
     private Collection<Favorite> favoriteCollection;
 
@@ -156,7 +172,7 @@ public class Station implements Serializable {
         this.isdeleted = isdeleted;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Journey> getJourneyCollection() {
         return journeyCollection;
     }
@@ -165,38 +181,42 @@ public class Station implements Serializable {
         this.journeyCollection = journeyCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Journey> getJourneyCollection1() {
         return journeyCollection1;
     }
 
+    @JsonIgnore
     public void setJourneyCollection1(Collection<Journey> journeyCollection1) {
         this.journeyCollection1 = journeyCollection1;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Passage> getPassageCollection() {
         return passageCollection;
     }
 
+    @JsonIgnore
     public void setPassageCollection(Collection<Passage> passageCollection) {
         this.passageCollection = passageCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Relatedto> getRelatedtoCollection() {
         return relatedtoCollection;
     }
 
+    @JsonIgnore
     public void setRelatedtoCollection(Collection<Relatedto> relatedtoCollection) {
         this.relatedtoCollection = relatedtoCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Alert> getAlertCollection() {
         return alertCollection;
     }
 
+    @JsonIgnore
     public void setAlertCollection(Collection<Alert> alertCollection) {
         this.alertCollection = alertCollection;
     }
@@ -209,11 +229,12 @@ public class Station implements Serializable {
         this.addedBy = addedBy;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Favorite> getFavoriteCollection() {
         return favoriteCollection;
     }
 
+    @JsonIgnore
     public void setFavoriteCollection(Collection<Favorite> favoriteCollection) {
         this.favoriteCollection = favoriteCollection;
     }
@@ -242,5 +263,5 @@ public class Station implements Serializable {
     public String toString() {
         return "a.Station[ stationId=" + stationId + " ]";
     }
-    
+
 }
