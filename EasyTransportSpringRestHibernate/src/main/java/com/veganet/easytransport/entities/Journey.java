@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Journey.findByIsdeleted", query = "SELECT j FROM Journey j WHERE j.isdeleted = :isdeleted"),
     @NamedQuery(name = "Journey.findByType", query = "SELECT j FROM Journey j WHERE j.type = :type")})
 public class Journey implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,8 +74,11 @@ public class Journey implements Serializable {
     private Short isdeleted;
     @Column(name = "TYPE")
     private Short type;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "journeyId")
     private Collection<Journeylocalisation> journeylocalisationCollection;
+
     @JoinColumn(name = "TRANSPORT_ID", referencedColumnName = "TRANSPORT_ID")
     @ManyToOne
     private Transport transportId;
@@ -84,12 +88,20 @@ public class Journey implements Serializable {
     @JoinColumn(name = "STATION_END_ID", referencedColumnName = "STATION_ID")
     @ManyToOne
     private Station stationEndId;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "journeyId")
     private Collection<Driverplanning> driverplanningCollection;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "journeyId")
     private Collection<Alert> alertCollection;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "journeyId")
     private Collection<Journeyplanning> journeyplanningCollection;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "journeyId")
     private Collection<Favorite> favoriteCollection;
 
@@ -172,11 +184,12 @@ public class Journey implements Serializable {
         this.type = type;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Journeylocalisation> getJourneylocalisationCollection() {
         return journeylocalisationCollection;
     }
 
+    @JsonIgnore
     public void setJourneylocalisationCollection(Collection<Journeylocalisation> journeylocalisationCollection) {
         this.journeylocalisationCollection = journeylocalisationCollection;
     }
@@ -205,38 +218,42 @@ public class Journey implements Serializable {
         this.stationEndId = stationEndId;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Driverplanning> getDriverplanningCollection() {
         return driverplanningCollection;
     }
 
+    @JsonIgnore
     public void setDriverplanningCollection(Collection<Driverplanning> driverplanningCollection) {
         this.driverplanningCollection = driverplanningCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Alert> getAlertCollection() {
         return alertCollection;
     }
 
+    @JsonIgnore
     public void setAlertCollection(Collection<Alert> alertCollection) {
         this.alertCollection = alertCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Journeyplanning> getJourneyplanningCollection() {
         return journeyplanningCollection;
     }
 
+    @JsonIgnore
     public void setJourneyplanningCollection(Collection<Journeyplanning> journeyplanningCollection) {
         this.journeyplanningCollection = journeyplanningCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Favorite> getFavoriteCollection() {
         return favoriteCollection;
     }
 
+    @JsonIgnore
     public void setFavoriteCollection(Collection<Favorite> favoriteCollection) {
         this.favoriteCollection = favoriteCollection;
     }
@@ -265,5 +282,5 @@ public class Journey implements Serializable {
     public String toString() {
         return "a.Journey[ journeyId=" + journeyId + " ]";
     }
-    
+
 }
