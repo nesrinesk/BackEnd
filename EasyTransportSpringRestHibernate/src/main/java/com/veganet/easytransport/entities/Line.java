@@ -33,52 +33,29 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "line")
-//@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Line.findAll", query = "SELECT l FROM Line l"),
     @NamedQuery(name = "Line.findByLineId", query = "SELECT l FROM Line l WHERE l.lineId = :lineId"),
     @NamedQuery(name = "Line.findByType", query = "SELECT l FROM Line l WHERE l.type = :type"),
     @NamedQuery(name = "Line.findByIsdeleted", query = "SELECT l FROM Line l WHERE l.isdeleted = :isdeleted")})
 public class Line implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "LINE_ID")
     private Integer lineId;
-
-    @Size(max = 254)
-    @Column(name = "NAME")
-    private String name;
-
     @Column(name = "TYPE")
     private Short type;
-
     @Column(name = "ISDELETED")
     private Short isdeleted;
-
-    @JsonIgnore
     @OneToMany(mappedBy = "lineId")
     private Collection<Journeylocalisation> journeylocalisationCollection;
-
-    @JoinColumn(name = "STATION_END_ID", referencedColumnName = "STATION_ID")
-    @ManyToOne
-    private Station stationEndId;
-
     @JoinColumn(name = "ADDED_BY", referencedColumnName = "USER_ID")
     @ManyToOne
     private User addedBy;
-
-    @JoinColumn(name = "STATION_START_ID", referencedColumnName = "STATION_ID")
-    @ManyToOne
-    private Station stationStartId;
-
-    @JsonIgnore
     @OneToMany(mappedBy = "lineId")
     private Collection<Relatedto> relatedtoCollection;
-
-    @JsonIgnore
     @OneToMany(mappedBy = "lineId")
     private Collection<Alert> alertCollection;
 
@@ -113,31 +90,13 @@ public class Line implements Serializable {
         this.isdeleted = isdeleted;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @JsonIgnore
     @XmlTransient
     public Collection<Journeylocalisation> getJourneylocalisationCollection() {
         return journeylocalisationCollection;
     }
 
-    @JsonIgnore
     public void setJourneylocalisationCollection(Collection<Journeylocalisation> journeylocalisationCollection) {
         this.journeylocalisationCollection = journeylocalisationCollection;
-    }
-
-    public Station getStationEndId() {
-        return stationEndId;
-    }
-
-    public void setStationEndId(Station stationEndId) {
-        this.stationEndId = stationEndId;
     }
 
     public User getAddedBy() {
@@ -148,32 +107,20 @@ public class Line implements Serializable {
         this.addedBy = addedBy;
     }
 
-    public Station getStationStartId() {
-        return stationStartId;
-    }
-
-    public void setStationStartId(Station stationStartId) {
-        this.stationStartId = stationStartId;
-    }
-
-    @JsonIgnore
     @XmlTransient
     public Collection<Relatedto> getRelatedtoCollection() {
         return relatedtoCollection;
     }
 
-    @JsonIgnore
     public void setRelatedtoCollection(Collection<Relatedto> relatedtoCollection) {
         this.relatedtoCollection = relatedtoCollection;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Alert> getAlertCollection() {
         return alertCollection;
     }
 
-    @JsonIgnore
     public void setAlertCollection(Collection<Alert> alertCollection) {
         this.alertCollection = alertCollection;
     }
@@ -200,7 +147,7 @@ public class Line implements Serializable {
 
     @Override
     public String toString() {
-        return "com.veganet.easytransport.mavenproject5.Line[ lineId=" + lineId + " ]";
+        return "a.Line[ lineId=" + lineId + " ]";
     }
-
+    
 }
