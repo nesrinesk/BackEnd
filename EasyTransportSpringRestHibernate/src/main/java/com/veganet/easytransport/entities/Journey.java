@@ -43,74 +43,53 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Journey.findByDelay", query = "SELECT j FROM Journey j WHERE j.delay = :delay"),
     @NamedQuery(name = "Journey.findByDateStart", query = "SELECT j FROM Journey j WHERE j.dateStart = :dateStart"),
     @NamedQuery(name = "Journey.findByVisibility", query = "SELECT j FROM Journey j WHERE j.visibility = :visibility"),
-    @NamedQuery(name = "Journey.findByIsdeleted", query = "SELECT j FROM Journey j WHERE j.isdeleted = :isdeleted")})
+    @NamedQuery(name = "Journey.findByIsdeleted", query = "SELECT j FROM Journey j WHERE j.isdeleted = :isdeleted"),
+    @NamedQuery(name = "Journey.findByType", query = "SELECT j FROM Journey j WHERE j.type = :type")})
 public class Journey implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "JOURNEY_ID")
     private Integer journeyId;
-
     @Size(max = 254)
     @Column(name = "JOURNEY_NAME")
     private String journeyName;
-
     @Column(name = "DATE_END")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateEnd;
-
     @Size(max = 254)
     @Column(name = "DURATION")
     private String duration;
-
     @Size(max = 254)
     @Column(name = "DELAY")
     private String delay;
-
     @Column(name = "DATE_START")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateStart;
-
     @Column(name = "VISIBILITY")
     private Short visibility;
-
-    @Column(name = "TYPE")
-    private Short type;
-
     @Column(name = "ISDELETED")
     private Short isdeleted;
-
-    @JsonIgnore
+    @Column(name = "TYPE")
+    private Short type;
     @OneToMany(mappedBy = "journeyId")
     private Collection<Journeylocalisation> journeylocalisationCollection;
-
     @JoinColumn(name = "TRANSPORT_ID", referencedColumnName = "TRANSPORT_ID")
     @ManyToOne
     private Transport transportId;
-
     @JoinColumn(name = "STATION_START_ID", referencedColumnName = "STATION_ID")
     @ManyToOne
     private Station stationStartId;
-
     @JoinColumn(name = "STATION_END_ID", referencedColumnName = "STATION_ID")
     @ManyToOne
     private Station stationEndId;
-
-    @JsonIgnore
     @OneToMany(mappedBy = "journeyId")
     private Collection<Driverplanning> driverplanningCollection;
-
-    @JsonIgnore
     @OneToMany(mappedBy = "journeyId")
     private Collection<Alert> alertCollection;
-
-    @JsonIgnore
     @OneToMany(mappedBy = "journeyId")
     private Collection<Journeyplanning> journeyplanningCollection;
-
-    @JsonIgnore
     @OneToMany(mappedBy = "journeyId")
     private Collection<Favorite> favoriteCollection;
 
@@ -161,14 +140,6 @@ public class Journey implements Serializable {
         this.delay = delay;
     }
 
-    public Short getType() {
-        return type;
-    }
-
-    public void setType(Short type) {
-        this.type = type;
-    }
-
     public Date getDateStart() {
         return dateStart;
     }
@@ -193,13 +164,19 @@ public class Journey implements Serializable {
         this.isdeleted = isdeleted;
     }
 
-    @JsonIgnore
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
+    }
+
     @XmlTransient
     public Collection<Journeylocalisation> getJourneylocalisationCollection() {
         return journeylocalisationCollection;
     }
 
-    @JsonIgnore
     public void setJourneylocalisationCollection(Collection<Journeylocalisation> journeylocalisationCollection) {
         this.journeylocalisationCollection = journeylocalisationCollection;
     }
@@ -228,46 +205,38 @@ public class Journey implements Serializable {
         this.stationEndId = stationEndId;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Driverplanning> getDriverplanningCollection() {
         return driverplanningCollection;
     }
 
-    @JsonIgnore
     public void setDriverplanningCollection(Collection<Driverplanning> driverplanningCollection) {
         this.driverplanningCollection = driverplanningCollection;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Alert> getAlertCollection() {
         return alertCollection;
     }
 
-    @JsonIgnore
     public void setAlertCollection(Collection<Alert> alertCollection) {
         this.alertCollection = alertCollection;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Journeyplanning> getJourneyplanningCollection() {
         return journeyplanningCollection;
     }
 
-    @JsonIgnore
     public void setJourneyplanningCollection(Collection<Journeyplanning> journeyplanningCollection) {
         this.journeyplanningCollection = journeyplanningCollection;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Favorite> getFavoriteCollection() {
         return favoriteCollection;
     }
 
-    @JsonIgnore
     public void setFavoriteCollection(Collection<Favorite> favoriteCollection) {
         this.favoriteCollection = favoriteCollection;
     }
@@ -294,7 +263,7 @@ public class Journey implements Serializable {
 
     @Override
     public String toString() {
-        return "com.veganet.easytransport.mavenproject5.Journey[ journeyId=" + journeyId + " ]";
+        return "a.Journey[ journeyId=" + journeyId + " ]";
     }
-
+    
 }
