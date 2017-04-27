@@ -73,6 +73,9 @@ public class Station implements Serializable {
     @Column(name = "ISDELETED")
     private Short isdeleted;
 
+    @Column(name = "TYPE")
+    private Short type;
+
     @JsonIgnore
     @OneToMany(mappedBy = "stationStartId")
     private Collection<Journey> journeyCollection;
@@ -156,6 +159,16 @@ public class Station implements Serializable {
         this.latitude = latitude;
     }
 
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
+    }
+
+    
+    
     public Date getCreationDate() {
         return creationDate;
     }
