@@ -65,19 +65,49 @@ public class RelatedtoController {
     @Consumes(MediaType.APPLICATION_JSON)
 
     @RequestMapping(value = "/updateRelatedto/{id}", method = RequestMethod.POST)
-    public void update(@PathVariable int id, @RequestBody Relatedto transport) {
+    public void update(@PathVariable int id, @RequestBody Relatedto r) {
 
         Relatedto currentO = relatedtoService.findOne(id);
         logger.info("updating Relatedto with id :" + id);
         if (currentO == null) {
             logger.info("Relatedto with id {} not found" + id);
         }
-        relatedtoService.update(transport);
+        relatedtoService.update(r);
         logger.info("updated Relatedto with id :" + id);
     }
 
     @RequestMapping(value = "/deleteRelatedto/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public void deleteById(@PathVariable("id") int id) {
         relatedtoService.deleteById(id);
+    }
+    
+    //trains
+   
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllTrains", method = RequestMethod.GET)
+    public List<Relatedto> getAll() {
+        logger.info("getting all trains");
+
+        List<Relatedto> list = relatedtoService.getAllByType( (short) 0);
+        if (list == null || list.isEmpty()) {
+            logger.info("no train found");
+        }
+        return list;
+    }
+    
+    
+    //bus
+     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllBus", method = RequestMethod.GET)
+    public List<Relatedto> getAllBus() {
+        logger.info("getting all trains");
+
+        List<Relatedto> list = relatedtoService.getAllByType((short) 1);
+        if (list == null || list.isEmpty()) {
+            logger.info("no train found");
+        }
+        return list;
     }
 }
