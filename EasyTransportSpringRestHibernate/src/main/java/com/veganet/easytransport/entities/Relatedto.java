@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Relatedto.findAll", query = "SELECT r FROM Relatedto r"),
     @NamedQuery(name = "Relatedto.findByRelatedToId", query = "SELECT r FROM Relatedto r WHERE r.relatedToId = :relatedToId"),
     @NamedQuery(name = "Relatedto.findByType", query = "SELECT r FROM Relatedto r WHERE r.type = :type"),
-    @NamedQuery(name = "Relatedto.findByDatePassage", query = "SELECT r FROM Relatedto r WHERE r.datePassage = :datePassage")})
+    @NamedQuery(name = "Relatedto.findByDate", query = "SELECT r FROM Relatedto r WHERE r.date = :date"),
+    @NamedQuery(name = "Relatedto.findByTag", query = "SELECT r FROM Relatedto r WHERE r.tag = :tag")})
 public class Relatedto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,21 +42,19 @@ public class Relatedto implements Serializable {
     @Basic(optional = false)
     @Column(name = "RELATED_TO_ID")
     private Integer relatedToId;
-    
     @Column(name = "TYPE")
     private Short type;
-    
-    @Column(name = "DATE_PASSAGE")
+    @Column(name = "DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date datePassage;
-    
-    @JoinColumn(name = "STATION_ID", referencedColumnName = "STATION_ID")
-    @ManyToOne
-    private Station stationId;
-    
+    private Date date;
+    @Column(name = "TAG")
+    private Short tag;
     @JoinColumn(name = "LINE_ID", referencedColumnName = "LINE_ID")
     @ManyToOne
     private Line lineId;
+    @JoinColumn(name = "STATION_ID", referencedColumnName = "STATION_ID")
+    @ManyToOne
+    private Station stationId;
 
     public Relatedto() {
     }
@@ -80,20 +79,20 @@ public class Relatedto implements Serializable {
         this.type = type;
     }
 
-    public Date getDatePassage() {
-        return datePassage;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDatePassage(Date datePassage) {
-        this.datePassage = datePassage;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public Station getStationId() {
-        return stationId;
+    public Short getTag() {
+        return tag;
     }
 
-    public void setStationId(Station stationId) {
-        this.stationId = stationId;
+    public void setTag(Short tag) {
+        this.tag = tag;
     }
 
     public Line getLineId() {
@@ -102,6 +101,14 @@ public class Relatedto implements Serializable {
 
     public void setLineId(Line lineId) {
         this.lineId = lineId;
+    }
+
+    public Station getStationId() {
+        return stationId;
+    }
+
+    public void setStationId(Station stationId) {
+        this.stationId = stationId;
     }
 
     @Override
@@ -126,8 +133,6 @@ public class Relatedto implements Serializable {
 
     @Override
     public String toString() {
-        return "com.veganet.easytransport.mavenproject5.Relatedto[ relatedToId=" + relatedToId + " ]";
+        return "a.Relatedto[ relatedToId=" + relatedToId + " ]";
     }
-    
 }
-
