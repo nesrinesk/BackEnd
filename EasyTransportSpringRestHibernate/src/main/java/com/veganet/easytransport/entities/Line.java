@@ -51,6 +51,10 @@ public class Line implements Serializable {
     @Column(name = "ISDELETED")
     private Short isdeleted;
 
+    
+    @Size(max = 254)
+    @Column(name = "NAME")
+    private String name;
     @JsonIgnore
     @OneToMany(mappedBy = "lineId")
     private Collection<Journeylocalisation> journeylocalisationCollection;
@@ -79,6 +83,14 @@ public class Line implements Serializable {
 
     public void setLineId(Integer lineId) {
         this.lineId = lineId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Short getType() {
