@@ -34,7 +34,8 @@ public class LineDao extends AbstractHibernateDao<Line>{
     public Line add(Line line) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(line);
-        line.setIsdeleted((short) 0);
+        session.flush();
+        
         return line;
     }
 
@@ -67,10 +68,10 @@ public class LineDao extends AbstractHibernateDao<Line>{
         return list;
     }
     
-    public BigInteger getLastInsertedId(){
+   /* public BigInteger getLastInsertedId(){
                 Session session = this.sessionFactory.getCurrentSession();
 
         BigInteger lastId= (BigInteger) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult();
         return lastId;
-    }
+    }*/
 }
