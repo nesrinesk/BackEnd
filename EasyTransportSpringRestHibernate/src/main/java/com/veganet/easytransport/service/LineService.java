@@ -7,6 +7,7 @@ package com.veganet.easytransport.service;
 
 import com.veganet.easytransport.dao.LineDao;
 import com.veganet.easytransport.entities.Line;
+import java.math.BigInteger;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,9 +64,15 @@ public class LineService {
     public List<Line> getAll(short isdeleted) {
         return lineDao.getAll(isdeleted);
     }
-    
+
     @Transactional
     public List<Line> getAllByType(short type, short isdeleted) {
         return lineDao.getAllByType(type, isdeleted);
     }
+
+    // public int getLastInsertedId(){
+    /*@Transactional
+    public BigInteger getLastInsertedId() {
+        return lineDao.getLastInsertedId();
+    }*/
 }
