@@ -6,6 +6,7 @@
 package com.veganet.easytransport.dao;
 
 import com.veganet.easytransport.entities.Line;
+import java.math.BigInteger;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,6 +22,7 @@ public class LineDao extends AbstractHibernateDao<Line>{
      @Autowired
     private SessionFactory sessionFactory;
 
+     @Override
     public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;
     }
@@ -63,5 +65,12 @@ public class LineDao extends AbstractHibernateDao<Line>{
                 .setParameter("type", type)
                 .setParameter("isdeleted", isdeleted).list();
         return list;
+    }
+    
+    public BigInteger getLastInsertedId(){
+                Session session = this.sessionFactory.getCurrentSession();
+
+        BigInteger lastId= (BigInteger) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult();
+        return lastId;
     }
 }
