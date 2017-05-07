@@ -32,7 +32,7 @@ public class RelatedtoController {
     private static final org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger(RelatedtoController.class);
     @Autowired
     RelatedtoService relatedtoService;
-    
+
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllRelatedto", method = RequestMethod.GET)
@@ -117,19 +117,32 @@ public class RelatedtoController {
     public List<Relatedto> getAllByLine(@PathVariable int id) {
         //logger.info("getting transport with id :" + id);
 
-      List<Relatedto> list = relatedtoService.getAllByLine(id);
-        
+        List<Relatedto> list = relatedtoService.getAllByLine(id);
+
         return list;
     }
+
     
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getLastTagLine/{id}", method = RequestMethod.GET)
+    public List<Relatedto> getLastTagLine(@PathVariable int id) {
+        logger.info("getting transport with id :" + id);
+        List<Relatedto> list = relatedtoService.getAllByLine(id);
+        int lastTag = list.size() - 1;
+                 List<Relatedto> list1 =  relatedtoService.getlaststation((short)lastTag,id);
+
+         return list1;
+    }
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getLastTag/{id}", method = RequestMethod.GET)
     public int getLastTag(@PathVariable int id) {
         //logger.info("getting transport with id :" + id);
 
-      List<Relatedto> list = relatedtoService.getAllByLine(id);
-        int lastTag= list.size() -1;
+        List<Relatedto> list = relatedtoService.getAllByLine(id);
+        int lastTag = list.size() - 1;
         return lastTag;
     }
 }
