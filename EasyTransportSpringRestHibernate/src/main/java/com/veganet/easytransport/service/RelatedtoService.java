@@ -6,6 +6,7 @@
 package com.veganet.easytransport.service;
 
 import com.veganet.easytransport.dao.RelatedtoDao;
+import com.veganet.easytransport.entities.Line;
 import com.veganet.easytransport.entities.Relatedto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author asus
  */
-    
 @Service("relatedtoService")
 public class RelatedtoService {
 
     @Autowired
     RelatedtoDao relatedtoDao;
 
-    
-   
     @Transactional
     public List<Relatedto> findAll() {
         return relatedtoDao.findAll();
     }
+
     @Transactional
     public Relatedto findOne(int id) {
         return relatedtoDao.findOne(id);
@@ -50,8 +49,15 @@ public class RelatedtoService {
         relatedtoDao.deleteById(id);
     }
 
-@Transactional
+    @Transactional
     public List<Relatedto> getAllByType(short type) {
         return relatedtoDao.getAllByType(type);
-    }    
+    }
+
+    @Transactional
+    public List<Relatedto> getAllByLine(int id) {
+        return relatedtoDao.getAllByLine(id);
+
+    }
+
 }
