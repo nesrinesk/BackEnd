@@ -5,7 +5,9 @@
  */
 package com.veganet.easytransport.controller;
 
+import com.veganet.easytransport.entities.Line;
 import com.veganet.easytransport.entities.Relatedto;
+import com.veganet.easytransport.service.LineService;
 import com.veganet.easytransport.service.RelatedtoService;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -26,11 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/relatedto")
 
 public class RelatedtoController {
-    
+
     private static final org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger(RelatedtoController.class);
     @Autowired
     RelatedtoService relatedtoService;
-
+    
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllRelatedto", method = RequestMethod.GET)
@@ -80,25 +82,23 @@ public class RelatedtoController {
     public void deleteById(@PathVariable("id") int id) {
         relatedtoService.deleteById(id);
     }
-    
+
     //trains
-   
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllTrains", method = RequestMethod.GET)
     public List<Relatedto> getAll() {
         logger.info("getting all trains");
 
-        List<Relatedto> list = relatedtoService.getAllByType( (short) 0);
+        List<Relatedto> list = relatedtoService.getAllByType((short) 0);
         if (list == null || list.isEmpty()) {
             logger.info("no train found");
         }
         return list;
     }
-    
-    
+
     //bus
-     @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllBus", method = RequestMethod.GET)
     public List<Relatedto> getAllBus() {
@@ -109,5 +109,27 @@ public class RelatedtoController {
             logger.info("no train found");
         }
         return list;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllByLine/{id}", method = RequestMethod.GET)
+    public List<Relatedto> getAllByLine(@PathVariable int id) {
+        //logger.info("getting transport with id :" + id);
+
+      List<Relatedto> list = relatedtoService.getAllByLine(id);
+        
+        return list;
+    }
+    
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getLastTag/{id}", method = RequestMethod.GET)
+    public int getLastTag(@PathVariable int id) {
+        //logger.info("getting transport with id :" + id);
+
+      List<Relatedto> list = relatedtoService.getAllByLine(id);
+        int lastTag= list.size() -1;
+        return lastTag;
     }
 }
