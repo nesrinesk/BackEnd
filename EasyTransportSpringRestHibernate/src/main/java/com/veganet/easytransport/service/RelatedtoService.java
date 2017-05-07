@@ -60,4 +60,8 @@ public class RelatedtoService {
 
     }
 
+    @Transactional
+    public List<Relatedto> getlaststation(short tag, int id) {
+        return relatedtoDao.getlaststation(tag,id);
+    }
 }
