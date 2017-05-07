@@ -5,6 +5,7 @@
  */
 package com.veganet.easytransport.dao;
 
+import com.veganet.easytransport.entities.Line;
 import com.veganet.easytransport.entities.Relatedto;
 import java.util.List;
 import org.hibernate.Session;
@@ -22,6 +23,7 @@ public class RelatedtoDao extends AbstractHibernateDao<Relatedto> {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Override
     public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;
     }
@@ -37,4 +39,18 @@ public class RelatedtoDao extends AbstractHibernateDao<Relatedto> {
                 .setParameter("type", type).list();
         return list;
     }
+    
+    // by  lineId
+    public List<Relatedto> getAllByLine(int id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Line lineId= (Line) session.get(Line.class, id);
+        List<Relatedto> list = session.createQuery("SELECT r FROM Relatedto r WHERE r.lineId = :lineId")
+                .setParameter("lineId", lineId).list();
+        return list;
+    }
+    /*
+     Session session = this.sessionFactory.getCurrentSession();
+        T object = (T) session.get(clazz, id);
+        return object;
+    */
 }
