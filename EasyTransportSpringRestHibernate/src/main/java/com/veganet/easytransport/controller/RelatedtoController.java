@@ -122,19 +122,18 @@ public class RelatedtoController {
         return list;
     }
 
-    
-
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getLastTagLine/{id}", method = RequestMethod.GET)
-    public List<Relatedto> getLastTagLine(@PathVariable int id) {
+    public Relatedto getLastTagLine(@PathVariable int id) {
         logger.info("getting transport with id :" + id);
         List<Relatedto> list = relatedtoService.getAllByLine(id);
         int lastTag = list.size() - 1;
-                 List<Relatedto> list1 =  relatedtoService.getlaststation((short)lastTag,id);
+        Relatedto list1 = relatedtoService.getlaststation((short) lastTag, id);
 
-         return list1;
+        return list1;
     }
+
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getLastTag/{id}", method = RequestMethod.GET)
@@ -144,5 +143,16 @@ public class RelatedtoController {
         List<Relatedto> list = relatedtoService.getAllByLine(id);
         int lastTag = list.size() - 1;
         return lastTag;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getFirstTagLine/{id}", method = RequestMethod.GET)
+    public Relatedto getFirstTagLine(@PathVariable int id) {
+        logger.info("getting transport with id :" + id);
+
+        Relatedto list1 = relatedtoService.getlaststation((short) 0, id);
+
+        return list1;
     }
 }
