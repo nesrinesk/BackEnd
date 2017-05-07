@@ -63,7 +63,6 @@ public class LineController {
     }
 
     @Consumes(MediaType.APPLICATION_JSON)
-
     @RequestMapping(value = "/updateLine/{id}", method = RequestMethod.POST)
     public void updateLine(@PathVariable int id, @RequestBody Line line) {
 
@@ -96,14 +95,15 @@ public class LineController {
     }
 
     //add
+    @Produces(MediaType.APPLICATION_JSON)
 
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void add(@RequestBody Line line) {
+    public Integer add(@RequestBody Line line) {
         logger.info("creating new : {}");
         lineService.add(line);
-        logger.info("id : {}"+line.getLineId());
-
+        logger.info("id : {}" + line.getLineId());
+        return line.getLineId();
     }
 
 //delete setting isdeleted = 1
@@ -142,13 +142,13 @@ public class LineController {
 
     //getLastInsertedId
     /*@Produces(MediaType.APPLICATION_JSON)
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getLastInsertedId", method = RequestMethod.GET)
-    public BigInteger getLastInsertedId() {
-        logger.info("getting last inseted id");
+     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+     @RequestMapping(value = "/getLastInsertedId", method = RequestMethod.GET)
+     public BigInteger getLastInsertedId() {
+     logger.info("getting last inseted id");
 
-        BigInteger id = lineService.getLastInsertedId();
+     BigInteger id = lineService.getLastInsertedId();
 
-        return id;
-    }*/
+     return id;
+     }*/
 }
