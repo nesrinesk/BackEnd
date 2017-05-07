@@ -54,12 +54,11 @@ public class RelatedtoDao extends AbstractHibernateDao<Relatedto> {
      return object;
      */
 
-    public List<Relatedto> getlaststation(short tag, int id) {
+    public Relatedto getlaststation(short tag, int id) {
         Session session = this.sessionFactory.getCurrentSession();
         Line lineId = (Line) session.get(Line.class, id);
-        List<Relatedto> object = session.createQuery("SELECT r FROM Relatedto r WHERE r.tag = :tag and r.lineId = :lineId ")
-                .setParameter("tag", tag).setParameter("lineId", lineId).list();
-
+        Relatedto object = (Relatedto) session.createQuery("SELECT r FROM Relatedto r WHERE r.tag = :tag and r.lineId = :lineId ")
+                .setParameter("tag", tag).setParameter("lineId", lineId).uniqueResult();
         return object;
     }
 }
