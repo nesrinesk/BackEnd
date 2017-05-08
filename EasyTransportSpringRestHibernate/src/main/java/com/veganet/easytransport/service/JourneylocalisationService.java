@@ -16,19 +16,17 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author asus
  */
-    
 @Service("journeylocalisationService")
 public class JourneylocalisationService {
 
     @Autowired
     JourneylocalisationDao journeylocalisationDao;
 
-    
-   
     @Transactional
     public List<Journeylocalisation> findAll() {
         return journeylocalisationDao.findAll();
     }
+
     @Transactional
     public Journeylocalisation findOne(int id) {
         return journeylocalisationDao.findOne(id);
@@ -50,6 +48,9 @@ public class JourneylocalisationService {
         journeylocalisationDao.deleteById(id);
     }
 
-    
+    @Transactional
+    public List<Journeylocalisation> getAllByType(short type) {
+       return journeylocalisationDao.getAllByType(type);
+    }
 
 }
