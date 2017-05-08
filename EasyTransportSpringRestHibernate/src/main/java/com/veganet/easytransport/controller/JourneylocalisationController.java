@@ -79,4 +79,15 @@ public class JourneylocalisationController {
     public void deleteById(@PathVariable("id") int id) {
         journeylocalisationService.deleteById(id);
     }
+    
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllBus", method = RequestMethod.GET)
+    public List<Journeylocalisation> getAllBus() {
+        logger.info("getting all trains");
+
+        List<Journeylocalisation> list = journeylocalisationService.getAllByType((short) 1);
+        
+        return list;
+    }
 }
