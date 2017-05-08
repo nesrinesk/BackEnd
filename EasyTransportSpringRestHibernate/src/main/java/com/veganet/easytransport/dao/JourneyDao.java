@@ -34,6 +34,7 @@ public class JourneyDao extends AbstractHibernateDao<Journey> {
     public Journey add(Journey journey) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(journey);
+        session.flush();
         journey.setIsdeleted((short) 0);
         return journey;
     }
