@@ -79,10 +79,9 @@ public class JourneyController {
     public void deleteJourney(@PathVariable("id") int id) {
         journeyService.deleteById(id);
     }
-    
+
     ////////////
-    
-     //not deleted object
+    //not deleted object
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
@@ -95,25 +94,25 @@ public class JourneyController {
         }
         return list;
     }
+
     //add
+
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void add(@RequestBody Journey journey) {
+    public Integer add(@RequestBody Journey journey) {
         logger.info("creating new object: {}");
 
         journeyService.add(journey);
-
+        return journey.getJourneyId();
     }
-    
-//delete setting isdeleted = 1
 
+//delete setting isdeleted = 1
     @RequestMapping(value = "/delete2/{id}", method = RequestMethod.POST, headers = "Accept=application/json")
     public void delete2(@PathVariable("id") int id) {
         journeyService.delete2(id);
     }
-    
+
     //trains
-   
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getTrainJourneys", method = RequestMethod.GET)
@@ -126,10 +125,9 @@ public class JourneyController {
         }
         return list;
     }
-    
-    
+
     //bus
-     @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getBusJourneys", method = RequestMethod.GET)
     public List<Journey> getBusJourneys() {
