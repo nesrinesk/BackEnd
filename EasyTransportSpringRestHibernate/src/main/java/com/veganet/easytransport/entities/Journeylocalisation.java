@@ -35,21 +35,23 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Journeylocalisation.findByJourneyLocalisationId", query = "SELECT j FROM Journeylocalisation j WHERE j.journeyLocalisationId = :journeyLocalisationId"),
     @NamedQuery(name = "Journeylocalisation.findByDate", query = "SELECT j FROM Journeylocalisation j WHERE j.date = :date")})
 public class Journeylocalisation implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "JOURNEY_LOCALISATION_ID")
     private Integer journeyLocalisationId;
-    
+
     @Column(name = "DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    
+    @Column(name = "TYPE")
+    private Short type;
     @JoinColumn(name = "LINE_ID", referencedColumnName = "LINE_ID")
     @ManyToOne
     private Line lineId;
-    
+
     @JoinColumn(name = "JOURNEY_ID", referencedColumnName = "JOURNEY_ID")
     @ManyToOne
     private Journey journeyId;
@@ -75,6 +77,14 @@ public class Journeylocalisation implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
     }
 
     public Line getLineId() {
@@ -117,6 +127,5 @@ public class Journeylocalisation implements Serializable {
     public String toString() {
         return "com.veganet.easytransport.mavenproject5.Journeylocalisation[ journeyLocalisationId=" + journeyLocalisationId + " ]";
     }
-    
-}
 
+}
