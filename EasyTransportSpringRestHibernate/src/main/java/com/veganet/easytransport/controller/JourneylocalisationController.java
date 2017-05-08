@@ -54,11 +54,11 @@ public class JourneylocalisationController {
 
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/addJourneylocalisation", method = RequestMethod.POST)
-    public void create(@RequestBody Journeylocalisation journeylocalisation) {
+    public Integer create(@RequestBody Journeylocalisation journeylocalisation) {
         logger.info("creating new transport: {}");
 
         journeylocalisationService.create(journeylocalisation);
-
+        return journeylocalisation.getJourneyLocalisationId();
     }
 
     @Consumes(MediaType.APPLICATION_JSON)
