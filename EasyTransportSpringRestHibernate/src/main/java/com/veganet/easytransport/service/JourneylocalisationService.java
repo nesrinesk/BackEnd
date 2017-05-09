@@ -52,5 +52,9 @@ public class JourneylocalisationService {
     public List<Journeylocalisation> getAllByType(short type) {
        return journeylocalisationDao.getAllByType(type);
     }
-
+// by  lineId
+    @Transactional
+    public List<Journeylocalisation> getAllByLine(int id) {
+        return journeylocalisationDao.getAllByLine(id);
+    }
 }
