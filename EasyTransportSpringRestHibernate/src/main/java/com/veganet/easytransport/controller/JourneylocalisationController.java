@@ -90,4 +90,16 @@ public class JourneylocalisationController {
         
         return list;
     }
+    
+    
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllByJourney/{id}", method = RequestMethod.GET)
+    public List<Journeylocalisation> getAllByLine(@PathVariable int id) {
+        //logger.info("getting transport with id :" + id);
+
+        List<Journeylocalisation> list = journeylocalisationService.getAllByLine(id);
+
+        return list;
+    }
 }
