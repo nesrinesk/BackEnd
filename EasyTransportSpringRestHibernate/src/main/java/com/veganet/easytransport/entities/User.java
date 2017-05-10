@@ -55,89 +55,88 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByCreationDate", query = "SELECT u FROM User u WHERE u.creationDate = :creationDate"),
     @NamedQuery(name = "User.findByIsdeleted", query = "SELECT u FROM User u WHERE u.isdeleted = :isdeleted")})
 public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "USER_ID")
     private Integer userId;
-    
+
     @Size(max = 254)
     @Column(name = "USER_NAME")
     private String userName;
-    
+
     @Size(max = 254)
     @Column(name = "PASSWORD")
     private String password;
-    
+
     @Column(name = "ACCESS_LEVEL")
     private Short accessLevel;
-    
+
     @Size(max = 254)
     @Column(name = "FIRST_NAME")
     private String firstName;
-    
+
     @Size(max = 254)
     @Column(name = "LAST_NAME")
     private String lastName;
-    
+
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 254)
     @Column(name = "EMAIL")
     private String email;
-    
+
     @Size(max = 254)
     @Column(name = "TEL")
     private String tel;
-    
+
     @Size(max = 254)
     @Column(name = "ADDRESS")
     private String address;
-    
-    
+
     @Column(name = "BIRTH_DATE")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
-    
-    
+
     @Size(max = 254)
     @Column(name = "CIN")
     private String cin;
-    
+
     @Column(name = "GENDER")
     private Short gender;
-    
+
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
-    
+
     @Column(name = "ISDELETED")
     private Short isdeleted;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "addedBy")
     private Collection<Line> lineCollection;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "addedBy")
     private Collection<Transport> transportCollection;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "userId")
-    private Collection<Driver> driverCollection;
-    
+    private Collection<Driverplanning> driverplanningCollection;
+
     @JsonIgnore
     @OneToMany(mappedBy = "addedBy")
     private Collection<Alert> alertCollection;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "userId")
     private Collection<Journeyplanning> journeyplanningCollection;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "addedBy")
     private Collection<Station> stationCollection;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "addededBy")
     private Collection<Favorite> favoriteCollection;
@@ -285,13 +284,13 @@ public class User implements Serializable {
 
     @JsonIgnore
     @XmlTransient
-    public Collection<Driver> getDriverCollection() {
-        return driverCollection;
+    public Collection<Driverplanning> getDriverplanningCollection() {
+        return driverplanningCollection;
     }
 
     @JsonIgnore
-    public void setDriverCollection(Collection<Driver> driverCollection) {
-        this.driverCollection = driverCollection;
+    public void setDriverplanningCollection(Collection<Driverplanning> driverplanningCollection) {
+        this.driverplanningCollection = driverplanningCollection;
     }
 
     @JsonIgnore
@@ -362,5 +361,5 @@ public class User implements Serializable {
     public String toString() {
         return "com.veganet.easytransport.mavenproject5.User[ userId=" + userId + " ]";
     }
-    
+
 }
