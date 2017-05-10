@@ -34,8 +34,8 @@ public class DriverplanningService {
     }
 
     @Transactional
-    public void create(Driverplanning driverplanning) {
-        driverplanningDao.create(driverplanning);
+    public void add(Driverplanning driverplanning) {
+        driverplanningDao.add(driverplanning);
     }
 
     @Transactional
