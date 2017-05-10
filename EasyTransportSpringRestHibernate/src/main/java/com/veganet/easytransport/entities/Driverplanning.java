@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -36,6 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Driverplanning.findByDay", query = "SELECT d FROM Driverplanning d WHERE d.day = :day"),
     @NamedQuery(name = "Driverplanning.findByDate", query = "SELECT d FROM Driverplanning d WHERE d.date = :date")})
 public class Driverplanning implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +57,12 @@ public class Driverplanning implements Serializable {
     @ManyToOne
     private Journey journeyId;
 
+    @Transient
+    private Date from ;
+    
+    @Transient
+    private Date to ;
+    
     public Driverplanning() {
     }
 
@@ -102,6 +110,22 @@ public class Driverplanning implements Serializable {
         this.journeyId = journeyId;
     }
 
+    public Date getFrom() {
+        return from;
+    }
+
+    public void setFrom(Date from) {
+        this.from = from;
+    }
+
+    public Date getTo() {
+        return to;
+    }
+
+    public void setTo(Date to) {
+        this.to = to;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -126,5 +150,5 @@ public class Driverplanning implements Serializable {
     public String toString() {
         return "x.Driverplanning[ planningId=" + planningId + " ]";
     }
-    
+
 }
