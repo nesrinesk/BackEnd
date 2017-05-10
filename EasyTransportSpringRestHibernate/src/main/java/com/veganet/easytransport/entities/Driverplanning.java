@@ -42,23 +42,18 @@ public class Driverplanning implements Serializable {
     @Basic(optional = false)
     @Column(name = "PLANNING_ID")
     private Integer planningId;
-    
     @Size(max = 256)
     @Column(name = "DAY")
     private String day;
-    
     @Column(name = "DATE")
     @Temporal(TemporalType.DATE)
     private Date date;
-    
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+    @ManyToOne
+    private User userId;
     @JoinColumn(name = "JOURNEY_ID", referencedColumnName = "JOURNEY_ID")
     @ManyToOne
     private Journey journeyId;
-    
-    @JoinColumn(name = "DRIVER_ID", referencedColumnName = "DRIVER_ID")
-    @ManyToOne
-    private Driver driverId;
-    
 
     public Driverplanning() {
     }
@@ -91,20 +86,20 @@ public class Driverplanning implements Serializable {
         this.date = date;
     }
 
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
     public Journey getJourneyId() {
         return journeyId;
     }
 
     public void setJourneyId(Journey journeyId) {
         this.journeyId = journeyId;
-    }
-
-    public Driver getDriverId() {
-        return driverId;
-    }
-
-    public void setDriverId(Driver driverId) {
-        this.driverId = driverId;
     }
 
     @Override
@@ -129,7 +124,7 @@ public class Driverplanning implements Serializable {
 
     @Override
     public String toString() {
-        return "com.veganet.easytransport.mavenproject5.Driverplanning[ planningId=" + planningId + " ]";
+        return "x.Driverplanning[ planningId=" + planningId + " ]";
     }
     
 }
