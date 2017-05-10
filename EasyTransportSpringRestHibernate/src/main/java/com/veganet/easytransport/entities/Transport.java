@@ -107,10 +107,7 @@ public class Transport implements Serializable {
     @ManyToOne
     private User addedBy;
     
-    @JsonIgnore
-    @OneToMany(mappedBy = "transportId")
-    private Collection<Driver> driverCollection;
-    
+   
     @JsonIgnore
     @OneToMany(mappedBy = "transportId")
     private Collection<Alert> alertCollection;
@@ -256,16 +253,7 @@ public class Transport implements Serializable {
         this.addedBy = addedBy;
     }
 
-    @JsonIgnore
-    @XmlTransient
-    public Collection<Driver> getDriverCollection() {
-        return driverCollection;
-    }
-
-    @JsonIgnore
-    public void setDriverCollection(Collection<Driver> driverCollection) {
-        this.driverCollection = driverCollection;
-    }
+   
 
     @JsonIgnore
     @XmlTransient
