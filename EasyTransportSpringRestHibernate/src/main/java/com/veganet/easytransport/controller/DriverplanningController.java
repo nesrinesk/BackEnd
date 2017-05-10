@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/driverplannings")
 public class DriverplanningController {
-    
-     private static final org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger(DriverplanningController.class);
+
+    private static final org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger(DriverplanningController.class);
     @Autowired
     DriverplanningService driverplanningService;
 
@@ -54,11 +54,11 @@ public class DriverplanningController {
 
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/addDriverplanning", method = RequestMethod.POST)
-    public void create(@RequestBody Driverplanning driverplanning) {
+    public Integer create(@RequestBody Driverplanning driverplanning) {
         logger.info("creating new driverplanning: {}");
 
         driverplanningService.create(driverplanning);
-
+        return driverplanning.getPlanningId();
     }
 
     @Consumes(MediaType.APPLICATION_JSON)
