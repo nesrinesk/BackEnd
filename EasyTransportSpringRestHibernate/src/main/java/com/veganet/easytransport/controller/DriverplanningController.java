@@ -8,7 +8,9 @@ package com.veganet.easytransport.controller;
 import com.veganet.easytransport.entities.Driverplanning;
 import com.veganet.easytransport.service.DriverplanningService;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import static java.util.Date.from;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -56,22 +58,21 @@ public class DriverplanningController {
 
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/addDriverplanning", method = RequestMethod.POST)
-    public Integer create(@RequestBody Driverplanning driverplanning) {
+    public void create(@RequestBody Driverplanning driverplanning) {
         logger.info("creating new driverplanning: {}");
         //for (Date d = driverplanning.getFrom(); !d.compareTo(driverplanning.getTo()); d = d.plusDays(1)) {
-     //    driverplanningService.create (driverplanning);
-   //driverplanning.setDate(d);
-       // }
-    
+        //    driverplanningService.create (driverplanning);
+        //driverplanning.setDate(d);
+        // }
+        driverplanningService.add(driverplanning);
 
-    
-    return driverplanning.getPlanningId ();
-}
 
-@Consumes(MediaType.APPLICATION_JSON)
+    }
 
-        @RequestMapping(value = "/updateDriverplanning/{id}", method = RequestMethod.POST)
-        public void update(@PathVariable int id, @RequestBody Driverplanning driverplanning) {
+    @Consumes(MediaType.APPLICATION_JSON)
+
+    @RequestMapping(value = "/updateDriverplanning/{id}", method = RequestMethod.POST)
+    public void update(@PathVariable int id, @RequestBody Driverplanning driverplanning) {
 
         Driverplanning currentO = driverplanningService.findOne(id);
         logger.info("updating driverplanning with id :" + id);
@@ -83,7 +84,7 @@ public class DriverplanningController {
     }
 
     @RequestMapping(value = "/deleteDriverplanning/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-        public void deleteById(@PathVariable("id") int id) {
+    public void deleteById(@PathVariable("id") int id) {
         driverplanningService.deleteById(id);
     }
 }
