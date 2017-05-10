@@ -31,7 +31,6 @@ com\veganet\easytransport\service\UserService.class
 com\veganet\easytransport\dao\RelatedtoDao.class
 com\veganet\easytransport\entities\Line.class
 com\veganet\easytransport\service\AlertService.class
-com\veganet\easytransport\service\DriverService.class
 com\veganet\easytransport\service\JourneylocalisationService.class
 com\veganet\easytransport\dao\AlertDao.class
 com\veganet\easytransport\entities\Transport.class
@@ -40,15 +39,12 @@ com\veganet\easytransport\service\JourneyService.class
 com\veganet\easytransport\service\JourneyplanningService.class
 com\veganet\easytransport\dao\DriverplanningDao.class
 com\veganet\easytransport\dao\StationDao.class
-com\veganet\easytransport\controller\DriverController.class
 com\veganet\easytransport\service\AbstractService.class
-com\veganet\easytransport\entities\Driver.class
 com\veganet\easytransport\controller\RelatedtoController.class
 com\veganet\easytransport\service\LineService.class
 com\veganet\easytransport\controller\StationController.class
 com\veganet\easytransport\controller\PositionController.class
 com\veganet\easytransport\dao\TransportDao.class
-com\veganet\easytransport\dao\DriverDao.class
 com\veganet\easytransport\dao\JourneyplanningDao.class
 com\veganet\easytransport\entities\Journeylocalisation.class
 com\veganet\easytransport\entities\Position.class

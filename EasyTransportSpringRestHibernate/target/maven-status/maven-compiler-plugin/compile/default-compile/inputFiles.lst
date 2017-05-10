@@ -8,7 +8,6 @@ C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\entities\Favorite.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\controller\TransportController.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\controller\LineController.java
-C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\service\DriverService.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\entities\Journeyplanning.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\service\LineService.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\entities\Alert.java
@@ -23,17 +22,14 @@ C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\entities\Relatedto.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\controller\PositionController.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\service\PassageService.java
-C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\dao\DriverDao.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\entities\User.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\service\PositionService.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\controller\AlertController.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\service\JourneyplanningService.java
-C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\controller\DriverController.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\controller\DriverplanningController.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\entities\Position.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\controller\RelatedtoController.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\dao\PositionDao.java
-C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\entities\Driver.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\service\AlertService.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\entities\Line.java
 C:\Users\asus\Documents\GitHub\BackEnd\EasyTransportSpringRestHibernate\src\main\java\com\veganet\easytransport\dao\DriverplanningDao.java

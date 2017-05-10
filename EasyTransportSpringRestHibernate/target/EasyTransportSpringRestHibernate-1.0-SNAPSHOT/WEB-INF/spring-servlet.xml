@@ -34,7 +34,6 @@
         <beans:property name="annotatedClasses">
             <beans:list>
                 <beans:value>com.veganet.easytransport.entities.Alert</beans:value>
-                <beans:value>com.veganet.easytransport.entities.Driver</beans:value>                
                 <beans:value>com.veganet.easytransport.entities.Driverplanning</beans:value>
                 <beans:value>com.veganet.easytransport.entities.Favorite</beans:value>
                 <beans:value>com.veganet.easytransport.entities.Journey</beans:value>
