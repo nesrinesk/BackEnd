@@ -49,6 +49,9 @@ public class DriverplanningService {
         driverplanningDao.deleteById(id);
     }
 
-    
+    @Transactional
+    public List<Driverplanning> getAllByUser(int id) {
+       return driverplanningDao.getAllByUser(id);
+    }
 
 }
