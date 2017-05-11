@@ -87,4 +87,15 @@ public class DriverplanningController {
     public void deleteById(@PathVariable("id") int id) {
         driverplanningService.deleteById(id);
     }
+        
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllByUser/{id}", method = RequestMethod.GET)
+    public List<Driverplanning> getAllByUser(@PathVariable int id) {
+        //logger.info("getting transport with id :" + id);
+
+        List<Driverplanning> list = driverplanningService.getAllByUser(id);
+
+        return list;
+    }
 }
