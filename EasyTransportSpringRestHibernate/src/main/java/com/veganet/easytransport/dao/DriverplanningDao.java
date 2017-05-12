@@ -45,7 +45,7 @@ public class DriverplanningDao extends AbstractHibernateDao<Driverplanning> {
         List<Date> dates = new ArrayList<Date>();
         Date startDate = object.getFrom();
         Date endDate = object.getTo();
-        long interval = 24 * 1000 * 60 * 60; // 1 hour in millis
+        long interval = 24 * 1000 * 60 * 60*7; // 1 hour in millis
         long endTime = endDate.getTime(); // create your endtime here, possibly using Calendar or Date
         long curTime = startDate.getTime();
         while (curTime <= endTime) {
@@ -57,21 +57,21 @@ public class DriverplanningDao extends AbstractHibernateDao<Driverplanning> {
         for (Date date : dates) {
             i++;
             Driverplanning ob = new Driverplanning();
-            ob = object;
+            ob.setJourneyId(object.getJourneyId());
+            ob.setUserId(object.getUserId());
+            ob.setDay(object.getDay());
             Date lDate = (Date) date;
             ob.setDate(lDate);
             System.out.println(" getdate ..." + ob.getDate());
             String ds = formatter.format(lDate);
             System.out.println(" Date is ..." + ds);
+            ob.setPlanningId(null);
             create(ob);
-            if (i % 20 == 0) { //20, same as the JDBC batch size
-                //flush a batch of inserts and release memory:
-                session.flush();
-                session.clear();
-            }
+
         }
 
     }
+
     public List<Driverplanning> getAllByUser(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         User userId = (User) session.get(User.class, id);
