@@ -51,8 +51,6 @@ public class AbstractHibernateDao< T extends Serializable> {
     public T create(T object) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(object);
-        session.flush();
-
         return object;
     }
 
