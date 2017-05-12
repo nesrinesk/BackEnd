@@ -43,7 +43,6 @@ public class UserDao extends AbstractHibernateDao<User> {
     public User add(User user) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(user);
-        user.setIsdeleted((short) 0);
         return user;
     }
 
@@ -55,7 +54,6 @@ public class UserDao extends AbstractHibernateDao<User> {
     }
 
     // set isdeleted=1
-
     public void delete2(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         User user = (User) session.get(User.class, id);
@@ -64,7 +62,6 @@ public class UserDao extends AbstractHibernateDao<User> {
     }
 
     //update 
-
     public void update2(User object) {
         Session session = this.sessionFactory.getCurrentSession();
 
