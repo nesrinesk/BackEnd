@@ -66,7 +66,6 @@ public class DriverplanningController {
         // }
         driverplanningService.add(driverplanning);
 
-
     }
 
     @Consumes(MediaType.APPLICATION_JSON)
@@ -87,7 +86,7 @@ public class DriverplanningController {
     public void deleteById(@PathVariable("id") int id) {
         driverplanningService.deleteById(id);
     }
-        
+
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllByUser/{id}", method = RequestMethod.GET)
@@ -98,4 +97,26 @@ public class DriverplanningController {
 
         return list;
     }
+
+    //    public List<Driverplanning> getAllByDistinctUser(int id) {
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllByDistinctUser", method = RequestMethod.GET)
+    public List<Driverplanning> getAllByDistinctUser() {
+        //logger.info("getting transport with id :" + id);
+
+        List<Driverplanning> list = driverplanningService.getAllByDistinctUser();
+        return list;
+    }
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getOneByUser/{id}", method = RequestMethod.GET)
+    public List<Driverplanning> getOneByUser(@PathVariable int id) {
+        logger.info("getting transport with id :" + id);
+
+        List<Driverplanning> list1 = driverplanningService.getOneByUser( id);
+
+        return list1;
+    }
+
 }
