@@ -16,18 +16,17 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author asus
  */
- @Service("driverplanningService")
+@Service("driverplanningService")
 public class DriverplanningService {
 
     @Autowired
     DriverplanningDao driverplanningDao;
 
-    
-   
     @Transactional
     public List<Driverplanning> findAll() {
         return driverplanningDao.findAll();
     }
+
     @Transactional
     public Driverplanning findOne(int id) {
         return driverplanningDao.findOne(id);
@@ -51,7 +50,15 @@ public class DriverplanningService {
 
     @Transactional
     public List<Driverplanning> getAllByUser(int id) {
-       return driverplanningDao.getAllByUser(id);
+        return driverplanningDao.getAllByUser(id);
     }
 
+    @Transactional
+    public List<Driverplanning> getAllByDistinctUser() {
+        return driverplanningDao.getAllByDistinctUser();
+    }
+    @Transactional
+    public List<Driverplanning> getOneByUser(int id) {
+        return driverplanningDao.getOneByUser(id);
+    }
 }
