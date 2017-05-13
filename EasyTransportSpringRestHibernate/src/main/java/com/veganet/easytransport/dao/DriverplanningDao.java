@@ -79,4 +79,28 @@ public class DriverplanningDao extends AbstractHibernateDao<Driverplanning> {
                 .setParameter("userId", userId).list();
         return list;
     }
+    
+     public List<Driverplanning> getAllByDistinctUser() {
+        Session session = this.sessionFactory.getCurrentSession();
+        List<Driverplanning> list = session.createQuery("SELECT DISTINCT userId FROM Driverplanning r")
+                .list();
+        return list;
+    }
+     
+     public List<Driverplanning> getOneByUser(int id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        User userId = (User) session.get(User.class, id);
+        List<Driverplanning> list =  session.createQuery("SELECT r FROM Driverplanning r WHERE r.userId = :userId")
+                .setParameter("userId", userId).list();
+        return list;
+    }
+     /*
+      public Relatedto getlaststation(short tag, int id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Line lineId = (Line) session.get(Line.class, id);
+        Relatedto object = (Relatedto) session.createQuery("SELECT r FROM Relatedto r WHERE r.tag = :tag and r.lineId = :lineId ")
+                .setParameter("tag", tag).setParameter("lineId", lineId).uniqueResult();
+        return object;
+    }
+     */
 }
