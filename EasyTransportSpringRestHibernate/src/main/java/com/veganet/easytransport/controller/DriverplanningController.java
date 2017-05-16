@@ -16,6 +16,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/driverplannings")
+@CrossOrigin(origins = "http://127.0.0.1:3000")
 public class DriverplanningController {
 
     private static final org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger(DriverplanningController.class);
