@@ -24,6 +24,7 @@ import org.springframework.http.HttpStatus;
  *
  * @author asus
  */
+@CrossOrigin(origins = "http://127.0.0.1:3000")
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
@@ -45,8 +46,6 @@ public class UserController {
         }
         return listOfUsers;
     }
-
-    
 
     //admins
     @Produces(MediaType.APPLICATION_JSON)
@@ -113,8 +112,6 @@ public class UserController {
         return userService.findOne(id);
     }
 
-
-
     //update
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/updateUser/{id}", method = RequestMethod.POST)
@@ -134,9 +131,7 @@ public class UserController {
     public void deleteUser(@PathVariable("id") int id) {
         userService.deleteById(id);
     }
-    
-    
-    
+
     //not deleted users
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -150,7 +145,9 @@ public class UserController {
         }
         return list;
     }
+
     //add
+
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public void add(@RequestBody User user) {
@@ -159,9 +156,8 @@ public class UserController {
         userService.add(user);
 
     }
-    
-//delete setting isdeleted = 1
 
+//delete setting isdeleted = 1
     @RequestMapping(value = "/deleteUser2/{id}", method = RequestMethod.POST, headers = "Accept=application/json")
     public void delete2(@PathVariable("id") int id) {
         userService.delete2(id);
