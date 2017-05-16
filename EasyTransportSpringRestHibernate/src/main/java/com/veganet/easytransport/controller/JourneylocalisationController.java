@@ -12,6 +12,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author asus
  */
- @RestController
+@CrossOrigin(origins = "http://127.0.0.1:3000")
+@RestController
 @RequestMapping(value = "/journeylocalisation")
 public class JourneylocalisationController {
-    
-     private static final org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger(JourneylocalisationController.class);
+
+    private static final org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger(JourneylocalisationController.class);
     @Autowired
     JourneylocalisationService journeylocalisationService;
 
@@ -79,7 +81,7 @@ public class JourneylocalisationController {
     public void deleteById(@PathVariable("id") int id) {
         journeylocalisationService.deleteById(id);
     }
-    
+
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllBus", method = RequestMethod.GET)
@@ -87,11 +89,10 @@ public class JourneylocalisationController {
         logger.info("getting all trains");
 
         List<Journeylocalisation> list = journeylocalisationService.getAllByType((short) 1);
-        
+
         return list;
     }
-    
-    
+
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllByJourney/{id}", method = RequestMethod.GET)
