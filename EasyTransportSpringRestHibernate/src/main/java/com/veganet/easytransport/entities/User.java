@@ -72,8 +72,8 @@ public class User implements Serializable {
     private String password;
 
     @Column(name = "ACCESS_LEVEL")
-    private Short accessLevel;
-
+    private String accessLevel;
+    
     @Size(max = 254)
     @Column(name = "FIRST_NAME")
     private String firstName;
@@ -172,11 +172,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Short getAccessLevel() {
+    public String getAccessLevel() {
         return accessLevel;
     }
 
-    public void setAccessLevel(Short accessLevel) {
+    public void setAccessLevel(String accessLevel) {
         this.accessLevel = accessLevel;
     }
 
@@ -236,6 +236,8 @@ public class User implements Serializable {
         this.cin = cin;
     }
 
+   
+    
     public Short getGender() {
         return gender;
     }
