@@ -31,7 +31,7 @@ public class UserDao extends AbstractHibernateDao<User> {
     }
 
     // users not deleted (isdeleted=0) by access level 
-    public List<User> getAllUsersByAccessLevel(short accessLevel, short isdeleted) {
+    public List<User> getAllUsersByAccessLevel(String accessLevel, short isdeleted) {
         Session session = this.sessionFactory.getCurrentSession();
         List<User> userList = session.createQuery("SELECT u FROM User u WHERE u.isdeleted = :isdeleted and u.accessLevel = :accessLevel ")
                 .setParameter("isdeleted", isdeleted)
@@ -42,6 +42,7 @@ public class UserDao extends AbstractHibernateDao<User> {
     //add+ set isdeleted =0
     public User add(User user) {
         Session session = this.sessionFactory.getCurrentSession();
+        user.setIsdeleted((short) 0);
         session.persist(user);
         return user;
     }
@@ -66,5 +67,12 @@ public class UserDao extends AbstractHibernateDao<User> {
         Session session = this.sessionFactory.getCurrentSession();
 
         session.update(object);
+    }
+    
+     public User findByUserName(String userName){
+        Session session = this.sessionFactory.getCurrentSession();
+        User object = (User) session.createQuery("SELECT u FROM User u WHERE u.userName = :userName")
+                .setParameter("userName", userName).uniqueResult();
+        return object;
     }
 }
