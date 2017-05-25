@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/relatedto")
-@CrossOrigin(origins = "http://127.0.0.1:3000")
+//@CrossOrigin(origins = "http://127.0.0.1:3000")
 public class RelatedtoController {
 
     private static final org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger(RelatedtoController.class);
