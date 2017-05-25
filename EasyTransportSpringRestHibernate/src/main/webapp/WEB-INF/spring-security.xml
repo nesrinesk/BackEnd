@@ -16,10 +16,20 @@
         <intercept-url pattern="/stations/**" access="hasRole('ROLE_DRIVER')"/>
 
         <intercept-url pattern="/transports/**" access="permitAll"/>
+        <intercept-url pattern="/users/login/**" access="permitAll"/>
+ <!--            login-page="/users/login/{username}/{password}"
+ -->
         <form-login
+         
+
             default-target-url="/users/getAllUsers"
             authentication-failure-url="/login" always-use-default-target="true" 
+            username-parameter="username"
+            password-parameter="password"
         />
+        <csrf disabled="true"/>
+        <!--  /login/{username}/{password} username-parameter="username"
+        password-parameter="password"-->
         <!-- Logout -->
         <logout logout-success-url="/logout" />
     </http>
