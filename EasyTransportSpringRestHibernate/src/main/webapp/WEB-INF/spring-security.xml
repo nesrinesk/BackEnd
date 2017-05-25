@@ -9,14 +9,14 @@
     
     <!-- <context:component-scan base-package="com.veganet.easytransport" /> -->
 
-   
     <http  use-expressions="true" auto-config="true">     
         <!-- Interceptor urls -->
-        <intercept-url pattern="/users/**" access="hasRole('ROLE_SADMIN')"/>
+        <intercept-url pattern="/users/getAllUsers" access="hasRole('ROLE_SADMIN')"/>
         <intercept-url pattern="/stations/**" access="hasRole('ROLE_DRIVER')"/>
+        <intercept-url pattern="/users/addUser" access="permitAll"/>
+        <intercept-url pattern="/users/getUser/**" access="hasRole('ROLE_DRIVER')"/>
 
         <intercept-url pattern="/transports/**" access="permitAll"/>
-        <intercept-url pattern="/users/login/**" access="permitAll"/>
  <!--            login-page="/users/login/{username}/{password}"
  -->
         <form-login
@@ -35,7 +35,7 @@
     </http>
 
 
-    <authentication-manager>
+    <authentication-manager alias="authenticationManager">
         <authentication-provider>
             <jdbc-user-service data-source-ref="dataSource"                    
                                users-by-username-query="select USER_NAME , PASSWORD , STATUS from user where USER_NAME=?"   
