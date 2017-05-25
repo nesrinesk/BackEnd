@@ -1,5 +1,9 @@
+com\veganet\easytransport\controller\JourneylocalisationController.class
 com\veganet\easytransport\controller\JourneyplanningController.class
+com\veganet\easytransport\controller\LoginController.class
+com\veganet\easytransport\dao\FavoriteDao.class
 com\veganet\easytransport\entities\Journey.class
+com\veganet\easytransport\controller\PassageController.class
 com\veganet\easytransport\entities\Favorite.class
 com\veganet\easytransport\dao\JourneylocalisationDao.class
 com\veganet\easytransport\entities\Alert.class
@@ -8,6 +12,7 @@ com\veganet\easytransport\service\PassageService.class
 com\veganet\easytransport\entities\Station.class
 com\veganet\easytransport\controller\DriverplanningController.class
 com\veganet\easytransport\controller\TransportController.class
+com\veganet\easytransport\controller\AlertController.class
 com\veganet\easytransport\entities\Passage.class
 com\veganet\easytransport\service\PositionService.class
 com\veganet\easytransport\entities\Relatedto.class

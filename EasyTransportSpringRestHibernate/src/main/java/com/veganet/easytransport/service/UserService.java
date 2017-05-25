@@ -22,22 +22,22 @@ public class UserService {
     @Autowired
     UserDao userDao;
 
-    
-
     @Transactional
     public List<User> getUsers(short isdeleted) {
         return userDao.getUsers(isdeleted);
     }
 
     @Transactional
-    public List<User> getAllUsersByAccessLevel(short accessLevel,short isdeleted) {
-        return userDao.getAllUsersByAccessLevel(accessLevel,isdeleted);
+    public List<User> getAllUsersByAccessLevel(String accessLevel, short isdeleted) {
+        return userDao.getAllUsersByAccessLevel(accessLevel, isdeleted);
     }
 ////////////
+
     @Transactional
     public List<User> findAll() {
         return userDao.findAll();
     }
+
     @Transactional
     public User findOne(int id) {
         return userDao.findOne(id);
@@ -64,4 +64,8 @@ public class UserService {
         userDao.delete2(id);
     }
 
+    @Transactional
+    public User findByUserName(String userName) {
+        return userDao.findByUserName(userName);
+    }
 }
