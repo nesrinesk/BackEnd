@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author asus
  */
-@CrossOrigin(origins = "http://127.0.0.1:3000")
+//@CrossOrigin(origins = "http://127.0.0.1:3000")
 @RestController
 @RequestMapping(value = "/stations")
 public class StationController {
