@@ -54,7 +54,7 @@ public class UserController {
     public List<User> getAllAdmins() {
         logger.info("getting all admins");
 
-        List<User> listOfUsers = userService.getAllUsersByAccessLevel((short) 1, (short) 0);
+        List<User> listOfUsers = userService.getAllUsersByAccessLevel("ROLE_ADMIN", (short) 0);
         if (listOfUsers == null || listOfUsers.isEmpty()) {
             logger.info("no admins found");
         }
@@ -68,7 +68,7 @@ public class UserController {
     public List<User> getAllDrivers() {
         logger.info("getting all drivers");
 
-        List<User> listOfUsers = userService.getAllUsersByAccessLevel((short) 2, (short) 0);
+        List<User> listOfUsers = userService.getAllUsersByAccessLevel("ROLE_DRIVER", (short) 0);
         if (listOfUsers == null || listOfUsers.isEmpty()) {
             logger.info("no drivers found");
         }
@@ -82,7 +82,7 @@ public class UserController {
     public List<User> getAllTravelers() {
         logger.info("getting all travelers");
 
-        List<User> listOfUsers = userService.getAllUsersByAccessLevel((short) 3, (short) 0);
+        List<User> listOfUsers = userService.getAllUsersByAccessLevel("ROLE_TRAVELER", (short) 0);
         if (listOfUsers == null || listOfUsers.isEmpty()) {
             logger.info("no traveller found");
         }
@@ -96,7 +96,7 @@ public class UserController {
     public List<User> getAllSuperAdmins() {
         logger.info("getting all superAdmins");
 
-        List<User> listOfUsers = userService.getAllUsersByAccessLevel((short) 0, (short) 0);
+        List<User> listOfUsers = userService.getAllUsersByAccessLevel("ROLE_SADMIN", (short) 0);
         if (listOfUsers == null || listOfUsers.isEmpty()) {
             logger.info("no superAdmin found");
         }
@@ -147,7 +147,6 @@ public class UserController {
     }
 
     //add
-
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public void add(@RequestBody User user) {
@@ -162,4 +161,15 @@ public class UserController {
     public void delete2(@PathVariable("id") int id) {
         userService.delete2(id);
     }
+
+    //findOne by username
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/findByUserName/{userName}", method = RequestMethod.GET)
+    public User findByUserName(@PathVariable String userName) {
+        logger.info("getting user with id :" + userName);
+        return userService.findByUserName(userName);
+    }
+
+    
 }
