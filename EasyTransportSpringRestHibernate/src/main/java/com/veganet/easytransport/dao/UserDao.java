@@ -43,6 +43,7 @@ public class UserDao extends AbstractHibernateDao<User> {
     public User add(User user) {
         Session session = this.sessionFactory.getCurrentSession();
         user.setIsdeleted((short) 0);
+        user.setStatus((short) 1);
         session.persist(user);
         return user;
     }
