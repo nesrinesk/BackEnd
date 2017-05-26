@@ -9,15 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +22,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -73,6 +66,9 @@ public class User implements Serializable {
 
     @Column(name = "ACCESS_LEVEL")
     private String accessLevel;
+    
+    @Column(name = "STATUS")
+    private Short status;
     
     @Size(max = 254)
     @Column(name = "FIRST_NAME")
@@ -210,6 +206,14 @@ public class User implements Serializable {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public Short getStatus() {
+        return status;
+    }
+
+    public void setStatus(Short status) {
+        this.status = status;
     }
 
     public String getAddress() {
