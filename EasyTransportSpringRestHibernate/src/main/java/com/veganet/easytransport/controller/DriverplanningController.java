@@ -110,15 +110,26 @@ public class DriverplanningController {
         List<Driverplanning> list = driverplanningService.getAllByDistinctUser();
         return list;
     }
+
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getOneByUser/{id}", method = RequestMethod.GET)
     public List<Driverplanning> getOneByUser(@PathVariable int id) {
         logger.info("getting transport with id :" + id);
 
-        List<Driverplanning> list1 = driverplanningService.getOneByUser( id);
+        List<Driverplanning> list1 = driverplanningService.getOneByUser(id);
 
         return list1;
     }
 
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllByDate", method = RequestMethod.GET)
+    public List<Driverplanning> getAllByDate() {
+        logger.info("getAllByDate");
+
+        List<Driverplanning> list1 = driverplanningService.getAllByDate();
+
+        return list1;
+    }
 }
