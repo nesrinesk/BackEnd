@@ -7,6 +7,7 @@ package com.veganet.easytransport.service;
 
 import com.veganet.easytransport.dao.DriverplanningDao;
 import com.veganet.easytransport.entities.Driverplanning;
+import com.veganet.easytransport.entities.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,4 +62,10 @@ public class DriverplanningService {
     public List<Driverplanning> getOneByUser(int id) {
         return driverplanningDao.getOneByUser(id);
     }
+    
+    @Transactional
+    public List<Driverplanning> getAllByDate() {
+        return driverplanningDao.getAllByDate();
+    }
+
 }
