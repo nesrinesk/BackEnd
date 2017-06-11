@@ -67,4 +67,5 @@ public class StationDao extends AbstractHibernateDao<Station> {
                 .setParameter("isdeleted", isdeleted).list();
         return list;
     }
+    
 }
