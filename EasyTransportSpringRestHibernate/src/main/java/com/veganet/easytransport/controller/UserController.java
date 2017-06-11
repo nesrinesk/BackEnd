@@ -8,23 +8,25 @@ package com.veganet.easytransport.controller;
 import com.veganet.easytransport.entities.User;
 import com.veganet.easytransport.service.UserService;
 import java.util.List;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatus;
 
 /**
  *
  * @author asus
  */
-@CrossOrigin(origins = "http://127.0.0.1:3000")
+//@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 4800, allowCredentials = "false")
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
@@ -32,6 +34,8 @@ public class UserController {
     private static final org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger(UserController.class);
     @Autowired
     UserService userService;
+
+    private JavaMailSender mailSender;
 
     //all users
     @Produces(MediaType.APPLICATION_JSON)
@@ -154,6 +158,31 @@ public class UserController {
 
         userService.add(user);
 
+        String status = null;
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom("Administrator");
+            helper.setTo(user.getEmail());
+            helper.setSubject("Registration confirmation");
+
+            String text = "Thank you for your registration. Your login details are:<br />"
+                    + "username:<b>" + user.getUserName() + "</b><br />"
+                    + "password:<b>" + user.getPassword() + "</b>";
+
+            helper.setText(text, true);
+            mailSender.send(message);
+            status = "Confirmation email is sent to your address (" + user.getEmail() + ")";
+        } catch (MessagingException e) {
+            status = "There was an error in email sending. Please check your email address: " + user.getEmail();
+        }
+
+    }
+
+    @Autowired
+    public void setMailSender(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
     }
 
 //delete setting isdeleted = 1
@@ -171,5 +200,4 @@ public class UserController {
         return userService.findByUserName(userName);
     }
 
-    
 }
