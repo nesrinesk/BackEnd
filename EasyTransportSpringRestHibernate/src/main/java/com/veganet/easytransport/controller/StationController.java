@@ -81,8 +81,7 @@ public class StationController {
     public void deleteStation(@PathVariable("id") int id) {
         stationService.deleteById(id);
     }
-    
-    
+
     //not deleted users
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -96,7 +95,9 @@ public class StationController {
         }
         return list;
     }
+
     //add
+
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void add(@RequestBody Station line) {
@@ -105,16 +106,14 @@ public class StationController {
         stationService.add(line);
 
     }
-    
-//delete setting isdeleted = 1
 
+//delete setting isdeleted = 1
     @RequestMapping(value = "/delete2/{id}", method = RequestMethod.POST, headers = "Accept=application/json")
     public void delete2(@PathVariable("id") int id) {
         stationService.delete2(id);
     }
-    
+
     //trains
-   
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getTrainStations", method = RequestMethod.GET)
@@ -127,10 +126,9 @@ public class StationController {
         }
         return list;
     }
-    
-    
+
     //bus
-     @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getBusStop", method = RequestMethod.GET)
     public List<Station> getBusStop() {
@@ -142,4 +140,6 @@ public class StationController {
         }
         return list;
     }
+
+   
 }
