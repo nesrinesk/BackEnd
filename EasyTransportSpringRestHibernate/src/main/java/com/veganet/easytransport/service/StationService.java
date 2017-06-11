@@ -72,4 +72,6 @@ public class StationService {
     public List<Station> getAllByType(short type, short isdeleted) {
         return stationDao.getAllByType(type, isdeleted);
     }
+     
+    
 }
