@@ -6,6 +6,9 @@
 package com.veganet.easytransport.dao;
 
 import com.veganet.easytransport.entities.Driverplanning;
+import com.veganet.easytransport.entities.Journey;
+import com.veganet.easytransport.entities.Station;
+import com.veganet.easytransport.entities.Transport;
 import com.veganet.easytransport.entities.User;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +42,17 @@ public class DriverplanningDao extends AbstractHibernateDao<Driverplanning> {
         setClazz(Driverplanning.class);
     }
 
+    public List<Driverplanning> getAllByDate() {
+        Session session = this.sessionFactory.getCurrentSession();
+        //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = new Date();
+        //String dateNow = dateFormat.format(date);
+        List<Driverplanning> list = session.createQuery("SELECT u FROM Driverplanning u WHERE u.date >= :date order by u.date asc")
+                .setParameter("date", date)
+                .list();
+        return list;
+    }
+
     public void add(Driverplanning object) {
         DateFormat formatter;
 
@@ -45,7 +61,7 @@ public class DriverplanningDao extends AbstractHibernateDao<Driverplanning> {
         List<Date> dates = new ArrayList<Date>();
         Date startDate = object.getFrom();
         Date endDate = object.getTo();
-        long interval = 24 * 1000 * 60 * 60*7; // 1 hour in millis
+        long interval = 24 * 1000 * 60 * 60 * 7; // 1 hour in millis
         long endTime = endDate.getTime(); // create your endtime here, possibly using Calendar or Date
         long curTime = startDate.getTime();
         while (curTime <= endTime) {
@@ -79,28 +95,100 @@ public class DriverplanningDao extends AbstractHibernateDao<Driverplanning> {
                 .setParameter("userId", userId).list();
         return list;
     }
-    
-     public List<Driverplanning> getAllByDistinctUser() {
+
+    public List<Driverplanning> getAllByDistinctUser() {
         Session session = this.sessionFactory.getCurrentSession();
         List<Driverplanning> list = session.createQuery("SELECT DISTINCT userId FROM Driverplanning r")
                 .list();
         return list;
     }
-     
-     public List<Driverplanning> getOneByUser(int id) {
+
+    public List<Driverplanning> getOneByUser(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         User userId = (User) session.get(User.class, id);
-        List<Driverplanning> list =  session.createQuery("SELECT r FROM Driverplanning r WHERE r.userId = :userId")
+        List<Driverplanning> list = session.createQuery("SELECT r FROM Driverplanning r WHERE r.userId = :userId")
                 .setParameter("userId", userId).list();
         return list;
     }
-     /*
-      public Relatedto getlaststation(short tag, int id) {
+
+    public List<Driverplanning> search(String stationStart, String stationEnd, Date date, Date hour) {
+        Station stationStartOb;
+        Station stationEndOb;
+        //Date hourD;
+        stationStartOb = findByName(stationStart);
+        stationEndOb = findByName(stationEnd);
+
+        System.out.println("stationStartOb" + stationStartOb.getStationName());
         Session session = this.sessionFactory.getCurrentSession();
-        Line lineId = (Line) session.get(Line.class, id);
-        Relatedto object = (Relatedto) session.createQuery("SELECT r FROM Relatedto r WHERE r.tag = :tag and r.lineId = :lineId ")
-                .setParameter("tag", tag).setParameter("lineId", lineId).uniqueResult();
-        return object;
+        Journey journey;
+
+        
+        List<Journey> listJ = session.createQuery("SELECT j FROM Journey j WHERE j.stationStartId = :stationStartOb "
+                + "and j.stationEndId = :stationEndOb and TIME(j.dateStart) >= :hour ")
+                .setParameter("stationStartOb", stationStartOb)
+                .setParameter("stationEndOb", stationEndOb)
+                .setParameter("hour", hour)
+                .list();
+        journey = listJ.get(0);
+        List<Driverplanning> list = session.createQuery("SELECT j FROM Driverplanning j "
+                + "WHERE j.journeyId = :journey and j.date = :date")
+                .setParameter("journey", journey)
+                .setParameter("date", date)
+                .list();
+
+        return list;
     }
-     */
+
+    public Station findByName(String stationName) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Station rs;
+        List<Station> list = session.createQuery("SELECT s FROM Station s WHERE s.stationName = :stationName")
+                .setParameter("stationName", stationName).list();
+        rs = list.get(0);
+        return rs;
+    }
+    
+     public Transport findTransportByName(String transportName) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Transport rs;
+        List<Transport> list = session.createQuery("SELECT s FROM Transport s WHERE s.name = :transportName")
+                .setParameter("transportName", transportName).list();
+        rs = list.get(0);
+        return rs;
+    }
+    
+     
+     public List<Driverplanning> searchByTrain(String transportName,Date date) {
+        Transport transportId;
+       
+        transportId = findTransportByName(transportName);
+
+        Session session = this.sessionFactory.getCurrentSession();
+        Session session1 = this.sessionFactory.getCurrentSession();
+        Journey journey;
+         List<Driverplanning> listF = null;
+        
+        List<Journey> listJ = session.createQuery("SELECT j FROM Journey j WHERE j.transportId = :transportId")
+                .setParameter("transportId", transportId)
+               
+                .list();
+            //for (int j = 0; j < listJ.size(); j++) {
+                 Journey get = listJ.get(0);
+                 List<Driverplanning> list = session1.createQuery("SELECT j FROM Driverplanning j "
+                + "WHERE j.journeyId = :get and j.date = :date")
+                .setParameter("get", get)
+                .setParameter("date", date)
+                .list();
+                /* for (int i = 0; i < list.size(); i++) {
+                     Driverplanning  get1= list.get(i);
+                     listF.add(get1);
+                 }
+                  
+                 
+            }
+         
+        
+return listF;*/  
+        return list;
+    }
 }
