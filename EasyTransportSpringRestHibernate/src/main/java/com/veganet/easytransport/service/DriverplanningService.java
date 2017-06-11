@@ -7,7 +7,9 @@ package com.veganet.easytransport.service;
 
 import com.veganet.easytransport.dao.DriverplanningDao;
 import com.veganet.easytransport.entities.Driverplanning;
+import com.veganet.easytransport.entities.Station;
 import com.veganet.easytransport.entities.User;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,14 +60,30 @@ public class DriverplanningService {
     public List<Driverplanning> getAllByDistinctUser() {
         return driverplanningDao.getAllByDistinctUser();
     }
+
     @Transactional
     public List<Driverplanning> getOneByUser(int id) {
         return driverplanningDao.getOneByUser(id);
     }
-    
+
     @Transactional
     public List<Driverplanning> getAllByDate() {
         return driverplanningDao.getAllByDate();
+    }
+
+    @Transactional
+    public List<Driverplanning> search(String stationStart, String stationEnd, Date date, Date hour) {
+        return driverplanningDao.search(stationStart, stationEnd, date, hour);
+    }
+
+    @Transactional
+    public Station findByName(String stationName) {
+        return driverplanningDao.findByName(stationName);
+    }
+
+    @Transactional
+    public List<Driverplanning> searchByTrain(String transportName, Date date) {
+        return driverplanningDao.searchByTrain(transportName, date);
     }
 
 }
