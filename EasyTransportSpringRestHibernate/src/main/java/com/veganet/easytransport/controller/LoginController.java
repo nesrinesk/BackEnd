@@ -20,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author asus
  */
+//@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 4800, allowCredentials = "false")
+
 @RestController
 @RequestMapping(value = "/security")
 public class LoginController {
@@ -47,7 +50,6 @@ public class LoginController {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/login/{username}/{password}", method = RequestMethod.GET)
     private void doAutoLogin(@PathVariable String username, @PathVariable String password, HttpServletRequest request) {
-
         try {
             // Must be called from request filtered by Spring Security, otherwise SecurityContextHolder is not updated
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
@@ -56,13 +58,14 @@ public class LoginController {
             logger.info("Logging in with [{}]" + authentication.getPrincipal());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             connectedUserName = username;
+           
+           
             logger.info("connectedUserName " + connectedUserName);
 
         } catch (Exception e) {
             SecurityContextHolder.getContext().setAuthentication(null);
             logger.error("Failure in autoLogin", e);
         }
-
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
