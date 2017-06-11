@@ -6,6 +6,7 @@
 package com.veganet.easytransport.controller;
 
 import com.veganet.easytransport.entities.Driverplanning;
+import com.veganet.easytransport.entities.Station;
 import com.veganet.easytransport.service.DriverplanningService;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -129,6 +131,29 @@ public class DriverplanningController {
         logger.info("getAllByDate");
 
         List<Driverplanning> list1 = driverplanningService.getAllByDate();
+
+        return list1;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/search/{stationStart}/{stationEnd}/{date}/{hour}", method = RequestMethod.GET)
+    public List<Driverplanning> search(@PathVariable String stationStart, @PathVariable String stationEnd,
+            @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date date, @PathVariable @DateTimeFormat(pattern = "HH:mm:ss") Date hour) {
+        logger.info("search");
+
+        List<Driverplanning> list1 = driverplanningService.search(stationStart, stationEnd, date, hour);
+
+        return list1;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/searchByTrain/{transportName}/{date}", method = RequestMethod.GET)
+    public List<Driverplanning> searchByTrain(@PathVariable String transportName, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date date) {
+        logger.info("searchByTrain");
+
+        List<Driverplanning> list1 = driverplanningService.searchByTrain(transportName, date);
 
         return list1;
     }
