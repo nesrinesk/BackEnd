@@ -49,6 +49,7 @@ com\veganet\easytransport\dao\TransportDao.class
 com\veganet\easytransport\dao\JourneyplanningDao.class
 com\veganet\easytransport\entities\Journeylocalisation.class
 com\veganet\easytransport\entities\Position.class
+com\veganet\easytransport\config\CORSFilter.class
 com\veganet\easytransport\dao\LineDao.class
 com\veganet\easytransport\service\DriverplanningService.class
 com\veganet\easytransport\dao\PositionDao.class

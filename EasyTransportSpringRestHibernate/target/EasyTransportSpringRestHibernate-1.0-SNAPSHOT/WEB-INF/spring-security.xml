@@ -9,19 +9,31 @@
     
     <!-- <context:component-scan base-package="com.veganet.easytransport" /> -->
 
-    <http  use-expressions="true" auto-config="true">     
+    <http  use-expressions="true" auto-config="true" >     
         <!-- Interceptor urls -->
         <intercept-url pattern="/users/getAllUsers" access="hasRole('ROLE_SADMIN')"/>
-        <intercept-url pattern="/stations/**" access="hasRole('ROLE_DRIVER')"/>
+        <intercept-url pattern="/users/getUser/**" access="hasAnyRole('ROLE_SADMIN', 'ROLE_ADMIN', 'ROLE_DRIVER')"/>
+        <intercept-url pattern="/users/updateUser/**" access="hasAnyRole('ROLE_SADMIN', 'ROLE_DRIVER')"/>
+        <intercept-url pattern="/users/deleteUser/**" access="hasAnyRole('ROLE_SADMIN', 'ROLE_DRIVER')"/>
+        <intercept-url pattern="/users/deleteUser2/**" access="hasAnyRole('ROLE_SADMIN', 'ROLE_DRIVER')"/>
+        <intercept-url pattern="/users/getUsers" access="hasRole('ROLE_SADMIN')"/>
+        <intercept-url pattern="/users/getAllSuperAdmins" access="hasRole('ROLE_SADMIN')"/>
+        <intercept-url pattern="/users/getAllAdmins" access="hasRole('ROLE_SADMIN')"/>
+        <intercept-url pattern="/users/getAllDrivers" access="hasAnyRole('ROLE_SADMIN', 'ROLE_ADMIN', 'ROLE_DRIVER')"/>
+        <intercept-url pattern="/users/getAllTravelers" access="hasRole('ROLE_SADMIN')"/>
+
         <intercept-url pattern="/users/addUser" access="permitAll"/>
-        <intercept-url pattern="/users/getUser/**" access="hasRole('ROLE_DRIVER')"/>
 
-        <intercept-url pattern="/transports/**" access="permitAll"/>
- <!--            login-page="/users/login/{username}/{password}"
- -->
+        <intercept-url pattern="/stations/**" access="hasAnyRole('ROLE_SADMIN', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/transports/**" access="hasAnyRole('ROLE_SADMIN', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/journeys/**" access="hasAnyRole('ROLE_SADMIN', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/lines/**" access="hasAnyRole('ROLE_SADMIN', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/favorites/**" access="hasAnyRole('ROLE_SADMIN', 'ROLE_TRAVELER')"/>
+
+        <intercept-url pattern="/security/**" access="permitAll"/>
+ 
         <form-login
-         
-
+        
             default-target-url="/users/getAllUsers"
             authentication-failure-url="/login" always-use-default-target="true" 
             username-parameter="username"
@@ -33,6 +45,7 @@
         <!-- Logout -->
         <logout logout-success-url="/logout" />
     </http>
+
 
 
     <authentication-manager alias="authenticationManager">
