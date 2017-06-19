@@ -124,6 +124,7 @@ public class DriverplanningController {
         return list1;
     }
 
+    //get programmed journeys from today
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllByDate", method = RequestMethod.GET)
@@ -157,4 +158,23 @@ public class DriverplanningController {
 
         return list1;
     }
+    
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/searchStations/{stationStart}/{stationEnd}", method = RequestMethod.GET)
+     public List<Station> searchStations(@PathVariable String stationStart,@PathVariable String stationEnd) {
+          List<Station> list1 = driverplanningService.searchStations(stationStart, stationEnd);
+
+        return list1;
+     }
+     
+     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/searchByStationName/{stationName}", method = RequestMethod.GET)
+     public List<Driverplanning> searchByStationName(@PathVariable String stationName) {
+              List<Driverplanning> list1 = driverplanningService.searchByStationName(stationName);
+
+        return list1;
+     }
+     
 }
