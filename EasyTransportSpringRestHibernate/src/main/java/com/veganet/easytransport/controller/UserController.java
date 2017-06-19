@@ -200,4 +200,36 @@ public class UserController {
         return userService.findByUserName(userName);
     }
 
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/passwordForgotten/{userName}", method = RequestMethod.GET)
+    public User passwordForgotten(@PathVariable String userName) {
+
+        logger.info("psw  {}");
+
+        User user = userService.passwordForgotten(userName);
+        
+        String status = null;
+        //logger.info("getting user with psw :" + user.getPassword()+" username"+user.getUserName());
+ try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom("Administrator");
+            helper.setTo(user.getEmail());
+            helper.setSubject("Réinitialisation de votre mot de passe");
+
+            String text = "Mot de passe réinitialisé. Vos détails de connexion sont:<br />"
+                    + "Identifiant:<b>" + user.getUserName() + "</b><br />"
+                    + "Mot de passe:<b>" + user.getPassword() + "</b>";
+
+            helper.setText(text, true);
+            mailSender.send(message);
+            status = "Confirmation email is sent to your address (" + user.getEmail() + ")";
+        } catch (MessagingException e) {
+            status = "There was an error in email sending. Please check your email address: " + user.getEmail();
+        }
+     return user;
+
+    }
+
 }
