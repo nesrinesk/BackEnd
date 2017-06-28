@@ -7,73 +7,25 @@ package com.veganet.easytransport.dao;
 
 import com.veganet.easytransport.entities.User;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author asus
  */
-@Repository("userDao")
-public class UserDao extends AbstractHibernateDao<User> {
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    public void setSessionFactory(SessionFactory sf) {
-        this.sessionFactory = sf;
-    }
-
-    public UserDao() {
-        setClazz(User.class);
-    }
-
-    // users not deleted (isdeleted=0) by access level 
-    public List<User> getAllUsersByAccessLevel(String accessLevel, short isdeleted) {
-        Session session = this.sessionFactory.getCurrentSession();
-        List<User> userList = session.createQuery("SELECT u FROM User u WHERE u.isdeleted = :isdeleted and u.accessLevel = :accessLevel ")
-                .setParameter("isdeleted", isdeleted)
-                .setParameter("accessLevel", accessLevel).list();
-        return userList;
-    }
-
-    //add+ set isdeleted =0
-    public User add(User user) {
-        Session session = this.sessionFactory.getCurrentSession();
-        user.setIsdeleted((short) 0);
-        user.setStatus((short) 1);
-        session.persist(user);
-        return user;
-    }
-
-    //users not deleted (having isDeleted=0)
-    public List<User> getUsers(short isdeleted) {
-        Session session = this.sessionFactory.getCurrentSession();
-        List<User> userList = session.createQuery("SELECT u FROM User u WHERE u.isdeleted = :isdeleted").setParameter("isdeleted", isdeleted).list();
-        return userList;
-    }
-
-    // set isdeleted=1
-    public void delete2(int id) {
-        Session session = this.sessionFactory.getCurrentSession();
-        User user = (User) session.get(User.class, id);
-        user.setIsdeleted((short) 1);
-
-    }
-
-    //update 
-    public void update2(User object) {
-        Session session = this.sessionFactory.getCurrentSession();
-
-        session.update(object);
-    }
+public interface UserDao {
+    public List<User> getAllUsersByAccessLevel(String accessLevel, short isdeleted);
+    public User add(User user);
+    public List<User> getUsers(short isdeleted);
+    public void delete2(int id);
+    public void update2(User object);
+    public User findByUserName(String userName);
+    public User passwordForgotten(String userName);
     
-     public User findByUserName(String userName){
-        Session session = this.sessionFactory.getCurrentSession();
-        User object = (User) session.createQuery("SELECT u FROM User u WHERE u.userName = :userName")
-                .setParameter("userName", userName).uniqueResult();
-        return object;
-    }
-}
+    
+    
+    
+            
+            
+            }
+
+
