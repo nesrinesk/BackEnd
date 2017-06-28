@@ -6,189 +6,36 @@
 package com.veganet.easytransport.dao;
 
 import com.veganet.easytransport.entities.Driverplanning;
-import com.veganet.easytransport.entities.Journey;
 import com.veganet.easytransport.entities.Station;
 import com.veganet.easytransport.entities.Transport;
-import com.veganet.easytransport.entities.User;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author asus
  */
-@Repository("driverplanningDao")
+public interface DriverplanningDao {
 
-public class DriverplanningDao extends AbstractHibernateDao<Driverplanning> {
+    public List<Driverplanning> getAllByDate();
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    public void add(Driverplanning object);
 
-    @Override
-    public void setSessionFactory(SessionFactory sf) {
-        this.sessionFactory = sf;
-    }
+    public List<Driverplanning> getAllByUser(int id);
 
-    public DriverplanningDao() {
-        setClazz(Driverplanning.class);
-    }
+    public List<Driverplanning> getAllByDistinctUser();
 
-    public List<Driverplanning> getAllByDate() {
-        Session session = this.sessionFactory.getCurrentSession();
-        //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Date date = new Date();
-        //String dateNow = dateFormat.format(date);
-        List<Driverplanning> list = session.createQuery("SELECT u FROM Driverplanning u WHERE u.date >= :date order by u.date asc")
-                .setParameter("date", date)
-                .list();
-        return list;
-    }
+    public List<Driverplanning> getOneByUser(int id);
 
-    public void add(Driverplanning object) {
-        DateFormat formatter;
+    public List<Driverplanning> search(String stationStart, String stationEnd, Date date, Date hour);
 
-        Session session = this.sessionFactory.getCurrentSession();
+    public Station findStationByName(String stationName);
 
-        List<Date> dates = new ArrayList<Date>();
-        Date startDate = object.getFrom();
-        Date endDate = object.getTo();
-        long interval = 24 * 1000 * 60 * 60 * 7; // 1 hour in millis
-        long endTime = endDate.getTime(); // create your endtime here, possibly using Calendar or Date
-        long curTime = startDate.getTime();
-        while (curTime <= endTime) {
-            dates.add(new Date(curTime));
-            curTime += interval;
-        }
-        formatter = new SimpleDateFormat("dd/MM/yyyy");
-        int i = 0;
-        for (Date date : dates) {
-            i++;
-            Driverplanning ob = new Driverplanning();
-            ob.setJourneyId(object.getJourneyId());
-            ob.setUserId(object.getUserId());
-            ob.setDay(object.getDay());
-            Date lDate = (Date) date;
-            ob.setDate(lDate);
-            System.out.println(" getdate ..." + ob.getDate());
-            String ds = formatter.format(lDate);
-            System.out.println(" Date is ..." + ds);
-            ob.setPlanningId(null);
-            create(ob);
+    public Transport findTransportByName(String transportName);
 
-        }
+    public List<Station> searchStations(String stationStart, String stationEnd);
 
-    }
+    public List<Driverplanning> searchByTrain(String transportName, Date date);
 
-    public List<Driverplanning> getAllByUser(int id) {
-        Session session = this.sessionFactory.getCurrentSession();
-        User userId = (User) session.get(User.class, id);
-        List<Driverplanning> list = session.createQuery("SELECT r FROM Driverplanning r WHERE r.userId = :userId")
-                .setParameter("userId", userId).list();
-        return list;
-    }
-
-    public List<Driverplanning> getAllByDistinctUser() {
-        Session session = this.sessionFactory.getCurrentSession();
-        List<Driverplanning> list = session.createQuery("SELECT DISTINCT userId FROM Driverplanning r")
-                .list();
-        return list;
-    }
-
-    public List<Driverplanning> getOneByUser(int id) {
-        Session session = this.sessionFactory.getCurrentSession();
-        User userId = (User) session.get(User.class, id);
-        List<Driverplanning> list = session.createQuery("SELECT r FROM Driverplanning r WHERE r.userId = :userId")
-                .setParameter("userId", userId).list();
-        return list;
-    }
-
-    public List<Driverplanning> search(String stationStart, String stationEnd, Date date, Date hour) {
-        Station stationStartOb;
-        Station stationEndOb;
-        //Date hourD;
-        stationStartOb = findByName(stationStart);
-        stationEndOb = findByName(stationEnd);
-
-        System.out.println("stationStartOb" + stationStartOb.getStationName());
-        Session session = this.sessionFactory.getCurrentSession();
-        Journey journey;
-
-        
-        List<Journey> listJ = session.createQuery("SELECT j FROM Journey j WHERE j.stationStartId = :stationStartOb "
-                + "and j.stationEndId = :stationEndOb and TIME(j.dateStart) >= :hour ")
-                .setParameter("stationStartOb", stationStartOb)
-                .setParameter("stationEndOb", stationEndOb)
-                .setParameter("hour", hour)
-                .list();
-        journey = listJ.get(0);
-        List<Driverplanning> list = session.createQuery("SELECT j FROM Driverplanning j "
-                + "WHERE j.journeyId = :journey and j.date = :date")
-                .setParameter("journey", journey)
-                .setParameter("date", date)
-                .list();
-
-        return list;
-    }
-
-    public Station findByName(String stationName) {
-        Session session = this.sessionFactory.getCurrentSession();
-        Station rs;
-        List<Station> list = session.createQuery("SELECT s FROM Station s WHERE s.stationName = :stationName")
-                .setParameter("stationName", stationName).list();
-        rs = list.get(0);
-        return rs;
-    }
-    
-     public Transport findTransportByName(String transportName) {
-        Session session = this.sessionFactory.getCurrentSession();
-        Transport rs;
-        List<Transport> list = session.createQuery("SELECT s FROM Transport s WHERE s.name = :transportName")
-                .setParameter("transportName", transportName).list();
-        rs = list.get(0);
-        return rs;
-    }
-    
-     
-     public List<Driverplanning> searchByTrain(String transportName,Date date) {
-        Transport transportId;
-       
-        transportId = findTransportByName(transportName);
-
-        Session session = this.sessionFactory.getCurrentSession();
-        Session session1 = this.sessionFactory.getCurrentSession();
-        Journey journey;
-         List<Driverplanning> listF = null;
-        
-        List<Journey> listJ = session.createQuery("SELECT j FROM Journey j WHERE j.transportId = :transportId")
-                .setParameter("transportId", transportId)
-               
-                .list();
-            //for (int j = 0; j < listJ.size(); j++) {
-                 Journey get = listJ.get(0);
-                 List<Driverplanning> list = session1.createQuery("SELECT j FROM Driverplanning j "
-                + "WHERE j.journeyId = :get and j.date = :date")
-                .setParameter("get", get)
-                .setParameter("date", date)
-                .list();
-                /* for (int i = 0; i < list.size(); i++) {
-                     Driverplanning  get1= list.get(i);
-                     listF.add(get1);
-                 }
-                  
-                 
-            }
-         
-        
-return listF;*/  
-        return list;
-    }
+    public List<Driverplanning> searchByStationName(String stationName);
 }
