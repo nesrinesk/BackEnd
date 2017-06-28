@@ -52,7 +52,6 @@ public class Driverplanning implements Serializable {
     private Date date;
     @Column(name = "TYPE")
     private Short type;
-
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     @ManyToOne
     private User userId;
