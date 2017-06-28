@@ -52,13 +52,13 @@ public class DriverplanningService {
     }
 
     @Transactional
-    public List<Driverplanning> getAllByUser(int id) {
-        return driverplanningDao.getAllByUser(id);
+    public List<Driverplanning> getAllByUser(int id,Short type) {
+        return driverplanningDao.getAllByUser(id,type);
     }
 
     @Transactional
-    public List<Driverplanning> getAllByDistinctUser() {
-        return driverplanningDao.getAllByDistinctUser();
+    public List<Driverplanning> getAllByDistinctUser(Short type) {
+        return driverplanningDao.getAllByDistinctUser(type);
     }
 
     @Transactional
@@ -67,8 +67,8 @@ public class DriverplanningService {
     }
 
     @Transactional
-    public List<Driverplanning> getAllByDate() {
-        return driverplanningDao.getAllByDate();
+    public List<Driverplanning> getAllByDate(Short type) {
+        return driverplanningDao.getAllByDate( type);
     }
 
     @Transactional
