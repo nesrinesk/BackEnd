@@ -93,23 +93,45 @@ public class DriverplanningController {
 
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getAllByUser/{id}", method = RequestMethod.GET)
-    public List<Driverplanning> getAllByUser(@PathVariable int id) {
+    @RequestMapping(value = "/getAllByUserBus/{id}", method = RequestMethod.GET)
+    public List<Driverplanning> getAllByUserBus(@PathVariable int id) {
         //logger.info("getting transport with id :" + id);
 
-        List<Driverplanning> list = driverplanningService.getAllByUser(id);
+        List<Driverplanning> list = driverplanningService.getAllByUser(id, (short) 1);
+
+        return list;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllByUserTrain/{id}", method = RequestMethod.GET)
+    public List<Driverplanning> getAllByUserTrain(@PathVariable int id) {
+        //logger.info("getting transport with id :" + id);
+
+        List<Driverplanning> list = driverplanningService.getAllByUser(id, (short) 0);
 
         return list;
     }
 
     //    public List<Driverplanning> getAllByDistinctUser(int id) {
+
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getAllByDistinctUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAllByDistinctUserBus", method = RequestMethod.GET)
     public List<Driverplanning> getAllByDistinctUser() {
         //logger.info("getting transport with id :" + id);
 
-        List<Driverplanning> list = driverplanningService.getAllByDistinctUser();
+        List<Driverplanning> list = driverplanningService.getAllByDistinctUser((short) 1);
+        return list;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllByDistinctUserTrain", method = RequestMethod.GET)
+    public List<Driverplanning> getAllByDistinctUserTrain() {
+        //logger.info("getting transport with id :" + id);
+
+        List<Driverplanning> list = driverplanningService.getAllByDistinctUser((short) 0);
         return list;
     }
 
@@ -127,11 +149,22 @@ public class DriverplanningController {
     //get programmed journeys from today
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getAllByDate", method = RequestMethod.GET)
-    public List<Driverplanning> getAllByDate() {
-        logger.info("getAllByDate");
+    @RequestMapping(value = "/getAllByDateBus", method = RequestMethod.GET)
+    public List<Driverplanning> getAllByDateBus() {
+        logger.info("getAllByDateBus");
 
-        List<Driverplanning> list1 = driverplanningService.getAllByDate();
+        List<Driverplanning> list1 = driverplanningService.getAllByDate((short) 1);
+
+        return list1;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllByDateTrain", method = RequestMethod.GET)
+    public List<Driverplanning> getAllByDateTrain() {
+        logger.info("getAllByDateTrain");
+
+        List<Driverplanning> list1 = driverplanningService.getAllByDate((short) 0);
 
         return list1;
     }
@@ -158,23 +191,23 @@ public class DriverplanningController {
 
         return list1;
     }
-    
+
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/searchStations/{stationStart}/{stationEnd}", method = RequestMethod.GET)
-     public List<Station> searchStations(@PathVariable String stationStart,@PathVariable String stationEnd) {
-          List<Station> list1 = driverplanningService.searchStations(stationStart, stationEnd);
+    public List<Station> searchStations(@PathVariable String stationStart, @PathVariable String stationEnd) {
+        List<Station> list1 = driverplanningService.searchStations(stationStart, stationEnd);
 
         return list1;
-     }
-     
-     @Produces(MediaType.APPLICATION_JSON)
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/searchByStationName/{stationName}", method = RequestMethod.GET)
-     public List<Driverplanning> searchByStationName(@PathVariable String stationName) {
-              List<Driverplanning> list1 = driverplanningService.searchByStationName(stationName);
+    public List<Driverplanning> searchByStationName(@PathVariable String stationName) {
+        List<Driverplanning> list1 = driverplanningService.searchByStationName(stationName);
 
         return list1;
-     }
-     
+    }
+
 }
