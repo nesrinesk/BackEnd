@@ -43,13 +43,13 @@ public class DriverplanningDaoImpl extends AbstractHibernateDao<Driverplanning> 
         setClazz(Driverplanning.class);
     }
 
-    public List<Driverplanning> getAllByDate() {
+    public List<Driverplanning> getAllByDate(Short type) {
         Session session = this.sessionFactory.getCurrentSession();
         //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
         //String dateNow = dateFormat.format(date);
-        List<Driverplanning> list = session.createQuery("SELECT u FROM Driverplanning u WHERE u.date >= :date order by u.date asc")
-                .setParameter("date", date)
+        List<Driverplanning> list = session.createQuery("SELECT u FROM Driverplanning u WHERE u.type = :type and u.date >= :date order by u.date asc")
+                .setParameter("date", date).setParameter("type", type)
                 .list();
         return list;
     }
