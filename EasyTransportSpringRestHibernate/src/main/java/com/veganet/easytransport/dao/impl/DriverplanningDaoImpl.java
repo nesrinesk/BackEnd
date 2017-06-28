@@ -74,6 +74,7 @@ public class DriverplanningDaoImpl extends AbstractHibernateDao<Driverplanning> 
         for (Date date : dates) {
             i++;
             Driverplanning ob = new Driverplanning();
+            ob.setType(object.getType());
             ob.setJourneyId(object.getJourneyId());
             ob.setUserId(object.getUserId());
             ob.setDay(object.getDay());
@@ -89,18 +90,20 @@ public class DriverplanningDaoImpl extends AbstractHibernateDao<Driverplanning> 
 
     }
 
-    public List<Driverplanning> getAllByUser(int id) {
+    public List<Driverplanning> getAllByUser(int id,Short type) {
         Session session = this.sessionFactory.getCurrentSession();
         User userId = (User) session.get(User.class, id);
-        List<Driverplanning> list = session.createQuery("SELECT r FROM Driverplanning r WHERE r.userId = :userId")
-                .setParameter("userId", userId).list();
+        List<Driverplanning> list = session.createQuery("SELECT r FROM Driverplanning r WHERE r.userId = :userId and r.type = :type")
+                .setParameter("userId", userId).setParameter("type", type).list();
         return list;
     }
 
-    public List<Driverplanning> getAllByDistinctUser() {
+   
+    public List<Driverplanning> getAllByDistinctUser(Short type) {
+         
         Session session = this.sessionFactory.getCurrentSession();
-        List<Driverplanning> list = session.createQuery("SELECT DISTINCT userId FROM Driverplanning r")
-                .list();
+        List<Driverplanning> list = session.createQuery("SELECT DISTINCT userId FROM Driverplanning r WHERE r.type = :type")
+                .setParameter("type", type).list();
         return list;
     }
 
