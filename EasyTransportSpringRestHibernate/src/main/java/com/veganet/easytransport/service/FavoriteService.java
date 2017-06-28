@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.service;
 
-import com.veganet.easytransport.dao.FavoriteDao;
+import com.veganet.easytransport.dao.impl.FavoriteDaoImpl;
 import com.veganet.easytransport.entities.Favorite;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class FavoriteService {
 
     @Autowired
-    FavoriteDao favoriteDao;
+    FavoriteDaoImpl favoriteDao;
 
     @Transactional
     public List<Favorite> findAll() {

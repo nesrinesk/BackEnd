@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.service;
 
-import com.veganet.easytransport.dao.LineDao;
+import com.veganet.easytransport.dao.impl.LineDaoImpl;
 import com.veganet.easytransport.entities.Line;
 import java.math.BigInteger;
 import java.util.List;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LineService {
 
     @Autowired
-    LineDao lineDao;
+    LineDaoImpl lineDao;
 
     @Transactional
     public List<Line> findAll() {

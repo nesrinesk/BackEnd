@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.service;
 
-import com.veganet.easytransport.dao.PositionDao;
+import com.veganet.easytransport.dao.impl.PositionDao;
 import com.veganet.easytransport.entities.Position;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

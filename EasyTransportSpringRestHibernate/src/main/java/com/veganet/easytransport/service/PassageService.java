@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.service;
 
-import com.veganet.easytransport.dao.PassageDao;
+import com.veganet.easytransport.dao.impl.PassageDao;
 import com.veganet.easytransport.entities.Passage;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

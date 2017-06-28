@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.service;
 
-import com.veganet.easytransport.dao.RelatedtoDao;
+import com.veganet.easytransport.dao.impl.RelatedtoDaoImpl;
 import com.veganet.easytransport.entities.Line;
 import com.veganet.easytransport.entities.Relatedto;
 import java.util.List;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RelatedtoService {
 
     @Autowired
-    RelatedtoDao relatedtoDao;
+    RelatedtoDaoImpl relatedtoDao;
 
     @Transactional
     public List<Relatedto> findAll() {

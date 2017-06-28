@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.service;
 
-import com.veganet.easytransport.dao.UserDao;
+import com.veganet.easytransport.dao.impl.UserDaoImpl;
 import com.veganet.easytransport.entities.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     @Autowired
-    UserDao userDao;
+    UserDaoImpl userDao;
 
     @Transactional
     public List<User> getUsers(short isdeleted) {
@@ -68,4 +68,9 @@ public class UserService {
     public User findByUserName(String userName) {
         return userDao.findByUserName(userName);
     }
+    
+    @Transactional
+     public User passwordForgotten(String userName){
+         return userDao.passwordForgotten(userName);
+     }
 }

@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.service;
 
-import com.veganet.easytransport.dao.StationDao;
+import com.veganet.easytransport.dao.impl.StationDaoImpl;
 import com.veganet.easytransport.entities.Station;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class StationService {
 
     @Autowired
-    StationDao stationDao;
+    StationDaoImpl stationDao;
 
     @Transactional
     public List<Station> findAll() {

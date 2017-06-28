@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.service;
 
-import com.veganet.easytransport.dao.AbstractHibernateDao;
+import com.veganet.easytransport.dao.impl.AbstractHibernateDao;
 import java.io.Serializable;
 import java.util.List;
 import org.springframework.stereotype.Service;

@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.service;
 
-import com.veganet.easytransport.dao.DriverplanningDao;
+import com.veganet.easytransport.dao.impl.DriverplanningDaoImpl;
 import com.veganet.easytransport.entities.Driverplanning;
 import com.veganet.easytransport.entities.Station;
 import com.veganet.easytransport.entities.User;
@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DriverplanningService {
 
     @Autowired
-    DriverplanningDao driverplanningDao;
+    DriverplanningDaoImpl driverplanningDao;
 
     @Transactional
     public List<Driverplanning> findAll() {
@@ -78,12 +78,21 @@ public class DriverplanningService {
 
     @Transactional
     public Station findByName(String stationName) {
-        return driverplanningDao.findByName(stationName);
+        return driverplanningDao.findStationByName(stationName);
     }
 
     @Transactional
     public List<Driverplanning> searchByTrain(String transportName, Date date) {
         return driverplanningDao.searchByTrain(transportName, date);
     }
-
+    
+    @Transactional
+     public List<Station> searchStations(String stationStart, String stationEnd) {
+         return driverplanningDao.searchStations(stationStart, stationEnd);
+     }
+     
+     @Transactional
+     public List<Driverplanning> searchByStationName(String stationName) {
+         return driverplanningDao.searchByStationName(stationName);
+     }
 }

@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.service;
 
-import com.veganet.easytransport.dao.JourneyDao;
+import com.veganet.easytransport.dao.impl.JourneyDaoImpl;
 import com.veganet.easytransport.entities.Journey;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class JourneyService {
 
     @Autowired
-    JourneyDao journeyDao;
+    JourneyDaoImpl journeyDao;
 
     @Transactional
     public List<Journey> findAll() {
@@ -70,4 +70,9 @@ public class JourneyService {
     public List<Journey> getAllByType(short type, short isdeleted) {
         return journeyDao.getAllByType(type, isdeleted);
     }
+    
+    @Transactional
+     public String linesOfJourney(int journeyId) {
+         return  journeyDao.linesOfJourney(journeyId);
+     }
 }

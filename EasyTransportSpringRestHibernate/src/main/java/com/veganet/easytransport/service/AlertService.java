@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.service;
 
-import com.veganet.easytransport.dao.AlertDao;
+import com.veganet.easytransport.dao.impl.AlertDaoImpl;
 import com.veganet.easytransport.entities.Alert;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AlertService {
 
     @Autowired
-    AlertDao alertDao;
+    AlertDaoImpl alertDao;
 
     @Transactional
     public List<Alert> findAll() {
