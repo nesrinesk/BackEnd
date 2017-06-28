@@ -50,6 +50,9 @@ public class Driverplanning implements Serializable {
     @Column(name = "DATE")
     @Temporal(TemporalType.DATE)
     private Date date;
+    @Column(name = "TYPE")
+    private Short type;
+
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     @ManyToOne
     private User userId;
@@ -58,11 +61,11 @@ public class Driverplanning implements Serializable {
     private Journey journeyId;
 
     @Transient
-    private Date from ;
-    
+    private Date from;
+
     @Transient
-    private Date to ;
-    
+    private Date to;
+
     public Driverplanning() {
     }
 
@@ -76,6 +79,14 @@ public class Driverplanning implements Serializable {
 
     public void setPlanningId(Integer planningId) {
         this.planningId = planningId;
+    }
+
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
     }
 
     public String getDay() {
