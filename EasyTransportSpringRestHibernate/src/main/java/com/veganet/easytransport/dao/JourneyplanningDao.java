@@ -5,17 +5,10 @@
  */
 package com.veganet.easytransport.dao;
 
-import com.veganet.easytransport.entities.Journeyplanning;
-import org.springframework.stereotype.Repository;
-
 /**
  *
  * @author asus
  */
-@Repository
-public class JourneyplanningDao extends AbstractHibernateDao<Journeyplanning>{
-
-    public JourneyplanningDao() {
-        setClazz(Journeyplanning.class);
-    }
+public interface JourneyplanningDao {
+    
 }
