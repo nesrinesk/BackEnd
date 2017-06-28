@@ -5,21 +5,10 @@
  */
 package com.veganet.easytransport.dao;
 
-import com.veganet.easytransport.entities.Favorite;
-import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 /**
  *
  * @author asus
  */
-@Repository
-public class FavoriteDao  extends AbstractHibernateDao<Favorite>{
-
-    public FavoriteDao() {
-        setClazz(Favorite.class);
-    }
+public interface FavoriteDao {
+    
 }
