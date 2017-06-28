@@ -140,6 +140,12 @@ public class User implements Serializable {
     public User() {
     }
 
+    public User(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    
+    
     public User(Integer userId) {
         this.userId = userId;
     }
