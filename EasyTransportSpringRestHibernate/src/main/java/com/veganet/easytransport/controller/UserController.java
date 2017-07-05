@@ -78,8 +78,34 @@ public class UserController {
         }
         return listOfUsers;
     }
-//travelers
 
+    // public List<User> getDriversByCompany(int id)
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getDriversByCompany/{id}", method = RequestMethod.GET)
+    public List<User> getDriversByCompany(@PathVariable int id) {
+        logger.info("getting all drivers");
+
+        List<User> list = userService.getDriversByCompany(id);
+        if (list == null || list.isEmpty()) {
+            logger.info("no drivers found");
+        }
+        return list;
+    }
+// public User getCompanyAdmin(int id) 
+   @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getCompanyAdmin/{id}", method = RequestMethod.GET)
+    public User getCompanyAdmin(@PathVariable int id) {
+        logger.info("getting all drivers");
+
+        User list = userService.getCompanyAdmin(id);
+       
+        return list;
+    }  
+    
+//travelers
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllTravelers", method = RequestMethod.GET)
@@ -208,10 +234,10 @@ public class UserController {
         logger.info("psw  {}");
 
         User user = userService.passwordForgotten(userName);
-        
+
         String status = null;
         //logger.info("getting user with psw :" + user.getPassword()+" username"+user.getUserName());
- try {
+        try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setFrom("Administrator");
@@ -228,7 +254,7 @@ public class UserController {
         } catch (MessagingException e) {
             status = "There was an error in email sending. Please check your email address: " + user.getEmail();
         }
-     return user;
+        return user;
 
     }
 

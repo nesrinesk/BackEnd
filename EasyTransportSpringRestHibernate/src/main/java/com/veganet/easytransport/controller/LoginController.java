@@ -14,6 +14,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,10 +32,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @author asus
  */
 //@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 4800, allowCredentials = "false")
-
 @RestController
 @RequestMapping(value = "/security")
 public class LoginController {
+//@Qualifier
 
     @Resource(name = "authenticationManager")
     private AuthenticationManager authenticationManager; // specific for Spring Security
@@ -58,8 +59,7 @@ public class LoginController {
             logger.info("Logging in with [{}]" + authentication.getPrincipal());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             connectedUserName = username;
-           
-           
+
             logger.info("connectedUserName " + connectedUserName);
 
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
-            connectedUserName="";
+            connectedUserName = "";
         }
         logger.info("logout");
     }
@@ -82,7 +82,7 @@ public class LoginController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/findConnectedUser", method = RequestMethod.GET)
-    public User findByUserName (){
+    public User findByUserName() {
         logger.info("getting user with id :" + connectedUserName);
         return userService.findByUserName(connectedUserName);
     }

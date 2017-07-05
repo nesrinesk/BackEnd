@@ -141,7 +141,7 @@ public class JourneyController {
         }
         return list;
     }
-    
+//    
   
     @RequestMapping(value = "/linesOfJourney/{journeyId}", method = RequestMethod.GET, headers = "Accept=application/json")
     public String linesOfJourney(@PathVariable int journeyId) {

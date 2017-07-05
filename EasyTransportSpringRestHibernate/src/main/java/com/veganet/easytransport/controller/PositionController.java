@@ -5,7 +5,7 @@
  */
 package com.veganet.easytransport.controller;
 
-import com.veganet.easytransport.entities.Position;
+import com.veganet.easytransport.entities.Positions;
 import com.veganet.easytransport.service.PositionService;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -35,10 +35,10 @@ public class PositionController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllPositions", method = RequestMethod.GET)
-    public List<Position> getPositions() {
+    public List<Positions> getPositions() {
         logger.info("getting all positions");
 
-        List<Position> listOfPositions = positionService.findAll();
+        List<Positions> listOfPositions = positionService.findAll();
         if (listOfPositions == null || listOfPositions.isEmpty()) {
             logger.info("no positions found");
         }
@@ -48,7 +48,7 @@ public class PositionController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getPosition/{id}", method = RequestMethod.GET)
-    public Position getPositionById(@PathVariable int id) {
+    public Positions getPositionById(@PathVariable int id) {
         logger.info("getting position with id :" + id);
 
         return positionService.findOne(id);
@@ -56,7 +56,7 @@ public class PositionController {
 
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/addPosition", method = RequestMethod.POST)
-    public void addPosition(@RequestBody Position position) {
+    public void addPosition(@RequestBody Positions position) {
         logger.info("creating new position: {}");
 
         positionService.create(position);
@@ -66,9 +66,9 @@ public class PositionController {
     @Consumes(MediaType.APPLICATION_JSON)
 
     @RequestMapping(value = "/updatePosition/{id}", method = RequestMethod.POST)
-    public void updatePosition(@PathVariable int id, @RequestBody Position position) {
+    public void updatePosition(@PathVariable int id, @RequestBody Positions position) {
 
-        Position currentPosition = positionService.findOne(id);
+        Positions currentPosition = positionService.findOne(id);
         logger.info("updating position with id :" + id);
         if (currentPosition == null) {
             logger.info("Position with id {} not found" + id);
@@ -87,10 +87,10 @@ public class PositionController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
-    public List<Position> getAll() {
+    public List<Positions> getAll() {
         logger.info("getting Positions not deleted");
 
-        List<Position> list = positionService.getAll((short) 0);
+        List<Positions> list = positionService.getAll((short) 0);
         if (list == null || list.isEmpty()) {
             logger.info("no  found");
         }
@@ -99,7 +99,7 @@ public class PositionController {
     //add
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void add(@RequestBody Position position) {
+    public void add(@RequestBody Positions position) {
         logger.info("creating new Position: {}");
 
         positionService.add(position);
