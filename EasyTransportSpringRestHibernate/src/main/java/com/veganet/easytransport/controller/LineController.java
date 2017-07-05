@@ -141,7 +141,31 @@ public class LineController {
         }
         return list;
     }
+   @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getBusByAdmin/{adminId}", method = RequestMethod.GET)
+    public List<Line> getAllByAdmin( @PathVariable int adminId) {
+        logger.info("getting all ");
 
+        List<Line> list = lineService.getAllByAdmin((short) 1, adminId);
+        if (list == null || list.isEmpty()) {
+            logger.info("no  found");
+        }
+        return list;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getTrainsByAdmin/{adminId}", method = RequestMethod.GET)
+    public List<Line> getTrainsByAdmin(@PathVariable int adminId) {
+        logger.info("getting all trains");
+
+        List<Line> list = lineService.getAllByAdmin((short) 0, adminId);
+        if (list == null || list.isEmpty()) {
+            logger.info("no train found");
+        }
+        return list;
+    }
     //getLastInsertedId
     /*@Produces(MediaType.APPLICATION_JSON)
      @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

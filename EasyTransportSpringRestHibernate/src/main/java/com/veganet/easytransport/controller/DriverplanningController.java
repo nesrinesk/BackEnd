@@ -7,6 +7,7 @@ package com.veganet.easytransport.controller;
 
 import com.veganet.easytransport.entities.Driverplanning;
 import com.veganet.easytransport.entities.Station;
+import com.veganet.easytransport.entities.User;
 import com.veganet.easytransport.service.DriverplanningService;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -117,21 +118,21 @@ public class DriverplanningController {
 
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getAllByDistinctUserBus", method = RequestMethod.GET)
-    public List<Driverplanning> getAllByDistinctUser() {
+    @RequestMapping(value = "/getAllByDistinctUserBus/{id}", method = RequestMethod.GET)
+    public List<User> getAllByDistinctUser(@PathVariable int id) {
         //logger.info("getting transport with id :" + id);
 
-        List<Driverplanning> list = driverplanningService.getAllByDistinctUser((short) 1);
+        List<User> list = driverplanningService.getAllByDistinctUser((short) 1, id);
         return list;
     }
 
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getAllByDistinctUserTrain", method = RequestMethod.GET)
-    public List<Driverplanning> getAllByDistinctUserTrain() {
+    @RequestMapping(value = "/getAllByDistinctUserTrain/{id}", method = RequestMethod.GET)
+    public List<User> getAllByDistinctUserTrain(@PathVariable int id) {
         //logger.info("getting transport with id :" + id);
 
-        List<Driverplanning> list = driverplanningService.getAllByDistinctUser((short) 0);
+        List<User> list = driverplanningService.getAllByDistinctUser((short)0 , id);
         return list;
     }
 

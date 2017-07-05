@@ -141,5 +141,30 @@ public class StationController {
         return list;
     }
 
+       @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getBusStopByAdmin/{adminId}", method = RequestMethod.GET)
+    public List<Station> getAllByAdmin( @PathVariable int adminId) {
+        logger.info("getting all ");
+
+        List<Station> list = stationService.getAllByAdmin((short) 1, adminId);
+        if (list == null || list.isEmpty()) {
+            logger.info("no  found");
+        }
+        return list;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getTrainsStationByAdmin/{adminId}", method = RequestMethod.GET)
+    public List<Station> getTrainsStationByAdmin(@PathVariable int adminId) {
+        logger.info("getting all trains");
+
+        List<Station> list = stationService.getAllByAdmin((short) 0, adminId);
+        if (list == null || list.isEmpty()) {
+            logger.info("no train found");
+        }
+        return list;
+    }
    
 }
