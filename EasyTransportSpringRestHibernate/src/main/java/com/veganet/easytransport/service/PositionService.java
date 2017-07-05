@@ -6,7 +6,7 @@
 package com.veganet.easytransport.service;
 
 import com.veganet.easytransport.dao.impl.PositionDao;
-import com.veganet.easytransport.entities.Position;
+import com.veganet.easytransport.entities.Positions;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,22 +23,22 @@ public class PositionService {
     PositionDao positionDao;
 
     @Transactional
-    public List<Position> findAll() {
+    public List<Positions> findAll() {
         return positionDao.findAll();
     }
 
     @Transactional
-    public Position findOne(int id) {
+    public Positions findOne(int id) {
         return positionDao.findOne(id);
     }
 
     @Transactional
-    public void create(Position position) {
+    public void create(Positions position) {
         positionDao.create(position);
     }
 
     @Transactional
-    public void update(Position position) {
+    public void update(Positions position) {
         positionDao.update(position);
 
     }
@@ -56,12 +56,12 @@ public class PositionService {
     }
 
     @Transactional
-    public void add(Position position) {
+    public void add(Positions position) {
         positionDao.add(position);
     }
 
     @Transactional
-    public List<Position> getAll(short isdeleted) {
+    public List<Positions> getAll(short isdeleted) {
         return positionDao.getAll(isdeleted);
     }
 }

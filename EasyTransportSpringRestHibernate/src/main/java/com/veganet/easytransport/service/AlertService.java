@@ -35,7 +35,7 @@ public class AlertService {
 
     @Transactional
     public void create(Alert alert) {
-        alertDao.create(alert);
+        alertDao.add(alert);
     }
 
     @Transactional
@@ -49,4 +49,17 @@ public class AlertService {
         alertDao.deleteById(id);
     }
 
+    @Transactional
+    public List<Alert> getAllVisible(Short visibility ,Short type) {
+        return alertDao.getAllVisible(visibility,type);
+    }
+    
+      @Transactional
+    public Alert changeVisibility(Alert t)  {
+        return alertDao.changeVisibility(t);
+    }
+    @Transactional
+     public List<Alert> getAllBytype(Short type) {
+        return alertDao.getAllBytype(type);
+    } 
 }

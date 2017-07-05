@@ -73,4 +73,14 @@ public class UserService {
      public User passwordForgotten(String userName){
          return userDao.passwordForgotten(userName);
      }
+     
+     @Transactional
+    public List<User> getDriversByCompany(int id) {
+        return userDao.getDriversByCompany(id);
+    }
+    
+    @Transactional
+     public User getCompanyAdmin(int id) {
+         return userDao.getCompanyAdmin(id);
+     }
 }

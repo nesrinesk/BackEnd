@@ -67,7 +67,7 @@ public class StationService {
     }
 
     //not deleted by type
-
+//
     @Transactional
     public List<Station> getAllByType(short type, short isdeleted) {
         return stationDao.getAllByType(type, isdeleted);
