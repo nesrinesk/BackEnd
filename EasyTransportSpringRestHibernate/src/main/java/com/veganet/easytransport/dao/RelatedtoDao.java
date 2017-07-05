@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface RelatedtoDao {
 
-    public List<Relatedto> getAllByType(short type);
+//    public List<Relatedto> getAllByType(short type);
 
     public List<Relatedto> getAllByLine(int id);
 

@@ -26,7 +26,7 @@
         <beans:property name="username" value="root" />
         <beans:property name="password" value="" />
     </beans:bean>
-
+   
     <!-- Hibernate 4 SessionFactory Bean definition -->
     <beans:bean id="hibernate4AnnotatedSessionFactory"
                 class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -41,11 +41,12 @@
                 <beans:value>com.veganet.easytransport.entities.Journeyplanning</beans:value>
                 <beans:value>com.veganet.easytransport.entities.Line</beans:value>
                 <beans:value>com.veganet.easytransport.entities.Passage</beans:value>
-                <beans:value>com.veganet.easytransport.entities.Position</beans:value>
+                <beans:value>com.veganet.easytransport.entities.Positions</beans:value>
                 <beans:value>com.veganet.easytransport.entities.Relatedto</beans:value>
                 <beans:value>com.veganet.easytransport.entities.Station</beans:value>
                 <beans:value>com.veganet.easytransport.entities.Transport</beans:value>
                 <beans:value>com.veganet.easytransport.entities.User</beans:value>
+                <beans:value>com.veganet.easytransport.entities.Company</beans:value>
 
             </beans:list>
         </beans:property>
@@ -66,7 +67,7 @@
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     
-    
+     
     <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <beans:property name="host" value="smtp.gmail.com" />
         <beans:property name="port" value="587" />

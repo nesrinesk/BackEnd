@@ -22,5 +22,5 @@ public interface TransportDao {
 
     public void update2(Transport object);
 
-    public List<Transport> getAllByType(short type, short isdeleted);
+   // public List<Transport> getAllByType(short type, short isdeleted);
 }

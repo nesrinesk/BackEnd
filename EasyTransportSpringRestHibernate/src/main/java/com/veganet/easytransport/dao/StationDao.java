@@ -22,5 +22,5 @@ public interface StationDao {
 
     public void update2(Station object);
 
-    public List<Station> getAllByType(short type, short isdeleted);
+ //   public List<Station> getAllByType(short type, short isdeleted);
 }

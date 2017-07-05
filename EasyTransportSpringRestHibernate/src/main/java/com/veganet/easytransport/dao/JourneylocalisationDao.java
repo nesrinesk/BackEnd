@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface JourneylocalisationDao {
 
-    public List<Journeylocalisation> getAllByType(short type);
+   // public List<Journeylocalisation> getAllByType(short type);
 
     public List<Journeylocalisation> getAllByLine(int id);
 }

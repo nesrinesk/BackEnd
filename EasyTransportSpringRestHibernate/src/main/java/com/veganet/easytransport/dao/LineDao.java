@@ -22,6 +22,6 @@ public interface LineDao {
 
     public void update2(Line object);
 
-    public List<Line> getAllByType(short type, short isdeleted);
+   // public List<Line> getAllByType(short type, short isdeleted);
 
 }

@@ -22,7 +22,7 @@ public interface JourneyDao {
 
     public void update2(Journey object);
 
-    public List<Journey> getAllByType(short type, short isdeleted);
+   // public List<Journey> getAllByType(short type, short isdeleted);
 
     public String linesOfJourney(int journeyId);
 }
