@@ -15,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -66,10 +68,10 @@ public class User implements Serializable {
 
     @Column(name = "ACCESS_LEVEL")
     private String accessLevel;
-    
+
     @Column(name = "STATUS")
     private Short status;
-    
+
     @Size(max = 254)
     @Column(name = "FIRST_NAME")
     private String firstName;
@@ -136,6 +138,9 @@ public class User implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "addededBy")
     private Collection<Favorite> favoriteCollection;
+    @JoinColumn(name = "COMPANY_ID", referencedColumnName = "COMPANY_ID")
+    @ManyToOne
+    private Company companyId;
 
     public User() {
     }
@@ -144,10 +149,17 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    
-    
+
     public User(Integer userId) {
         this.userId = userId;
+    }
+
+    public Company getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Company companyId) {
+        this.companyId = companyId;
     }
 
     public Integer getUserId() {
@@ -246,8 +258,6 @@ public class User implements Serializable {
         this.cin = cin;
     }
 
-   
-    
     public Short getGender() {
         return gender;
     }
@@ -367,11 +377,6 @@ public class User implements Serializable {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.veganet.easytransport.mavenproject5.User[ userId=" + userId + " ]";
     }
 
 }

@@ -34,21 +34,23 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Passage.findByPassageId", query = "SELECT p FROM Passage p WHERE p.passageId = :passageId"),
     @NamedQuery(name = "Passage.findByDate", query = "SELECT p FROM Passage p WHERE p.date = :date")})
 public class Passage implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "PASSAGE_ID")
     private Integer passageId;
-    
+
     @Column(name = "DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    
+
     @JoinColumn(name = "STATION_ID", referencedColumnName = "STATION_ID")
     @ManyToOne
     private Station stationId;
-    
+    @Column(name = "TYPE")
+    private Short type;
     @JoinColumn(name = "TRANSPORT_ID", referencedColumnName = "TRANSPORT_ID")
     @ManyToOne
     private Transport transportId;
@@ -74,6 +76,14 @@ public class Passage implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
     }
 
     public Station getStationId() {
@@ -116,5 +126,5 @@ public class Passage implements Serializable {
     public String toString() {
         return "com.veganet.easytransport.mavenproject5.Passage[ passageId=" + passageId + " ]";
     }
-    
+
 }

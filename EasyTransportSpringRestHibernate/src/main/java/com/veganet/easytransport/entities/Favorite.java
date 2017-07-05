@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Favorite.findByTitle", query = "SELECT f FROM Favorite f WHERE f.title = :title"),
     @NamedQuery(name = "Favorite.findByCreationDate", query = "SELECT f FROM Favorite f WHERE f.creationDate = :creationDate")})
 public class Favorite implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "FAVORITE_ID")
     private Integer favoriteId;
-    
+
     @Size(max = 254)
     @Column(name = "TITLE")
     private String title;
-    
+
     @Lob
     @Size(max = 2147483647)
     @Column(name = "DESCRIPTION")
     private String description;
-    
+
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
-    
-    @JoinColumn(name = "STATION_ID", referencedColumnName = "STATION_ID")
-    @ManyToOne
-    private Station stationId;
-    
+    @Column(name = "TYPE")
+    private Short type;
+
     @JoinColumn(name = "ADDEDED_BY", referencedColumnName = "USER_ID")
     @ManyToOne
     private User addededBy;
-    
     @JoinColumn(name = "JOURNEY_ID", referencedColumnName = "JOURNEY_ID")
     @ManyToOne
     private Journey journeyId;
-    
     @JoinColumn(name = "TRANSPORT_ID", referencedColumnName = "TRANSPORT_ID")
     @ManyToOne
     private Transport transportId;
+    @JoinColumn(name = "STATION_ID", referencedColumnName = "STATION_ID")
+    @ManyToOne
+    private Station stationId;
 
     public Favorite() {
     }
@@ -125,6 +125,14 @@ public class Favorite implements Serializable {
         return addededBy;
     }
 
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
+    }
+
     public void setAddededBy(User addededBy) {
         this.addededBy = addededBy;
     }
@@ -169,5 +177,5 @@ public class Favorite implements Serializable {
     public String toString() {
         return "com.veganet.easytransport.mavenproject5.Favorite[ favoriteId=" + favoriteId + " ]";
     }
-    
+
 }

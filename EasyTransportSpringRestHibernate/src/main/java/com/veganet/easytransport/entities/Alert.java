@@ -5,7 +5,6 @@
  */
 package com.veganet.easytransport.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -23,7 +22,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -37,25 +35,22 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Alert.findByAlertId", query = "SELECT a FROM Alert a WHERE a.alertId = :alertId"),
     @NamedQuery(name = "Alert.findByTitle", query = "SELECT a FROM Alert a WHERE a.title = :title"),
     @NamedQuery(name = "Alert.findByStatus", query = "SELECT a FROM Alert a WHERE a.status = :status"),
-    @NamedQuery(name = "Alert.findByType", query = "SELECT a FROM Alert a WHERE a.type = :type"),
     @NamedQuery(name = "Alert.findByCreationDate", query = "SELECT a FROM Alert a WHERE a.creationDate = :creationDate")})
 public class Alert implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ALERT_ID")
     private Integer alertId;
-    
     @Size(max = 254)
     @Column(name = "TITLE")
     private String title;
-    
     @Lob
     @Size(max = 2147483647)
     @Column(name = "DESCRIPTION")
     private String description;
-    
     @Column(name = "STATUS")
     private Short status;
     
@@ -65,23 +60,24 @@ public class Alert implements Serializable {
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
-    
-    @JoinColumn(name = "JOURNEY_ID", referencedColumnName = "JOURNEY_ID")
+    @Column(name = "VISIBILITY")
+    private Short visibility;
+   @JoinColumn(name = "JOURNEY_ID", referencedColumnName = "JOURNEY_ID")
     @ManyToOne
     private Journey journeyId;
-    
+
     @JoinColumn(name = "STATION_ID", referencedColumnName = "STATION_ID")
     @ManyToOne
     private Station stationId;
-    
+
     @JoinColumn(name = "ADDED_BY", referencedColumnName = "USER_ID")
     @ManyToOne
     private User addedBy;
-    
+
     @JoinColumn(name = "TRANSPORT_ID", referencedColumnName = "TRANSPORT_ID")
     @ManyToOne
     private Transport transportId;
-    
+
     @JoinColumn(name = "LINE_ID", referencedColumnName = "LINE_ID")
     @ManyToOne
     private Line lineId;
@@ -101,12 +97,28 @@ public class Alert implements Serializable {
         this.alertId = alertId;
     }
 
+    public Short getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Short visibility) {
+        this.visibility = visibility;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
     }
 
     public String getDescription() {
@@ -125,15 +137,7 @@ public class Alert implements Serializable {
         this.status = status;
     }
 
-    public Short getType() {
-        return type;
-    }
-
-    public void setType(Short type) {
-        this.type = type;
-    }
-
-    public Date getCreationDate() {
+      public Date getCreationDate() {
         return creationDate;
     }
 
@@ -181,6 +185,9 @@ public class Alert implements Serializable {
         this.lineId = lineId;
     }
 
+ 
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -205,5 +212,5 @@ public class Alert implements Serializable {
     public String toString() {
         return "com.veganet.easytransport.mavenproject5.Alert[ alertId=" + alertId + " ]";
     }
-    
+
 }

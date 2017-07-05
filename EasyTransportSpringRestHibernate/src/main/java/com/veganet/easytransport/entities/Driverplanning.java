@@ -52,6 +52,7 @@ public class Driverplanning implements Serializable {
     private Date date;
     @Column(name = "TYPE")
     private Short type;
+
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     @ManyToOne
     private User userId;
@@ -80,14 +81,6 @@ public class Driverplanning implements Serializable {
         this.planningId = planningId;
     }
 
-    public Short getType() {
-        return type;
-    }
-
-    public void setType(Short type) {
-        this.type = type;
-    }
-
     public String getDay() {
         return day;
     }
@@ -104,22 +97,6 @@ public class Driverplanning implements Serializable {
         this.date = date;
     }
 
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
-
-    public Journey getJourneyId() {
-        return journeyId;
-    }
-
-    public void setJourneyId(Journey journeyId) {
-        this.journeyId = journeyId;
-    }
-
     public Date getFrom() {
         return from;
     }
@@ -134,6 +111,30 @@ public class Driverplanning implements Serializable {
 
     public void setTo(Date to) {
         this.to = to;
+    }
+
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
+    public Journey getJourneyId() {
+        return journeyId;
+    }
+
+    public void setJourneyId(Journey journeyId) {
+        this.journeyId = journeyId;
     }
 
     @Override

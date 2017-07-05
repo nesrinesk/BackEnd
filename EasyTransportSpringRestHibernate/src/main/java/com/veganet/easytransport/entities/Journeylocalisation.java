@@ -46,12 +46,12 @@ public class Journeylocalisation implements Serializable {
     @Column(name = "DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @Column(name = "TYPE")
-    private Short type;
+
     @JoinColumn(name = "LINE_ID", referencedColumnName = "LINE_ID")
     @ManyToOne
     private Line lineId;
-
+    @Column(name = "TYPE")
+    private Short type;
     @JoinColumn(name = "JOURNEY_ID", referencedColumnName = "JOURNEY_ID")
     @ManyToOne
     private Journey journeyId;

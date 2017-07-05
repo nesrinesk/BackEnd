@@ -30,20 +30,24 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Journeyplanning.findAll", query = "SELECT j FROM Journeyplanning j"),
     @NamedQuery(name = "Journeyplanning.findByPlanningId", query = "SELECT j FROM Journeyplanning j WHERE j.planningId = :planningId")})
 public class Journeyplanning implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "PLANNING_ID")
     private Integer planningId;
-    
+
     @JoinColumn(name = "JOURNEY_ID", referencedColumnName = "JOURNEY_ID")
     @ManyToOne
     private Journey journeyId;
-    
+
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     @ManyToOne
     private User userId;
+
+    @Column(name = "TYPE")
+    private Short type;
 
     public Journeyplanning() {
     }
@@ -76,6 +80,14 @@ public class Journeyplanning implements Serializable {
         this.userId = userId;
     }
 
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -100,6 +112,5 @@ public class Journeyplanning implements Serializable {
     public String toString() {
         return "com.veganet.easytransport.mavenproject5.Journeyplanning[ planningId=" + planningId + " ]";
     }
-    
-}
 
+}

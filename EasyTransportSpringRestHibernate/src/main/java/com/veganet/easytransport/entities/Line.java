@@ -36,7 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Line.findAll", query = "SELECT l FROM Line l"),
     @NamedQuery(name = "Line.findByLineId", query = "SELECT l FROM Line l WHERE l.lineId = :lineId"),
-    @NamedQuery(name = "Line.findByType", query = "SELECT l FROM Line l WHERE l.type = :type"),
     @NamedQuery(name = "Line.findByIsdeleted", query = "SELECT l FROM Line l WHERE l.isdeleted = :isdeleted")})
 public class Line implements Serializable {
 
@@ -46,12 +45,10 @@ public class Line implements Serializable {
     @Basic(optional = false)
     @Column(name = "LINE_ID")
     private Integer lineId;
-    @Column(name = "TYPE")
-    private Short type;
+
     @Column(name = "ISDELETED")
     private Short isdeleted;
 
-    
     @Size(max = 254)
     @Column(name = "NAME")
     private String name;
@@ -69,6 +66,8 @@ public class Line implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "lineId")
     private Collection<Alert> alertCollection;
+    @Column(name = "TYPE")
+    private Short type;
 
     public Line() {
     }
@@ -85,20 +84,20 @@ public class Line implements Serializable {
         this.lineId = lineId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Short getType() {
         return type;
     }
 
     public void setType(Short type) {
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Short getIsdeleted() {

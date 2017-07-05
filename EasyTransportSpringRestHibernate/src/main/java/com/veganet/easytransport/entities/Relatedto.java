@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Relatedto.findByDate", query = "SELECT r FROM Relatedto r WHERE r.date = :date"),
     @NamedQuery(name = "Relatedto.findByTag", query = "SELECT r FROM Relatedto r WHERE r.tag = :tag")})
 public class Relatedto implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +50,7 @@ public class Relatedto implements Serializable {
     private Date date;
     @Column(name = "TAG")
     private Short tag;
+
     @JoinColumn(name = "LINE_ID", referencedColumnName = "LINE_ID")
     @ManyToOne
     private Line lineId;

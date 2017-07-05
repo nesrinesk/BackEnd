@@ -167,8 +167,6 @@ public class Station implements Serializable {
         this.type = type;
     }
 
-    
-    
     public Date getCreationDate() {
         return creationDate;
     }

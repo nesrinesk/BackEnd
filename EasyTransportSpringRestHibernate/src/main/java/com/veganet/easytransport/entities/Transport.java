@@ -40,7 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Transport.findByName", query = "SELECT t FROM Transport t WHERE t.name = :name"),
     @NamedQuery(name = "Transport.findByStationStart", query = "SELECT t FROM Transport t WHERE t.stationStart = :stationStart"),
     @NamedQuery(name = "Transport.findByDelay", query = "SELECT t FROM Transport t WHERE t.delay = :delay"),
-    @NamedQuery(name = "Transport.findByType", query = "SELECT t FROM Transport t WHERE t.type = :type"),
     @NamedQuery(name = "Transport.findByCreationDate", query = "SELECT t FROM Transport t WHERE t.creationDate = :creationDate"),
     @NamedQuery(name = "Transport.findByNumber", query = "SELECT t FROM Transport t WHERE t.number = :number"),
     @NamedQuery(name = "Transport.findBySpeedMax", query = "SELECT t FROM Transport t WHERE t.speedMax = :speedMax"),
@@ -48,74 +47,71 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Transport.findByCapacity", query = "SELECT t FROM Transport t WHERE t.capacity = :capacity"),
     @NamedQuery(name = "Transport.findByIsdeleted", query = "SELECT t FROM Transport t WHERE t.isdeleted = :isdeleted")})
 public class Transport implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "TRANSPORT_ID")
     private Integer transportId;
-    
+
     @Size(max = 254)
     @Column(name = "NAME")
     private String name;
-    
+
     @Size(max = 254)
     @Column(name = "STATION_START")
     private String stationStart;
-    
+
     @Size(max = 254)
     @Column(name = "DELAY")
     private String delay;
-    
-    @Column(name = "TYPE")
-    private Short type;
-    
+
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
-    
+
     @Size(max = 50)
     @Column(name = "NUMBER")
     private String number;
-    
+
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "SPEED_MAX")
     private Double speedMax;
-    
+
     @Column(name = "SPEED_AVERAGE")
     private Double speedAverage;
-    
+
     @Column(name = "CAPACITY")
     private Integer capacity;
-    
+
     @Column(name = "ISDELETED")
     private Short isdeleted;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "transportId")
     private Collection<Journey> journeyCollection;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "transportId")
     private Collection<Passage> passageCollection;
-    
-    @JoinColumn(name = "POSITION_ID", referencedColumnName = "POSITION_ID")
-    @ManyToOne
-    private Position positionId;
-    
+    @JsonIgnore
+    @OneToMany(mappedBy = "deviceId")
+    private Collection<Positions> positionsCollection;
+
+    @Column(name = "TYPE")
+    private Short type;
     @JoinColumn(name = "ADDED_BY", referencedColumnName = "USER_ID")
     @ManyToOne
     private User addedBy;
-    
-   
+    @JoinColumn(name = "POSITION_ID", referencedColumnName = "id")
+    @ManyToOne
+    private Positions positionId;
+
     @JsonIgnore
     @OneToMany(mappedBy = "transportId")
     private Collection<Alert> alertCollection;
-    
-    @JsonIgnore
-    @OneToMany(mappedBy = "transportId")
-    private Collection<Position> positionCollection;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "transportId")
     private Collection<Favorite> favoriteCollection;
@@ -143,6 +139,14 @@ public class Transport implements Serializable {
         this.name = name;
     }
 
+    public Short getType() {
+        return type;
+    }
+
+    public void setType(Short type) {
+        this.type = type;
+    }
+
     public String getStationStart() {
         return stationStart;
     }
@@ -157,14 +161,6 @@ public class Transport implements Serializable {
 
     public void setDelay(String delay) {
         this.delay = delay;
-    }
-
-    public Short getType() {
-        return type;
-    }
-
-    public void setType(Short type) {
-        this.type = type;
     }
 
     public Date getCreationDate() {
@@ -237,14 +233,6 @@ public class Transport implements Serializable {
         this.passageCollection = passageCollection;
     }
 
-    public Position getPositionId() {
-        return positionId;
-    }
-
-    public void setPositionId(Position positionId) {
-        this.positionId = positionId;
-    }
-
     public User getAddedBy() {
         return addedBy;
     }
@@ -252,8 +240,6 @@ public class Transport implements Serializable {
     public void setAddedBy(User addedBy) {
         this.addedBy = addedBy;
     }
-
-   
 
     @JsonIgnore
     @XmlTransient
@@ -268,17 +254,6 @@ public class Transport implements Serializable {
 
     @JsonIgnore
     @XmlTransient
-    public Collection<Position> getPositionCollection() {
-        return positionCollection;
-    }
-
-    @JsonIgnore
-    public void setPositionCollection(Collection<Position> positionCollection) {
-        this.positionCollection = positionCollection;
-    }
-
-    @JsonIgnore
-    @XmlTransient
     public Collection<Favorite> getFavoriteCollection() {
         return favoriteCollection;
     }
@@ -286,6 +261,24 @@ public class Transport implements Serializable {
     @JsonIgnore
     public void setFavoriteCollection(Collection<Favorite> favoriteCollection) {
         this.favoriteCollection = favoriteCollection;
+    }
+
+    @JsonIgnore
+    public Collection<Positions> getPositionsCollection() {
+        return positionsCollection;
+    }
+
+    @JsonIgnore
+    public void setPositionsCollection(Collection<Positions> positionsCollection) {
+        this.positionsCollection = positionsCollection;
+    }
+
+    public Positions getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(Positions positionId) {
+        this.positionId = positionId;
     }
 
     @Override
@@ -308,9 +301,4 @@ public class Transport implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.veganet.easytransport.mavenproject5.Transport[ transportId=" + transportId + " ]";
-    }
-    
 }
