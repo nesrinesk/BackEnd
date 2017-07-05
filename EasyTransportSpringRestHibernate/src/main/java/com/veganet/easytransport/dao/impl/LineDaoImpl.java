@@ -72,7 +72,7 @@ public class LineDaoImpl extends AbstractHibernateDao<Line> implements LineDao {
     }
 
     // Lines not deleted (type=0) by  type
-    @Override
+//    @Override
     public List<Line> getAllByType(short type, short isdeleted) {
         Session session = this.sessionFactory.getCurrentSession();
         List<Line> list = session.createQuery("SELECT l FROM Line l WHERE l.type = :type and l.isdeleted = :isdeleted")

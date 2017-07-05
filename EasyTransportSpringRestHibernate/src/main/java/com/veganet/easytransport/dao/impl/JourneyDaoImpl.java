@@ -72,7 +72,7 @@ public class JourneyDaoImpl extends AbstractHibernateDao<Journey> implements Jou
     }
     
     // Stations not deleted (type=0) by  type
-    @Override
+    //@Override
     public List<Journey> getAllByType(short type, short isdeleted) {
         Session session = this.sessionFactory.getCurrentSession();
         List<Journey> list = session.createQuery("SELECT j FROM Journey j WHERE j.type = :type and j.isdeleted = :isdeleted")
@@ -106,5 +106,7 @@ public class JourneyDaoImpl extends AbstractHibernateDao<Journey> implements Jou
 
         return listF;
     }
+
+   
 
 }

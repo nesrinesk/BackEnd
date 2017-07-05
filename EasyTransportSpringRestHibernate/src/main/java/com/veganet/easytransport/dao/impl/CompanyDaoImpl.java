@@ -5,8 +5,8 @@
  */
 package com.veganet.easytransport.dao.impl;
 
-import com.veganet.easytransport.dao.impl.AbstractHibernateDao;
-import com.veganet.easytransport.entities.Positions;
+import com.veganet.easytransport.dao.CompanyDao;
+import com.veganet.easytransport.entities.Company;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,37 +17,42 @@ import org.springframework.stereotype.Repository;
  *
  * @author asus
  */
-    
 @Repository
-public class PositionDao  extends AbstractHibernateDao<Positions>{
-  @Autowired
+public class CompanyDaoImpl extends AbstractHibernateDao<Company> implements CompanyDao {
+
+    @Autowired
     private SessionFactory sessionFactory;
 
+    @Override
     public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;
     }
-    public PositionDao() {
-        setClazz(Positions.class);
-    }
-    
-      //add+ set isdeleted =0
-    public Positions add(Positions position) {
-        Session session = this.sessionFactory.getCurrentSession();
-        session.persist(position);
-        return position;
+
+    public CompanyDaoImpl() {
+        setClazz(Company.class);
     }
 
-    //users not deleted (having isDeleted=0)
-    public List<Positions> getAll(short isdeleted) {
+    public Company add(Company c) {
         Session session = this.sessionFactory.getCurrentSession();
-        List<Positions> list = session.createQuery("SELECT p FROM Positions p WHERE p.isdeleted = :isdeleted").setParameter("isdeleted", isdeleted).list();
+        session.persist(c);
+        session.flush();
+
+        return c;
+    }
+
+    public List<Company> getCompanies() {
+        // short isdeleted = (short) 0;
+        Session session = this.sessionFactory.getCurrentSession();
+        List<Company> list = session.createQuery("SELECT u FROM Company u WHERE u.isdeleted = 0")
+                .list();
         return list;
     }
-    // set isdeleted=1
+
     public void delete2(int id) {
         Session session = this.sessionFactory.getCurrentSession();
-        Positions line = (Positions) session.get(Positions.class, id);
+        Company company = (Company) session.get(Company.class, id);
+        company.setIsdeleted((short) 1);
 
     }
+    
 }
-

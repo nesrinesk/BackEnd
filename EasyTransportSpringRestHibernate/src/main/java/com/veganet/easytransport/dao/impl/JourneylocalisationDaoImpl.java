@@ -34,7 +34,7 @@ public class JourneylocalisationDaoImpl extends AbstractHibernateDao<Journeyloca
         setClazz(Journeylocalisation.class);
     }
 
-    @Override
+//    @Override
     public List<Journeylocalisation> getAllByType(short type) {
         Session session = this.sessionFactory.getCurrentSession();
         List<Journeylocalisation> list = session.createQuery("SELECT l FROM Journeylocalisation l WHERE l.type = :type")

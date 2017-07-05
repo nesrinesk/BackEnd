@@ -7,6 +7,7 @@ package com.veganet.easytransport.dao.impl;
 
 import com.veganet.easytransport.dao.UserDao;
 import com.veganet.easytransport.dao.impl.AbstractHibernateDao;
+import com.veganet.easytransport.entities.Company;
 import com.veganet.easytransport.entities.User;
 import java.util.List;
 import java.util.Random;
@@ -44,7 +45,23 @@ public class UserDaoImpl extends AbstractHibernateDao<User> implements UserDao {
         return userList;
     }
 
+    public List<User> getDriversByCompany(int id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Company companyId = (Company) session.get(Company.class, id);
+        List<User> userList = session.createQuery("SELECT u FROM User u WHERE u.isdeleted = 0 and u.accessLevel = 'ROLE_DRIVER' and u.companyId = :companyId")
+                .setParameter("companyId", companyId).list();
+        return userList;
+    }
+
+    public User getCompanyAdmin(int id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Company companyId = (Company) session.get(Company.class, id);
+        User u = (User) session.createQuery("SELECT u FROM User u WHERE u.isdeleted = 0 and u.accessLevel = 'ROLE_ADMIN' and u.companyId = :companyId")
+                .setParameter("companyId", companyId).uniqueResult();
+        return u;
+    }
     //add+ set isdeleted =0
+
     @Override
     public User add(User user) {
         Session session = this.sessionFactory.getCurrentSession();

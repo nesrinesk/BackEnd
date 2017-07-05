@@ -70,7 +70,7 @@ public class StationDaoImpl extends AbstractHibernateDao<Station> implements Sta
 
     // Stations not deleted (type=0) by  type
 
-    @Override
+//    @Override
     public List<Station> getAllByType(short type, short isdeleted) {
         Session session = this.sessionFactory.getCurrentSession();
         List<Station> list = session.createQuery("SELECT s FROM Station s WHERE s.type = :type and s.isdeleted = :isdeleted")

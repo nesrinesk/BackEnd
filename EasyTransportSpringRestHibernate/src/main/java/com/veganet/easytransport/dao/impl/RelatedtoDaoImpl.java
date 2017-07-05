@@ -35,7 +35,7 @@ public class RelatedtoDaoImpl extends AbstractHibernateDao<Relatedto> implements
     }
 
     // by  type
-    @Override
+//    @Override
     public List<Relatedto> getAllByType(short type) {
         Session session = this.sessionFactory.getCurrentSession();
         List<Relatedto> list = session.createQuery("SELECT r FROM Relatedto r WHERE r.type = :type")
