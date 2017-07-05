@@ -5,6 +5,7 @@
  */
 package com.veganet.easytransport.dao.impl;
 
+import com.veganet.easytransport.entities.Company;
 import com.veganet.easytransport.entities.Driverplanning;
 import com.veganet.easytransport.entities.Journey;
 import com.veganet.easytransport.entities.Line;
@@ -99,12 +100,23 @@ public class DriverplanningDaoImpl extends AbstractHibernateDao<Driverplanning> 
     }
 
    
-    public List<Driverplanning> getAllByDistinctUser(Short type) {
-         
+    public List<User> getAllByDistinctUser(Short type, int id) {
+                 List<User> finalList = new ArrayList<User>();
+
         Session session = this.sessionFactory.getCurrentSession();
-        List<Driverplanning> list = session.createQuery("SELECT DISTINCT userId FROM Driverplanning r WHERE r.type = :type")
+        List<User> list = session.createQuery("SELECT DISTINCT userId FROM Driverplanning r WHERE r.type = :type")
                 .setParameter("type", type).list();
-        return list;
+        
+        Company companyId = (Company) session.get(Company.class, id);
+        List<User> userList = session.createQuery("SELECT u FROM User u WHERE u.isdeleted = 0 and u.accessLevel = 'ROLE_DRIVER' and u.companyId = :companyId")
+                .setParameter("companyId", companyId).list();
+        
+        for (User u : userList) {
+            if(u.getCompanyId().equals(companyId)){
+                finalList.add(u);
+            }
+        }
+        return finalList;
     }
 
     public List<Driverplanning> getOneByUser(int id) {

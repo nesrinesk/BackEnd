@@ -6,12 +6,10 @@
 package com.veganet.easytransport.dao.impl;
 
 import com.veganet.easytransport.dao.JourneyDao;
-import com.veganet.easytransport.dao.impl.AbstractHibernateDao;
 import com.veganet.easytransport.entities.Journey;
-import com.veganet.easytransport.entities.Journeylocalisation;
 import com.veganet.easytransport.entities.Line;
 import com.veganet.easytransport.entities.Relatedto;
-import java.util.ArrayList;
+import com.veganet.easytransport.entities.User;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -107,6 +105,13 @@ public class JourneyDaoImpl extends AbstractHibernateDao<Journey> implements Jou
         return listF;
     }
 
-   
+    public List<Journey> getAllByAdmin(short type, int adminId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        User userId = (User) session.get(User.class, adminId);
+        List<Journey> list = session.createQuery("SELECT t FROM Journey t WHERE t.isdeleted = 0 and t.type = :type and t.userId = :userId")
+                .setParameter("type", type)
+                .setParameter("userId", userId).list();
+        return list;
+    }
 
 }

@@ -6,9 +6,8 @@
 package com.veganet.easytransport.dao.impl;
 
 import com.veganet.easytransport.dao.LineDao;
-import com.veganet.easytransport.dao.impl.AbstractHibernateDao;
 import com.veganet.easytransport.entities.Line;
-import java.math.BigInteger;
+import com.veganet.easytransport.entities.User;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -53,7 +52,6 @@ public class LineDaoImpl extends AbstractHibernateDao<Line> implements LineDao {
     }
 
     // set isdeleted=1
-
     @Override
     public void delete2(int id) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -63,7 +61,6 @@ public class LineDaoImpl extends AbstractHibernateDao<Line> implements LineDao {
     }
 
     //update 
-
     @Override
     public void update2(Line object) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -81,6 +78,14 @@ public class LineDaoImpl extends AbstractHibernateDao<Line> implements LineDao {
         return list;
     }
 
+    public List<Line> getAllByAdmin(short type, int adminId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        User addedBy = (User) session.get(User.class, adminId);
+        List<Line> list = session.createQuery("SELECT t FROM Line t WHERE t.isdeleted = 0 and t.type = :type and t.addedBy = :addedBy")
+                .setParameter("type", type)
+                .setParameter("addedBy", addedBy).list();
+        return list;
+    }
     /* public BigInteger getLastInsertedId(){
      Session session = this.sessionFactory.getCurrentSession();
 

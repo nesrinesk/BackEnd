@@ -6,8 +6,8 @@
 package com.veganet.easytransport.dao.impl;
 
 import com.veganet.easytransport.dao.StationDao;
-import com.veganet.easytransport.dao.impl.AbstractHibernateDao;
 import com.veganet.easytransport.entities.Station;
+import com.veganet.easytransport.entities.User;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  * @author asus
  */
 @Repository
-public class StationDaoImpl extends AbstractHibernateDao<Station> implements StationDao{
+public class StationDaoImpl extends AbstractHibernateDao<Station> implements StationDao {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -60,7 +60,6 @@ public class StationDaoImpl extends AbstractHibernateDao<Station> implements Sta
     }
 
     //update 
-
     @Override
     public void update2(Station object) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -69,7 +68,6 @@ public class StationDaoImpl extends AbstractHibernateDao<Station> implements Sta
     }
 
     // Stations not deleted (type=0) by  type
-
 //    @Override
     public List<Station> getAllByType(short type, short isdeleted) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -79,4 +77,12 @@ public class StationDaoImpl extends AbstractHibernateDao<Station> implements Sta
         return list;
     }
 
+    public List<Station> getAllByAdmin(short type, int adminId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        User addedBy = (User) session.get(User.class, adminId);
+        List<Station> list = session.createQuery("SELECT t FROM Station t WHERE t.isdeleted = 0 and t.type = :type and t.addedBy = :addedBy")
+                .setParameter("type", type)
+                .setParameter("addedBy", addedBy).list();
+        return list;
+    }
 }
