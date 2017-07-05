@@ -49,7 +49,6 @@ public class StationService {
     }
 
     //isdeleted
-
     @Transactional
     public void delete2(int id) {
         stationDao.delete2(id);
@@ -72,6 +71,10 @@ public class StationService {
     public List<Station> getAllByType(short type, short isdeleted) {
         return stationDao.getAllByType(type, isdeleted);
     }
-     
-    
+
+    @Transactional
+    public List<Station> getAllByAdmin(short type, int adminId) {
+        return stationDao.getAllByAdmin(type, adminId);
+    }
+
 }

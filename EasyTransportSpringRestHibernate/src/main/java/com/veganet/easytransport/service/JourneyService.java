@@ -47,32 +47,36 @@ public class JourneyService {
     public void deleteById(int id) {
         journeyDao.deleteById(id);
     }
- 
+
     //
     @Transactional
     public Journey add(Journey journey) {
         return journeyDao.add(journey);
     }
-    
+
     @Transactional
     public List<Journey> getAll(short isdeleted) {
-       return journeyDao.getAll(isdeleted);
+        return journeyDao.getAll(isdeleted);
     }
-    
+
     @Transactional
     public void delete2(int id) {
         journeyDao.delete2(id);
     }
-    
-     //not deleted by type
 
+     //not deleted by type
     @Transactional
     public List<Journey> getAllByType(short type, short isdeleted) {
         return journeyDao.getAllByType(type, isdeleted);
     }
-    
+
     @Transactional
-     public String linesOfJourney(int journeyId) {
-         return  journeyDao.linesOfJourney(journeyId);
-     }
+    public String linesOfJourney(int journeyId) {
+        return journeyDao.linesOfJourney(journeyId);
+    }
+
+    @Transactional
+    public List<Journey> getAllByAdmin(short type, int adminId) {
+        return journeyDao.getAllByAdmin(type, adminId);
+    }
 }

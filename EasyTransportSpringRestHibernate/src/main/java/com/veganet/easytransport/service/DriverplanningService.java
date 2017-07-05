@@ -57,8 +57,8 @@ public class DriverplanningService {
     }
 
     @Transactional
-    public List<Driverplanning> getAllByDistinctUser(Short type) {
-        return driverplanningDao.getAllByDistinctUser(type);
+    public List<User> getAllByDistinctUser(Short type, int id) {
+        return driverplanningDao.getAllByDistinctUser(type,id);
     }
 
     @Transactional

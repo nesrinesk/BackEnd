@@ -70,9 +70,13 @@ public class LineService {
         return lineDao.getAllByType(type, isdeleted);
     }
 
+    @Transactional
+    public List<Line> getAllByAdmin(short type, int adminId) {
+        return lineDao.getAllByAdmin(type, adminId);
+    }
     // public int getLastInsertedId(){
     /*@Transactional
-    public BigInteger getLastInsertedId() {
-        return lineDao.getLastInsertedId();
-    }*/
+     public BigInteger getLastInsertedId() {
+     return lineDao.getLastInsertedId();
+     }*/
 }
