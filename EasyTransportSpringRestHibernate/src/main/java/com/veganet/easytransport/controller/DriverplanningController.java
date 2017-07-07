@@ -150,22 +150,22 @@ public class DriverplanningController {
     //get programmed journeys from today
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getAllByDateBus", method = RequestMethod.GET)
-    public List<Driverplanning> getAllByDateBus() {
+    @RequestMapping(value = "/getAllByDateBus/{id}", method = RequestMethod.GET)
+    public List<Driverplanning> getAllByDateBus(@PathVariable int id) {
         logger.info("getAllByDateBus");
 
-        List<Driverplanning> list1 = driverplanningService.getAllByDate((short) 1);
+        List<Driverplanning> list1 = driverplanningService.getAllByDate((short) 1 ,id);
 
         return list1;
     }
 
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getAllByDateTrain", method = RequestMethod.GET)
-    public List<Driverplanning> getAllByDateTrain() {
+    @RequestMapping(value = "/getAllByDateTrain/{id}", method = RequestMethod.GET)
+    public List<Driverplanning> getAllByDateTrain(@PathVariable int id) {
         logger.info("getAllByDateTrain");
 
-        List<Driverplanning> list1 = driverplanningService.getAllByDate((short) 0);
+        List<Driverplanning> list1 = driverplanningService.getAllByDate((short) 0,id);
 
         return list1;
     }

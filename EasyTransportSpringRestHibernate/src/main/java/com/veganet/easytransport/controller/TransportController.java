@@ -145,7 +145,7 @@ public class TransportController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getBusByAdmin/{adminId}", method = RequestMethod.GET)
-    public List<Transport> getAllByAdmin( @PathVariable int adminId) {
+    public List<Transport> getAllByAdmin(@PathVariable int adminId) {
         logger.info("getting all ");
 
         List<Transport> list = transportService.getAllByAdmin((short) 1, adminId);
@@ -162,6 +162,34 @@ public class TransportController {
         logger.info("getting all trains");
 
         List<Transport> list = transportService.getAllByAdmin((short) 0, adminId);
+        if (list == null || list.isEmpty()) {
+            logger.info("no train found");
+        }
+        return list;
+    }
+
+    //bycompany
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getBusByCompany/{id}", method = RequestMethod.GET)
+    public List<Transport> getAllByCompany(@PathVariable int id) {
+        logger.info("getting all ");
+
+        List<Transport> list = transportService.getAllByAdmin((short) 1, id);
+        if (list == null || list.isEmpty()) {
+            logger.info("no  found");
+        }
+        return list;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getTrainsByCompany/{id}", method = RequestMethod.GET)
+    public List<Transport> getTrainsByCompany(@PathVariable int id) {
+        logger.info("getting all trains");
+
+        List<Transport> list = transportService.getAllByAdmin((short) 0, id);
         if (list == null || list.isEmpty()) {
             logger.info("no train found");
         }

@@ -84,11 +84,11 @@ public class AlertController {
 
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getAllVisibleTrain", method = RequestMethod.GET)
-    public List<Alert> getAllVisibleTrain() {
+    @RequestMapping(value = "/getAllVisibleTrain/{id}", method = RequestMethod.GET)
+    public List<Alert> getAllVisibleTrain(@PathVariable int id) {
         logger.info("getting all alerts");
 
-        List<Alert> listOfAlerts = alertService.getAllVisible((short) 1, (short) 0);
+        List<Alert> listOfAlerts = alertService.getAllVisible((short) 1, (short) 0, id);
         if (listOfAlerts == null || listOfAlerts.isEmpty()) {
             logger.info("no alerts found");
         }
@@ -97,11 +97,11 @@ public class AlertController {
 
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getAllInvisibleTrain", method = RequestMethod.GET)
-    public List<Alert> getAllInvisibleTrain() {
+    @RequestMapping(value = "/getAllInvisibleTrain/{id}", method = RequestMethod.GET)
+    public List<Alert> getAllInvisibleTrain(@PathVariable int id) {
         logger.info("getting all alerts");
 
-        List<Alert> listOfAlerts = alertService.getAllVisible((short) 0, (short) 0);
+        List<Alert> listOfAlerts = alertService.getAllVisible((short) 0, (short) 0, id);
         if (listOfAlerts == null || listOfAlerts.isEmpty()) {
             logger.info("no alerts found");
         }
@@ -110,11 +110,11 @@ public class AlertController {
 
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getAllVisibleBus", method = RequestMethod.GET)
-    public List<Alert> getAllVisible() {
+    @RequestMapping(value = "/getAllVisibleBus/{id}", method = RequestMethod.GET)
+    public List<Alert> getAllVisible(@PathVariable int id) {
         logger.info("getting all alerts");
 
-        List<Alert> listOfAlerts = alertService.getAllVisible((short) 1, (short) 1);
+        List<Alert> listOfAlerts = alertService.getAllVisible((short) 1, (short) 1, id);
         if (listOfAlerts == null || listOfAlerts.isEmpty()) {
             logger.info("no alerts found");
         }
@@ -123,11 +123,11 @@ public class AlertController {
 
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/getAllInvisibleBus", method = RequestMethod.GET)
-    public List<Alert> getAllInvisible() {
+    @RequestMapping(value = "/getAllInvisibleBus/{id}", method = RequestMethod.GET)
+    public List<Alert> getAllInvisible(@PathVariable int id) {
         logger.info("getting all alerts");
 
-        List<Alert> listOfAlerts = alertService.getAllVisible((short) 0, (short) 1);
+        List<Alert> listOfAlerts = alertService.getAllVisible((short) 0, (short) 1, id);
         if (listOfAlerts == null || listOfAlerts.isEmpty()) {
             logger.info("no alerts found");
         }
@@ -158,7 +158,7 @@ public class AlertController {
         }
         return listOfAlerts;
     }
-    
+
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/alertsTrain", method = RequestMethod.GET)
 
@@ -170,4 +170,53 @@ public class AlertController {
         }
         return listOfAlerts;
     }
+
+    @Consumes(MediaType.APPLICATION_JSON)
+    @RequestMapping(value = "/getAllAlertsTrainByCompany/{id}", method = RequestMethod.GET)
+
+    public List<Alert> getAllByCompany(@PathVariable int id) {
+
+        List<Alert> listOfAlerts = alertService.getAllByCompany((short) 0, id);
+        if (listOfAlerts == null || listOfAlerts.isEmpty()) {
+            logger.info("no alerts found");
+        }
+        return listOfAlerts;
+    }
+
+    @Consumes(MediaType.APPLICATION_JSON)
+    @RequestMapping(value = "/getAllAlertsBusByCompany/{id}", method = RequestMethod.GET)
+
+    public List<Alert> getAllAlertsBusByCompany(@PathVariable int id) {
+
+        List<Alert> listOfAlerts = alertService.getAllByCompany((short) 1, id);
+        if (listOfAlerts == null || listOfAlerts.isEmpty()) {
+            logger.info("no alerts found");
+        }
+        return listOfAlerts;
+    }
+
+    @Consumes(MediaType.APPLICATION_JSON)
+    @RequestMapping(value = "/alertTrainNotificationForAdmin/{id}", method = RequestMethod.GET)
+
+    public List<Alert> alertTrainNotificationForAdmin(@PathVariable int id) {
+
+        List<Alert> listOfAlerts = alertService.alertNotificationForAdmin((short) 0, (short) 0, id);
+        if (listOfAlerts == null || listOfAlerts.isEmpty()) {
+            logger.info("no alerts found");
+        }
+        return listOfAlerts;
+    }
+
+    @Consumes(MediaType.APPLICATION_JSON)
+    @RequestMapping(value = "/alertBusNotificationForAdmin/{id}", method = RequestMethod.GET)
+
+    public List<Alert> alertBusNotificationForAdmin(@PathVariable int id) {
+
+        List<Alert> listOfAlerts = alertService.alertNotificationForAdmin((short) 0, (short) 1, id);
+        if (listOfAlerts == null || listOfAlerts.isEmpty()) {
+            logger.info("no alerts found");
+        }
+        return listOfAlerts;
+    }
+
 }
