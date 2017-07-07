@@ -44,15 +44,23 @@ public class DriverplanningDaoImpl extends AbstractHibernateDao<Driverplanning> 
         setClazz(Driverplanning.class);
     }
 
-    public List<Driverplanning> getAllByDate(Short type) {
+    public List<Driverplanning> getAllByDate(Short type, int id) {
+        List<Driverplanning> finalList = new ArrayList<Driverplanning>();
         Session session = this.sessionFactory.getCurrentSession();
+        Company companyId = (Company) session.get(Company.class, id);
+
         //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
         //String dateNow = dateFormat.format(date);
         List<Driverplanning> list = session.createQuery("SELECT u FROM Driverplanning u WHERE u.type = :type and u.date >= :date order by u.date asc")
                 .setParameter("date", date).setParameter("type", type)
                 .list();
-        return list;
+        for (Driverplanning u : list) {
+            if (u.getUserId().getCompanyId().equals(companyId)) {
+                finalList.add(u);
+            }
+        }
+        return finalList;
     }
 
     public void add(Driverplanning object) {
@@ -91,7 +99,7 @@ public class DriverplanningDaoImpl extends AbstractHibernateDao<Driverplanning> 
 
     }
 
-    public List<Driverplanning> getAllByUser(int id,Short type) {
+    public List<Driverplanning> getAllByUser(int id, Short type) {
         Session session = this.sessionFactory.getCurrentSession();
         User userId = (User) session.get(User.class, id);
         List<Driverplanning> list = session.createQuery("SELECT r FROM Driverplanning r WHERE r.userId = :userId and r.type = :type")
@@ -99,20 +107,19 @@ public class DriverplanningDaoImpl extends AbstractHibernateDao<Driverplanning> 
         return list;
     }
 
-   
     public List<User> getAllByDistinctUser(Short type, int id) {
-                 List<User> finalList = new ArrayList<User>();
+        List<User> finalList = new ArrayList<User>();
 
         Session session = this.sessionFactory.getCurrentSession();
         List<User> list = session.createQuery("SELECT DISTINCT userId FROM Driverplanning r WHERE r.type = :type")
                 .setParameter("type", type).list();
-        
+
         Company companyId = (Company) session.get(Company.class, id);
         List<User> userList = session.createQuery("SELECT u FROM User u WHERE u.isdeleted = 0 and u.accessLevel = 'ROLE_DRIVER' and u.companyId = :companyId")
                 .setParameter("companyId", companyId).list();
-        
+
         for (User u : userList) {
-            if(u.getCompanyId().equals(companyId)){
+            if (u.getCompanyId().equals(companyId)) {
                 finalList.add(u);
             }
         }
@@ -147,12 +154,12 @@ public class DriverplanningDaoImpl extends AbstractHibernateDao<Driverplanning> 
                 .list();
         //journey = listJ.get(0);
         for (Journey j : listJ) {
-        List<Driverplanning> list = session.createQuery("SELECT j FROM Driverplanning j "
-                + "WHERE j.journeyId = :j and j.date = :date")
-                .setParameter("j", j)
-                .setParameter("date", date)
-                .list();
-         listF.addAll(list);
+            List<Driverplanning> list = session.createQuery("SELECT j FROM Driverplanning j "
+                    + "WHERE j.journeyId = :j and j.date = :date")
+                    .setParameter("j", j)
+                    .setParameter("date", date)
+                    .list();
+            listF.addAll(list);
         }
 
         return listF;

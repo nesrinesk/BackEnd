@@ -6,8 +6,10 @@
 package com.veganet.easytransport.dao.impl;
 
 import com.veganet.easytransport.dao.TransportDao;
+import com.veganet.easytransport.entities.Company;
 import com.veganet.easytransport.entities.Transport;
 import com.veganet.easytransport.entities.User;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -79,8 +81,8 @@ public class TransportDaoImpl extends AbstractHibernateDao<Transport> implements
                 .setParameter("isdeleted", isdeleted).list();
         return list;
     }
-    
-       public List<Transport> getAllByAdmin(short type, int adminId) {
+
+    public List<Transport> getAllByAdmin(short type, int adminId) {
         Session session = this.sessionFactory.getCurrentSession();
         User addedBy = (User) session.get(User.class, adminId);
         List<Transport> list = session.createQuery("SELECT t FROM Transport t WHERE t.isdeleted = 0 and t.type = :type and t.addedBy = :addedBy")
@@ -88,4 +90,21 @@ public class TransportDaoImpl extends AbstractHibernateDao<Transport> implements
                 .setParameter("addedBy", addedBy).list();
         return list;
     }
+
+    public List<Transport> getAllByCompany(short type, int id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        List<Transport> listF = new ArrayList<Transport>();
+        Company companyId = (Company) session.get(Company.class, id);
+        List<Transport> list = session.createQuery("SELECT t FROM Transport t WHERE t.isdeleted = 0 and t.type = :type")
+                .setParameter("type", type)
+                .list();
+        for (Transport s : list) {
+            if (s.getAddedBy().getCompanyId().equals(companyId)) {
+                listF.addAll(list);
+            }
+        }
+
+        return listF;
+    }
+
 }
