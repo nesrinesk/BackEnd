@@ -77,4 +77,9 @@ public class StationService {
         return stationDao.getAllByAdmin(type, adminId);
     }
 
+    @Transactional
+    public List<Station> getAllByCompany(short type, int id) {
+        return stationDao.getAllByCompany(type, id);
+    }
+    
 }

@@ -69,9 +69,14 @@ public class TransportService {
     public List<Transport> getAllByType(short type, short isdeleted) {
         return transportDao.getAllByType(type, isdeleted);
     }
-    
+
     @Transactional
-     public List<Transport> getAllByAdmin(short type, int adminId) {
-       return transportDao.getAllByAdmin(type, adminId);
+    public List<Transport> getAllByAdmin(short type, int adminId) {
+        return transportDao.getAllByAdmin(type, adminId);
+    }
+
+    @Transactional
+    public List<Transport> getAllByCompany(short type, int id) {
+        return transportDao.getAllByCompany(type, id);
     }
 }

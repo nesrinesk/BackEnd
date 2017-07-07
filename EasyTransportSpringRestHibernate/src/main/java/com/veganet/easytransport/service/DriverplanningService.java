@@ -67,8 +67,8 @@ public class DriverplanningService {
     }
 
     @Transactional
-    public List<Driverplanning> getAllByDate(Short type) {
-        return driverplanningDao.getAllByDate( type);
+    public List<Driverplanning> getAllByDate(Short type, int id) {
+        return driverplanningDao.getAllByDate( type, id);
     }
 
     @Transactional

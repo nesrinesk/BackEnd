@@ -50,8 +50,8 @@ public class AlertService {
     }
 
     @Transactional
-    public List<Alert> getAllVisible(Short visibility ,Short type) {
-        return alertDao.getAllVisible(visibility,type);
+    public List<Alert> getAllVisible(Short visibility ,Short type,int id) {
+        return alertDao.getAllVisible(visibility,type, id);
     }
     
       @Transactional
@@ -62,4 +62,14 @@ public class AlertService {
      public List<Alert> getAllBytype(Short type) {
         return alertDao.getAllBytype(type);
     } 
+     
+     @Transactional
+     public List<Alert> getAllByCompany(short type, int id) {
+         return alertDao.getAllByCompany(type, id);
+     }
+     
+     @Transactional
+     public List<Alert> alertNotificationForAdmin(Short visibility, Short type, int id) {
+         return  alertDao.alertNotificationForAdmin(visibility, type, id);
+     }
 }
