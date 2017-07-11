@@ -176,7 +176,7 @@ public class TransportController {
     public List<Transport> getAllByCompany(@PathVariable int id) {
         logger.info("getting all ");
 
-        List<Transport> list = transportService.getAllByAdmin((short) 1, id);
+        List<Transport> list = transportService.getAllByCompany((short) 1, id);
         if (list == null || list.isEmpty()) {
             logger.info("no  found");
         }
@@ -189,7 +189,7 @@ public class TransportController {
     public List<Transport> getTrainsByCompany(@PathVariable int id) {
         logger.info("getting all trains");
 
-        List<Transport> list = transportService.getAllByAdmin((short) 0, id);
+        List<Transport> list = transportService.getAllByCompany((short) 0, id);
         if (list == null || list.isEmpty()) {
             logger.info("no train found");
         }

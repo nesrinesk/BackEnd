@@ -174,7 +174,7 @@ public class DriverplanningController {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/search/{stationStart}/{stationEnd}/{date}/{hour}", method = RequestMethod.GET)
     public List<Driverplanning> search(@PathVariable String stationStart, @PathVariable String stationEnd,
-            @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date date, @PathVariable @DateTimeFormat(pattern = "HH:mm:ss") Date hour) {
+            @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date date, @PathVariable @DateTimeFormat(pattern = "HH:mm:ss") Date hour ) {
         logger.info("search");
 
         List<Driverplanning> list1 = driverplanningService.search(stationStart, stationEnd, date, hour);

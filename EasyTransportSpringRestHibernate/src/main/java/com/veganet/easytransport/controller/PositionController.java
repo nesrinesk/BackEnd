@@ -82,8 +82,8 @@ public class PositionController {
         positionService.deleteById(id);
     }
     ///////////
-    
-     //not deleted 
+
+    //not deleted 
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
@@ -96,7 +96,9 @@ public class PositionController {
         }
         return list;
     }
+
     //add
+
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void add(@RequestBody Positions position) {
@@ -105,12 +107,30 @@ public class PositionController {
         positionService.add(position);
 
     }
-    
-//delete setting isdeleted = 1
 
+//delete setting isdeleted = 1
     @RequestMapping(value = "/delete2/{id}", method = RequestMethod.POST, headers = "Accept=application/json")
     public void delete2(@PathVariable("id") int id) {
         positionService.delete2(id);
     }
-    
+
+    //
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllByTransport/{transportName}", method = RequestMethod.GET)
+    public List<Positions> getAllByTransport(@PathVariable String transportName) {
+        logger.info("getting position with id :" + transportName);
+
+        return positionService.getAllByTransport(transportName);
+    }
+
+    //
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getLastPositionByTransport/{transportName}", method = RequestMethod.GET)
+    public Positions getLastPositionByTransport(@PathVariable String transportName) {
+        return positionService.getLastPositionByTransport(transportName);
+    }
 }
