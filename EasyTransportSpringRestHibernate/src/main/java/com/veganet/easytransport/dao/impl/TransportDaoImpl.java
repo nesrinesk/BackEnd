@@ -10,6 +10,7 @@ import com.veganet.easytransport.entities.Company;
 import com.veganet.easytransport.entities.Transport;
 import com.veganet.easytransport.entities.User;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -100,7 +101,7 @@ public class TransportDaoImpl extends AbstractHibernateDao<Transport> implements
                 .list();
         for (Transport s : list) {
             if (s.getAddedBy().getCompanyId().equals(companyId)) {
-                listF.addAll(list);
+                listF.add(s);
             }
         }
 

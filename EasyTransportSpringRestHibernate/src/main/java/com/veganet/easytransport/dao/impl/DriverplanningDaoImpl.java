@@ -135,16 +135,20 @@ public class DriverplanningDaoImpl extends AbstractHibernateDao<Driverplanning> 
     }
 
     public List<Driverplanning> search(String stationStart, String stationEnd, Date date, Date hour) {
+
         Station stationStartOb;
         Station stationEndOb;
-        //Date hourD;
+                stationEndOb = findStationByName(stationEnd);
+        System.out.println("station end"+ stationEndOb.getStationName());
         stationStartOb = findStationByName(stationStart);
-        stationEndOb = findStationByName(stationEnd);
+
+        Session session = this.sessionFactory.getCurrentSession();
 
         System.out.println("stationStartOb" + stationStartOb.getStationName());
-        Session session = this.sessionFactory.getCurrentSession();
-        Journey journey;
+        //   Company companyId = (Company) session.get(Company.class, id);
+
         List<Driverplanning> listF = new ArrayList<Driverplanning>();
+        // List<Driverplanning> listFinal = new ArrayList<Driverplanning>();
 
         List<Journey> listJ = session.createQuery("SELECT j FROM Journey j WHERE j.stationStartId = :stationStartOb "
                 + "and j.stationEndId = :stationEndOb and TIME(j.dateStart) >= :hour ")
@@ -161,25 +165,29 @@ public class DriverplanningDaoImpl extends AbstractHibernateDao<Driverplanning> 
                     .list();
             listF.addAll(list);
         }
-
+        /*    for (Driverplanning s : listF) {
+         if (s.getUserId().getCompanyId().equals(companyId)) {
+         listFinal.add(s);
+         }
+         }
+         */
         return listF;
     }
 
     public Station findStationByName(String stationName) {
         Session session = this.sessionFactory.getCurrentSession();
-        Station rs;
-        List<Station> list = session.createQuery("SELECT s FROM Station s WHERE s.stationName = :stationName")
-                .setParameter("stationName", stationName).list();
-        rs = list.get(0);
+
+        Station rs = (Station) session.createQuery("SELECT s FROM Station s WHERE s.stationName = :stationName")
+                .setParameter("stationName", stationName).uniqueResult();
+        System.out.println("rs.getStationName()" + rs.getStationName());
         return rs;
     }
 
     public Transport findTransportByName(String transportName) {
         Session session = this.sessionFactory.getCurrentSession();
-        Transport rs;
-        List<Transport> list = session.createQuery("SELECT s FROM Transport s WHERE s.name = :transportName")
-                .setParameter("transportName", transportName).list();
-        rs = list.get(0);
+        Transport rs = (Transport) session.createQuery("SELECT s FROM Transport s WHERE s.name = :transportName")
+                .setParameter("transportName", transportName).uniqueResult();
+
         return rs;
     }
 

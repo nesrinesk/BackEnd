@@ -7,6 +7,7 @@ package com.veganet.easytransport.dao.impl;
 
 import com.veganet.easytransport.dao.impl.AbstractHibernateDao;
 import com.veganet.easytransport.entities.Positions;
+import com.veganet.easytransport.entities.Transport;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,20 +18,21 @@ import org.springframework.stereotype.Repository;
  *
  * @author asus
  */
-    
 @Repository
-public class PositionDao  extends AbstractHibernateDao<Positions>{
-  @Autowired
+public class PositionDao extends AbstractHibernateDao<Positions> {
+
+    @Autowired
     private SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;
     }
+
     public PositionDao() {
         setClazz(Positions.class);
     }
-    
-      //add+ set isdeleted =0
+
+    //add+ set isdeleted =0
     public Positions add(Positions position) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(position);
@@ -43,11 +45,43 @@ public class PositionDao  extends AbstractHibernateDao<Positions>{
         List<Positions> list = session.createQuery("SELECT p FROM Positions p WHERE p.isdeleted = :isdeleted").setParameter("isdeleted", isdeleted).list();
         return list;
     }
+
     // set isdeleted=1
     public void delete2(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         Positions line = (Positions) session.get(Positions.class, id);
 
     }
-}
 
+    public Transport findTransportByName(String transportName) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Transport rs = (Transport) session.createQuery("SELECT s FROM Transport s WHERE s.name = :transportName")
+                .setParameter("transportName", transportName).uniqueResult();
+
+        return rs;
+    }
+
+    public List<Positions> getAllByTransport(String transportName) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Transport deviceId = findTransportByName(transportName);
+
+        List<Positions> list = session.createQuery("SELECT u FROM Positions u WHERE u.deviceId = :deviceId")
+                .setParameter("deviceId", deviceId)
+                .list();
+
+        return list;
+    }
+    
+    public Positions getLastPositionByTransport(String transportName) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Transport deviceId = findTransportByName(transportName);
+
+        List<Positions> list = session.createQuery("SELECT u FROM Positions u WHERE u.deviceId = :deviceId")
+                .setParameter("deviceId", deviceId)
+                .list();
+        int size= list.size();
+        System.out.println("size "+ size);
+        Positions p = (Positions) session.get(Positions.class, size);
+        return p;
+    }
+}

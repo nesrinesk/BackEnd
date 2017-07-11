@@ -10,6 +10,7 @@ import com.veganet.easytransport.entities.Company;
 import com.veganet.easytransport.entities.Station;
 import com.veganet.easytransport.entities.User;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -94,8 +95,10 @@ public class StationDaoImpl extends AbstractHibernateDao<Station> implements Sta
         List<Station> list = session.createQuery("SELECT t FROM Station t WHERE t.isdeleted = 0 and t.type = :type")
                 .setParameter("type", type).list();
          for (Station s : list) {
-            if(s.getAddedBy().getCompanyId().equals(companyId))
-            listF.addAll(list);
+            if(s.getAddedBy().getCompanyId().equals(companyId)){
+                 listF.add(s);
+            }
+           
         }
 
         return listF;
