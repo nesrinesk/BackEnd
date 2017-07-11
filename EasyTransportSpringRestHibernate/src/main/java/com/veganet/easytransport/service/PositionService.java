@@ -64,4 +64,14 @@ public class PositionService {
     public List<Positions> getAll(short isdeleted) {
         return positionDao.getAll(isdeleted);
     }
+
+    @Transactional
+    public List<Positions> getAllByTransport(String transportName) {
+        return positionDao.getAllByTransport(transportName);
+    }
+
+    @Transactional
+    public Positions getLastPositionByTransport(String transportName) {
+        return positionDao.getLastPositionByTransport(transportName);
+    }
 }
