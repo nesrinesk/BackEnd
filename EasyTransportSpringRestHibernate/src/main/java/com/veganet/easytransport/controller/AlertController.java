@@ -77,6 +77,21 @@ public class AlertController {
         logger.info("updated aler with id :" + id);
     }
 
+    //public Alert seen(Alert t) {
+
+    @Consumes(MediaType.APPLICATION_JSON)
+    @RequestMapping(value = "/seen/{id}", method = RequestMethod.POST)
+    public void seen(@PathVariable int id) {
+
+        Alert currentAlert = alertService.findOne(id);
+        logger.info("updating alert with id :" + id);
+        if (currentAlert == null) {
+            logger.info("Alert with id {} not found" + id);
+        }
+        alertService.seen(currentAlert);
+        logger.info("updated aler with id :" + id);
+    }
+
     @RequestMapping(value = "/deleteAlert/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public void deleteAlert(@PathVariable("id") int id) {
         alertService.deleteById(id);
@@ -136,7 +151,7 @@ public class AlertController {
 
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/changeVisibility/{id}", method = RequestMethod.POST)
-    public void changeVisibility(@PathVariable int id, @RequestBody Alert alert) {
+    public void changeVisibility(@PathVariable int id) {
 
         Alert currentAlert = alertService.findOne(id);
         logger.info("updating alert with id :" + id);
@@ -219,4 +234,16 @@ public class AlertController {
         return listOfAlerts;
     }
 
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getNotSeenAlerts/{id}", method = RequestMethod.GET)
+    public List<Alert> getNotSeenAlerts(@PathVariable int id) {
+        logger.info("getting all alerts");
+
+        List<Alert> listOfAlerts = alertService.getNotSeenAlerts(id);
+        if (listOfAlerts == null || listOfAlerts.isEmpty()) {
+            logger.info("no alerts found");
+        }
+        return listOfAlerts;
+    }
 }

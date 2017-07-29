@@ -45,7 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Positions.findByPower", query = "SELECT p FROM Positions p WHERE p.power = :power"),
     @NamedQuery(name = "Positions.findBySpeed", query = "SELECT p FROM Positions p WHERE p.speed = :speed"),
     @NamedQuery(name = "Positions.findByTime", query = "SELECT p FROM Positions p WHERE p.time = :time"),
-    @NamedQuery(name = "Positions.findByValid", query = "SELECT p FROM Positions p WHERE p.valid = :valid")})
+    @NamedQuery(name = "Positions.findByValid", query = "SELECT p FROM Positions p WHERE p.valid = :valid"),
+    @NamedQuery(name = "Positions.findLastPosition", query = "SELECT p FROM Positions p WHERE p.deviceId = :deviceId ORDER BY p.id ASC")})
 public class Positions implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

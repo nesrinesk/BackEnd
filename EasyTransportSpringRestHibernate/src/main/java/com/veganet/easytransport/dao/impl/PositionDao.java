@@ -76,12 +76,16 @@ public class PositionDao extends AbstractHibernateDao<Positions> {
         Session session = this.sessionFactory.getCurrentSession();
         Transport deviceId = findTransportByName(transportName);
 
-        List<Positions> list = session.createQuery("SELECT u FROM Positions u WHERE u.deviceId = :deviceId")
+        Positions p = (Positions) session.createQuery("SELECT u FROM Positions u WHERE u.deviceId = :deviceId ORDER BY u.id DESC")
                 .setParameter("deviceId", deviceId)
-                .list();
-        int size= list.size();
-        System.out.println("size "+ size);
-        Positions p = (Positions) session.get(Positions.class, size);
+                .setMaxResults(1).setFirstResult(0)
+                .list().get(0);
+       // int size= list.size();
+        //System.out.println("size "+ size);
+       // Positions p = (Positions) session.get(Positions.class, size);
+        System.out.println("id pos "+p.getId());
+        System.out.println("long "+p.getLongitude());
+        System.out.println("lat "+p.getLatitude());
         return p;
     }
 }

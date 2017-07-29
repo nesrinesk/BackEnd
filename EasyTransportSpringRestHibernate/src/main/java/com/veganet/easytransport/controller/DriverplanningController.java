@@ -115,7 +115,6 @@ public class DriverplanningController {
     }
 
     //    public List<Driverplanning> getAllByDistinctUser(int id) {
-
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllByDistinctUserBus/{id}", method = RequestMethod.GET)
@@ -132,7 +131,7 @@ public class DriverplanningController {
     public List<User> getAllByDistinctUserTrain(@PathVariable int id) {
         //logger.info("getting transport with id :" + id);
 
-        List<User> list = driverplanningService.getAllByDistinctUser((short)0 , id);
+        List<User> list = driverplanningService.getAllByDistinctUser((short) 0, id);
         return list;
     }
 
@@ -154,7 +153,7 @@ public class DriverplanningController {
     public List<Driverplanning> getAllByDateBus(@PathVariable int id) {
         logger.info("getAllByDateBus");
 
-        List<Driverplanning> list1 = driverplanningService.getAllByDate((short) 1 ,id);
+        List<Driverplanning> list1 = driverplanningService.getAllByDate((short) 1, id);
 
         return list1;
     }
@@ -165,7 +164,7 @@ public class DriverplanningController {
     public List<Driverplanning> getAllByDateTrain(@PathVariable int id) {
         logger.info("getAllByDateTrain");
 
-        List<Driverplanning> list1 = driverplanningService.getAllByDate((short) 0,id);
+        List<Driverplanning> list1 = driverplanningService.getAllByDate((short) 0, id);
 
         return list1;
     }
@@ -174,7 +173,7 @@ public class DriverplanningController {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/search/{stationStart}/{stationEnd}/{date}/{hour}", method = RequestMethod.GET)
     public List<Driverplanning> search(@PathVariable String stationStart, @PathVariable String stationEnd,
-            @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date date, @PathVariable @DateTimeFormat(pattern = "HH:mm:ss") Date hour ) {
+            @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date date, @PathVariable @DateTimeFormat(pattern = "HH:mm:ss") Date hour) {
         logger.info("search");
 
         List<Driverplanning> list1 = driverplanningService.search(stationStart, stationEnd, date, hour);
@@ -184,11 +183,11 @@ public class DriverplanningController {
 
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @RequestMapping(value = "/searchByTrain/{transportName}/{date}", method = RequestMethod.GET)
-    public List<Driverplanning> searchByTrain(@PathVariable String transportName, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") Date date) {
+    @RequestMapping(value = "/searchByTrain/{transportName}", method = RequestMethod.GET)
+    public Driverplanning searchByTrain(@PathVariable String transportName) {
         logger.info("searchByTrain");
 
-        List<Driverplanning> list1 = driverplanningService.searchByTrain(transportName, date);
+        Driverplanning list1 = driverplanningService.searchByTrain(transportName);
 
         return list1;
     }
@@ -211,4 +210,24 @@ public class DriverplanningController {
         return list1;
     }
 
+    //        public ArrayList<ArrayList<String>> latlong(String stationStart, String stationEnd, Date date, Date hour) {
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/latlong/{id}", method = RequestMethod.GET)
+    public ArrayList<String> latlong(@PathVariable int id) {
+        logger.info("search");
+
+       ArrayList<String> list1 = driverplanningService.latlong(id);
+
+        return list1;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/sumTime/{myTime}/{min}", method = RequestMethod.GET)
+    public String sumTime(@PathVariable String myTime, @PathVariable int min) {
+        //logger.info("getting Driverplanning with id :" + id);
+
+        return driverplanningService.sumTime(myTime, min);
+    }
 }

@@ -5,8 +5,16 @@
  */
 package com.veganet.easytransport.controller;
 
+import com.veganet.easytransport.entities.Driverplanning;
+import com.veganet.easytransport.entities.Station;
 import com.veganet.easytransport.entities.User;
+import com.veganet.easytransport.insertPosition.InsertThread;
+import com.veganet.easytransport.service.DriverplanningService;
+import com.veganet.easytransport.service.TransportService;
 import com.veganet.easytransport.service.UserService;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,8 +52,26 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    TransportService transportService;
+    @Autowired
+    DriverplanningService driverplanningService;
 
+    public static String device_name;
+    public static Driverplanning journey;
+    public static String startStation;
+    public static String endStation;
+    public static ArrayList<ArrayList<Double>> listOLists;
+    public static ArrayList<Double> singleList;
+    public static List<Station> linesStation;
+    public static Double stationStartLong;
+    public static Double stationStartLat;
+    public static Double stationEndLong;
+    public static Double stationEndLat;
+    public static Date startDate;
+    public static Date endDate;
     String connectedUserName;
+    int deice_id = 1;
 
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -61,7 +87,21 @@ public class LoginController {
             connectedUserName = username;
 
             logger.info("connectedUserName " + connectedUserName);
+            //thread preparation
 
+           device_name = transportService.findOne(deice_id).getName();
+            System.out.println("device_name "+device_name);
+            journey = driverplanningService.searchByTrain(device_name);
+            startStation = journey.getJourneyId().getStationStartId().getStationName();
+            System.out.println("startStation "+startStation);
+            stationStartLong=journey.getJourneyId().getStationStartId().getLongitude();
+            stationStartLat=journey.getJourneyId().getStationStartId().getLatitude();
+            endStation = journey.getJourneyId().getStationEndId().getStationName();
+            stationEndLong= journey.getJourneyId().getStationEndId().getLongitude();
+            stationEndLat= journey.getJourneyId().getStationEndId().getLatitude();
+            startDate= journey.getJourneyId().getDateStart();
+            linesStation = driverplanningService.searchStations(startStation, endStation);
+       //  new Thread(new InsertThread()).start();
         } catch (Exception e) {
             SecurityContextHolder.getContext().setAuthentication(null);
             logger.error("Failure in autoLogin", e);
@@ -84,6 +124,9 @@ public class LoginController {
     @RequestMapping(value = "/findConnectedUser", method = RequestMethod.GET)
     public User findByUserName() {
         logger.info("getting user with id :" + connectedUserName);
+
+        userService.findByUserName(connectedUserName);
+
         return userService.findByUserName(connectedUserName);
     }
 

@@ -53,16 +53,20 @@ public class Alert implements Serializable {
     private String description;
     @Column(name = "STATUS")
     private Short status;
-    
+     @Column(name = "LONGITUDE")
+    private Double longitude;
+    @Column(name = "LATITUDE")
+    private Double latitude;
     @Column(name = "TYPE")
     private Short type;
-    
+    @Column(name = "SEEN")
+    private Short seen;
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
     @Column(name = "VISIBILITY")
     private Short visibility;
-   @JoinColumn(name = "JOURNEY_ID", referencedColumnName = "JOURNEY_ID")
+    @JoinColumn(name = "JOURNEY_ID", referencedColumnName = "JOURNEY_ID")
     @ManyToOne
     private Journey journeyId;
 
@@ -111,6 +115,14 @@ public class Alert implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Short getSeen() {
+        return seen;
+    }
+
+    public void setSeen(Short seen) {
+        this.seen = seen;
     }
 
     public Short getType() {
@@ -184,6 +196,23 @@ public class Alert implements Serializable {
     public void setLineId(Line lineId) {
         this.lineId = lineId;
     }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+    
 
  
 

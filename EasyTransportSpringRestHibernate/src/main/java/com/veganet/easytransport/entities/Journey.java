@@ -5,7 +5,11 @@
  */
 package com.veganet.easytransport.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.veganet.easytransport.config.JsonDateSerializer;
+import com.veganet.easytransport.config.MyDateConverter;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -24,6 +28,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  *
@@ -53,6 +58,8 @@ public class Journey implements Serializable {
     @Size(max = 254)
     @Column(name = "JOURNEY_NAME")
     private String journeyName;
+    //@JsonDeserialize(converter = MyDateConverter.class)
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss", timezone = "CET")
     @Column(name = "DATE_END")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateEnd;
@@ -62,6 +69,9 @@ public class Journey implements Serializable {
     @Size(max = 254)
     @Column(name = "DELAY")
     private String delay;
+    //@JsonDeserialize(converter = MyDateConverter.class)
+
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss", timezone = "CET")
     @Column(name = "DATE_START")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateStart;

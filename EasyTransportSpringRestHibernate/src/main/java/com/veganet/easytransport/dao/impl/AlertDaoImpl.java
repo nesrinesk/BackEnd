@@ -28,27 +28,29 @@ import org.springframework.stereotype.Repository;
 @Repository
 
 public class AlertDaoImpl extends AbstractHibernateDao<Alert> implements AlertDao {
-
+    
     @Autowired
     private SessionFactory sessionFactory;
-
+    
     @Override
     public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;
     }
-
+    
     public AlertDaoImpl() {
         setClazz(Alert.class);
     }
-
+    
     public Alert add(Alert t) {
         Session session = this.sessionFactory.getCurrentSession();
         t.setVisibility((short) 0);
+        t.setSeen((short) 0);
+        t.setType((short) 1);
         session.persist(t);
-
+        
         return t;
     }
-
+    
     public Alert changeVisibility(Alert t) {
         Session session = this.sessionFactory.getCurrentSession();
         if (t.getVisibility() == (short) 1) {
@@ -58,10 +60,19 @@ public class AlertDaoImpl extends AbstractHibernateDao<Alert> implements AlertDa
         }
         // t.setVisibility((short) 1);
         session.update(t);
-
+        
         return t;
     }
-
+    
+    public Alert seen(Alert t) {
+        Session session = this.sessionFactory.getCurrentSession();
+        t.setSeen((short) 1);
+        // t.setVisibility((short) 1);
+        session.update(t);
+        
+        return t;
+    }
+    
     public List<Alert> getAllBytype(Short type) {
         Session session = this.sessionFactory.getCurrentSession();
         List<Alert> list = session.createQuery("SELECT t FROM Alert t "
@@ -69,7 +80,7 @@ public class AlertDaoImpl extends AbstractHibernateDao<Alert> implements AlertDa
                 .setParameter("type", type).list();
         return list;
     }
-
+    
     public List<Alert> getAllByCompany(short type, int id) {
         List<Alert> finalList = new ArrayList<Alert>();
         Session session = this.sessionFactory.getCurrentSession();
@@ -84,13 +95,13 @@ public class AlertDaoImpl extends AbstractHibernateDao<Alert> implements AlertDa
         }
         return finalList;
     }
-
+    
     public List<Alert> getAllVisible(Short visibility, Short type, int id) {
         List<Alert> finalList = new ArrayList<Alert>();
-
+        
         Session session = this.sessionFactory.getCurrentSession();
         Company companyId = (Company) session.get(Company.class, id);
-
+        
         List<Alert> list = session.createQuery("SELECT t FROM Alert t "
                 + "WHERE t.visibility = :visibility and t.type = :type")
                 .setParameter("visibility", visibility)
@@ -102,34 +113,51 @@ public class AlertDaoImpl extends AbstractHibernateDao<Alert> implements AlertDa
         }
         return finalList;
     }
-
+    
     public List<Alert> alertNotificationForAdmin(Short visibility, Short type, int id) {
         List<Alert> finalList = new ArrayList<Alert>();
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
+        
         Date today = new Date();
-
+        
         Date todayWithZeroTime;
         try {
             todayWithZeroTime = formatter.parse(formatter.format(today));
-        
-        System.out.println("date" + today);
-        System.out.println("todayWithZeroTime" + todayWithZeroTime);
+            
+            System.out.println("date" + today);
+            System.out.println("todayWithZeroTime" + todayWithZeroTime);
+            
+            Session session = this.sessionFactory.getCurrentSession();
+            Company companyId = (Company) session.get(Company.class, id);
+            List<Alert> list = session.createQuery("SELECT t FROM Alert t "
+                    + "WHERE t.visibility = :visibility and t.type = :type and Date(t.creationDate) = :todayWithZeroTime")
+                    .setParameter("visibility", visibility)
+                    .setParameter("todayWithZeroTime", todayWithZeroTime)
+                    .setParameter("type", type).list();
+            for (Alert u : list) {
+                if ((u.getAddedBy().getCompanyId().equals(companyId)) && (u.getAddedBy().getAccessLevel().equals("ROLE_ADMIN"))) {
+                    finalList.add(u);
+                }
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(AlertDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return finalList;
+    }
+    
+    public List<Alert> getNotSeenAlerts(int id) {
+        List<Alert> finalList = new ArrayList<Alert>();
         
         Session session = this.sessionFactory.getCurrentSession();
         Company companyId = (Company) session.get(Company.class, id);
+        
         List<Alert> list = session.createQuery("SELECT t FROM Alert t "
-                + "WHERE t.visibility = :visibility and t.type = :type and Date(t.creationDate) = :todayWithZeroTime")
-                .setParameter("visibility", visibility)
-                .setParameter("todayWithZeroTime", todayWithZeroTime)
-                .setParameter("type", type).list();
+                + "WHERE t.seen = 0")
+                .list();
         for (Alert u : list) {
-            if ((u.getAddedBy().getCompanyId().equals(companyId)) && (u.getAddedBy().getAccessLevel().equals("ROLE_ADMIN"))) {
+            if ((u.getAddedBy().getCompanyId().equals(companyId))) {
                 finalList.add(u);
             }
-        }
-        } catch (ParseException ex) {
-            Logger.getLogger(AlertDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return finalList;
     }
