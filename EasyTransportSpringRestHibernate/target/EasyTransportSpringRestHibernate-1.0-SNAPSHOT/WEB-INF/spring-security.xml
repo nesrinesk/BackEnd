@@ -33,7 +33,7 @@
         <intercept-url pattern="/transports/**" access="permitAll"/>
         <intercept-url pattern="/journeys/**" access="permitAll"/>
         <intercept-url pattern="/lines/**" access="permitAll"/>
-        <intercept-url pattern="/favorites/**" access="hasAnyRole('ROLE_SADMIN', 'ROLE_TRAVELER')"/>
+        <intercept-url pattern="/favorites/**" access="permitAll"/>
 
         <intercept-url pattern="/security/**" access="permitAll"/>
  

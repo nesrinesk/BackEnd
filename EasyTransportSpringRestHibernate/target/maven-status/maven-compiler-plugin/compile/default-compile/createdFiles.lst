@@ -1,5 +1,6 @@
 com\veganet\easytransport\controller\JourneylocalisationController.class
 com\veganet\easytransport\controller\JourneyplanningController.class
+com\veganet\easytransport\insertPosition\InsertThread.class
 com\veganet\easytransport\dao\impl\UserDaoImpl.class
 com\veganet\easytransport\controller\LoginController.class
 com\veganet\easytransport\dao\FavoriteDao.class
@@ -16,6 +17,7 @@ com\veganet\easytransport\controller\TransportController.class
 com\veganet\easytransport\entities\Positions.class
 com\veganet\easytransport\controller\AlertController.class
 com\veganet\easytransport\entities\Passage.class
+com\veganet\easytransport\config\JsonDateSerializer.class
 com\veganet\easytransport\entities\Company.class
 com\veganet\easytransport\service\PositionService.class
 com\veganet\easytransport\dao\impl\RelatedtoDaoImpl.class
@@ -28,6 +30,7 @@ com\veganet\easytransport\dao\impl\FavoriteDaoImpl.class
 com\veganet\easytransport\dao\JourneyDao.class
 com\veganet\easytransport\controller\UserController.class
 com\veganet\easytransport\service\TransportService.class
+com\veganet\easytransport\config\MyDateConverter.class
 com\veganet\easytransport\dao\impl\AlertDaoImpl.class
 com\veganet\easytransport\service\CompanyService.class
 com\veganet\easytransport\service\StationService.class
@@ -53,6 +56,7 @@ com\veganet\easytransport\dao\impl\JourneyDaoImpl.class
 com\veganet\easytransport\service\JourneyplanningService.class
 com\veganet\easytransport\dao\impl\AbstractHibernateDao.class
 com\veganet\easytransport\dao\DriverplanningDao.class
+com\veganet\easytransport\config\JavaConfigurator.class
 com\veganet\easytransport\dao\StationDao.class
 com\veganet\easytransport\dao\impl\JourneylocalisationDaoImpl.class
 com\veganet\easytransport\service\AbstractService.class
