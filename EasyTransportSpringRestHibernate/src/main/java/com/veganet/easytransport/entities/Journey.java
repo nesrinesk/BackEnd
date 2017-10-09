@@ -71,8 +71,8 @@ public class Journey implements Serializable {
     private String delay;
     //@JsonDeserialize(converter = MyDateConverter.class)
 
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss", timezone = "CET")
-    @Column(name = "DATE_START")
+//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+       @Column(name = "DATE_START")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateStart;
     @Column(name = "VISIBILITY")
@@ -131,6 +131,7 @@ public class Journey implements Serializable {
     public void setJourneyName(String journeyName) {
         this.journeyName = journeyName;
     }
+@JsonSerialize(using = JsonDateSerializer.class)
 
     public Date getDateEnd() {
         return dateEnd;
@@ -155,7 +156,7 @@ public class Journey implements Serializable {
     public void setDelay(String delay) {
         this.delay = delay;
     }
-
+@JsonSerialize(using = JsonDateSerializer.class)
     public Date getDateStart() {
         return dateStart;
     }

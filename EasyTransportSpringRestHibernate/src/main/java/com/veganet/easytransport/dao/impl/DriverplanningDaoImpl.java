@@ -247,7 +247,46 @@ Transport rs = list.get(0);
         //System.out.println("final list"+ listStationF.get(0).getStationName());
         return stationsName;
     }
+//list of delays for a line 
+    
+    public List<Integer> searchDelays(String stationStart, String stationEnd) {
+        Station stationStartOb;
+        Station stationEndOb;
 
+        Short isdeleted = 0;
+        //Date hourD;
+        stationStartOb = findStationByName(stationStart);
+        stationEndOb = findStationByName(stationEnd);
+//
+        List<Integer> list = new ArrayList<Integer>();
+        //
+        System.out.println("stationStartOb" + stationStartOb.getStationName());
+        Session session = this.sessionFactory.getCurrentSession();
+        Journey journey;
+        List<Station> listStationF = null;
+
+        List<Journey> listJ = session.createQuery("SELECT j FROM Journey j WHERE j.stationStartId = :stationStartOb "
+                + "and j.stationEndId = :stationEndOb and j.isdeleted = :isdeleted")
+                .setParameter("isdeleted", isdeleted)
+                .setParameter("stationStartOb", stationStartOb)
+                .setParameter("stationEndOb", stationEndOb)
+                .list();
+        journey = listJ.get(0);
+
+        List<Line> listLine = session.createQuery("SELECT j.lineId FROM Journeylocalisation j WHERE j.journeyId = :journey")
+                .setParameter("journey", journey)
+                .list();
+        for (Line l : listLine) {
+            Integer listStation =(Integer) session.createQuery("SELECT j.delay FROM Relatedto j WHERE j.lineId = :l")
+                    .setParameter("l", l)
+                    .uniqueResult();
+            list.add(listStation);
+
+        }
+      //  System.out.println("stations name" + stationsName);
+        //System.out.println("final list"+ listStationF.get(0).getStationName());
+        return list;
+    }
     /*
      recherche d'un bus : 
      recherche des stations en indiquant la date et le moyen de transport

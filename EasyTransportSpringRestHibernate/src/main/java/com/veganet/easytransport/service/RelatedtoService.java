@@ -62,6 +62,16 @@ public class RelatedtoService {
 
     @Transactional
     public Relatedto getlaststation(short tag, int id) {
-        return relatedtoDao.getlaststation(tag,id);
+        return relatedtoDao.getlaststation(tag, id);
+    }
+
+    @Transactional
+    public void updateIndexLine(Line line, int index) {
+        relatedtoDao.updateIndexLine(line, index);
+    }
+
+    @Transactional
+    public int getIndexLine(int lineId) {
+        return relatedtoDao.getIndexLine(lineId);
     }
 }

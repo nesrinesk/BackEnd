@@ -5,19 +5,34 @@
  */
 package com.veganet.easytransport.controller;
 
+import com.veganet.easytransport.entities.Driverplanning;
 import com.veganet.easytransport.entities.Favorite;
+import com.veganet.easytransport.pushNotification.helpers.AndroidPushNotificationsService;
+import com.veganet.easytransport.pushNotification.helpers.FirebaseResponse;
 import com.veganet.easytransport.service.FavoriteService;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  *
@@ -32,25 +47,39 @@ public class FavoriteController {
     @Autowired
     FavoriteService favoriteService;
 
+    @Autowired
+    AndroidPushNotificationsService androidPushNotificationsService;
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+
+    @RequestMapping(value = "/send", method = RequestMethod.GET)
+    public ResponseEntity<String> send() {
+
+        return favoriteService.send();
+    }
+
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getAllFavorites", method = RequestMethod.GET)
     public List<Favorite> getFavorites() {
         logger.info("getting all favorites");
+//
 
+        //
         List<Favorite> listOfFavorites = favoriteService.findAll();
         if (listOfFavorites == null || listOfFavorites.isEmpty()) {
             logger.info("no favorites found");
         }
         return listOfFavorites;
     }
-    
+
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getFavorite/{id}", method = RequestMethod.GET)
     public Favorite getFavoriteById(@PathVariable int id) {
-        logger.info("getting favorite with id :"+id);
-        
+        logger.info("getting favorite with id :" + id);
+
         return favoriteService.findOne(id);
     }
 
@@ -62,23 +91,38 @@ public class FavoriteController {
         favoriteService.create(favorite);
 
     }
+
     @Consumes(MediaType.APPLICATION_JSON)
 
     @RequestMapping(value = "/updateFavorite/{id}", method = RequestMethod.POST)
-    public void updateFavorite(@PathVariable int id,@RequestBody Favorite favorite) {
-       
+    public void updateFavorite(@PathVariable int id, @RequestBody Favorite favorite) {
+
         Favorite currentFavorite = favoriteService.findOne(id);
-         logger.info("updating favorite with id :"+id);
-          if (currentFavorite==null) {
-               logger.info("Favorite with id {} not found"+ id);
-           }
-          favoriteService.update(favorite);
-          logger.info("updated favorite with id :"+id);
+        logger.info("updating favorite with id :" + id);
+        if (currentFavorite == null) {
+            logger.info("Favorite with id {} not found" + id);
         }
-    
+        favoriteService.update(favorite);
+        logger.info("updated favorite with id :" + id);
+    }
 
     @RequestMapping(value = "/deleteFavorite/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public void deleteFavorite(@PathVariable("id") int id) {
         favoriteService.deleteById(id);
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getAllFavoritesByUser/{id}", method = RequestMethod.GET)
+    public List<Driverplanning> getFavoritesByUser(@PathVariable int id) {
+        logger.info("getting all favorites");
+//
+
+        //
+        List<Driverplanning> listOfFavorites = favoriteService.getAllByUser(id);
+        if (listOfFavorites == null || listOfFavorites.isEmpty()) {
+            logger.info("no favorites found");
+        }
+        return listOfFavorites;
     }
 }

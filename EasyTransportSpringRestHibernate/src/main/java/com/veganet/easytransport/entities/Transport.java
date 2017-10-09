@@ -82,6 +82,10 @@ public class Transport implements Serializable {
     @Column(name = "SPEED_AVERAGE")
     private Double speedAverage;
 
+    @Column(name = "REALTIMESTART")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date realTimeStart;
+
     @Column(name = "CAPACITY")
     private Integer capacity;
 
@@ -185,6 +189,14 @@ public class Transport implements Serializable {
 
     public void setSpeedMax(Double speedMax) {
         this.speedMax = speedMax;
+    }
+
+    public Date getRealTimeStart() {
+        return realTimeStart;
+    }
+
+    public void setRealTimeStart(Date realTimeStart) {
+        this.realTimeStart = realTimeStart;
     }
 
     public Double getSpeedAverage() {

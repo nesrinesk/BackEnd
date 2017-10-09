@@ -99,4 +99,13 @@ public class CompanyController {
     public void delete2(@PathVariable("id") int id) {
         companyService.delete2(id);
     }
+    
+       @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RequestMapping(value = "/getCompanyByName/{name}", method = RequestMethod.GET)
+    public Company getCompanyByName(@PathVariable String name) {
+       // logger.info("getting company with id :" + id);
+
+        return companyService.findCompanyByName(name);
+    }
 }

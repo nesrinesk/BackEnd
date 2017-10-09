@@ -50,6 +50,7 @@ public class JourneyController {
     @RequestMapping(value = "/getJourney/{id}", method = RequestMethod.GET)
     public Journey getJourneyById(@PathVariable int id) {
         logger.info("getting journey with id :" + id);
+        logger.info("getting date start :" + journeyService.findOne(id).getDateStart());
 
         return journeyService.findOne(id);
     }

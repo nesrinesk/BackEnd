@@ -24,7 +24,7 @@ import org.springframework.test.context.TestExecutionListeners;
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration("file:src/main/webapp/WEB-INF/spring-servlet.xml")
 //
-//@Transactional
+@Transactional
 public class UserDaoTest {
 
 //    @Autowired(required = true)

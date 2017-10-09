@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -52,6 +54,10 @@ public class Line implements Serializable {
     @Size(max = 254)
     @Column(name = "NAME")
     private String name;
+
+    @Column(name = "INDEXLINE")
+    private int index;
+
     @JsonIgnore
     @OneToMany(mappedBy = "lineId")
     private Collection<Journeylocalisation> journeylocalisationCollection;
@@ -69,6 +75,9 @@ public class Line implements Serializable {
     @Column(name = "TYPE")
     private Short type;
 
+    @Transient
+    private List<String> delayList;
+
     public Line() {
     }
 
@@ -82,6 +91,14 @@ public class Line implements Serializable {
 
     public void setLineId(Integer lineId) {
         this.lineId = lineId;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public Short getType() {
@@ -144,6 +161,14 @@ public class Line implements Serializable {
     @JsonIgnore
     public void setAlertCollection(Collection<Alert> alertCollection) {
         this.alertCollection = alertCollection;
+    }
+
+    public List<String> getDelayList() {
+        return delayList;
+    }
+
+    public void setDelayList(List<String> delayList) {
+        this.delayList = delayList;
     }
 
     @Override

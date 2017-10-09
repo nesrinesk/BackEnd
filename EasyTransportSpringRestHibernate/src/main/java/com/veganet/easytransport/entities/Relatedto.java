@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -50,7 +51,9 @@ public class Relatedto implements Serializable {
     private Date date;
     @Column(name = "TAG")
     private Short tag;
-
+    @Size(max = 254)
+    @Column(name = "DELAY")
+    private String delay;
     @JoinColumn(name = "LINE_ID", referencedColumnName = "LINE_ID")
     @ManyToOne
     private Line lineId;
@@ -111,6 +114,14 @@ public class Relatedto implements Serializable {
 
     public void setStationId(Station stationId) {
         this.stationId = stationId;
+    }
+
+    public String getDelay() {
+        return delay;
+    }
+
+    public void setDelay(String delay) {
+        this.delay = delay;
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.veganet.easytransport.dao.impl.AbstractHibernateDao;
 import com.veganet.easytransport.entities.Line;
 import com.veganet.easytransport.entities.Relatedto;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,23 @@ public class RelatedtoDaoImpl extends AbstractHibernateDao<Relatedto> implements
         Relatedto object = (Relatedto) session.createQuery("SELECT r FROM Relatedto r WHERE r.tag = :tag and r.lineId = :lineId ")
                 .setParameter("tag", tag).setParameter("lineId", lineId).uniqueResult();
         return object;
+    }
+
+    public void updateIndexLine(Line line, int index) {
+        Session session = this.sessionFactory.getCurrentSession();
+        /*   Line lineId = (Line) session.get(Line.class, id);
+         Relatedto object = (Relatedto) session.createQuery("SELECT r FROM Relatedto r WHERE r.tag = :tag and r.lineId = :lineId ")
+         .setParameter("index", index).uniqueResult();*/
+        line.setIndex(index);
+        session.update(line);
+
+    }
+
+    public int getIndexLine(int lineId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Line object = (Line) session.createQuery("SELECT r FROM Line r WHERE r.lineId = :lineId ")
+               .setParameter("lineId", lineId).uniqueResult();
+        return object.getIndex();
+
     }
 }

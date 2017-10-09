@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 //@CrossOrigin(origins = "http://127.0.0.1:3000")
 public class RelatedtoController {
 
+    // int i = 0;
     private static final org.jboss.logging.Logger logger = org.jboss.logging.Logger.getLogger(RelatedtoController.class);
     @Autowired
     RelatedtoService relatedtoService;
@@ -59,8 +60,20 @@ public class RelatedtoController {
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/addRelatedto", method = RequestMethod.POST)
     public void create(@RequestBody Relatedto relatedto) {
-        logger.info("creating new transport: {}");
+        /*  for (int i = 0; i < relatedto.getLineId().getDelayList().size(); i++) {
+         logger.info(relatedto.getLineId().getDelayList().get(i)); 
+         }
+         */
+        logger.info("creating new related to : {} ");
+        int i = relatedtoService.getIndexLine(relatedto.getLineId().getLineId());
+        logger.info("index: {} " + i);
+        logger.info("delay " + relatedto.getLineId().getDelayList().get(i));
 
+//relatedto.getLineId().getIndex();
+        // logger.info("delay "+relatedto.getLineId().getDelayList().get(i));
+        relatedto.setDelay(relatedto.getLineId().getDelayList().get(i));
+        
+        relatedtoService.updateIndexLine(relatedto.getLineId(), i+1);
         relatedtoService.create(relatedto);
 
     }

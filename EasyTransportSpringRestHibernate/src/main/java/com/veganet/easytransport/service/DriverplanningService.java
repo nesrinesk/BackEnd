@@ -99,6 +99,11 @@ public class DriverplanningService {
     }
 
     @Transactional
+    public List<Integer> searchDelays(String stationStart, String stationEnd) {
+        return driverplanningDao.searchDelays(stationStart, stationEnd);
+    }
+
+    @Transactional
     public List<Driverplanning> searchByStationName(String stationName) {
         return driverplanningDao.searchByStationName(stationName);
     }
@@ -106,7 +111,7 @@ public class DriverplanningService {
     @Transactional
     public String sumTime(String myTime, int min) {
         //     String myTime = "14:10";
-      //  Format formatter = new SimpleDateFormat("HH:mm");
+        //  Format formatter = new SimpleDateFormat("HH:mm");
         //String myTime = formatter.format(time);
         SimpleDateFormat df = new SimpleDateFormat("HH:mm");
         Date d;
@@ -124,11 +129,10 @@ public class DriverplanningService {
         return "";
 
     }
-    
-    @Transactional
-        public ArrayList<String> latlong(int id){
-               return driverplanningDao.latlong(id);
-        }
 
-            
+    @Transactional
+    public ArrayList<String> latlong(int id) {
+        return driverplanningDao.latlong(id);
+    }
+
 }

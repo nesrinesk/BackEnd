@@ -5,6 +5,7 @@ com\veganet\easytransport\dao\impl\UserDaoImpl.class
 com\veganet\easytransport\controller\LoginController.class
 com\veganet\easytransport\dao\FavoriteDao.class
 com\veganet\easytransport\entities\Journey.class
+com\veganet\easytransport\pushNotification\helpers\FirebaseResponse.class
 com\veganet\easytransport\controller\PassageController.class
 com\veganet\easytransport\entities\Favorite.class
 com\veganet\easytransport\dao\JourneylocalisationDao.class
@@ -12,12 +13,15 @@ com\veganet\easytransport\entities\Alert.class
 com\veganet\easytransport\dao\impl\JourneyplanningDaoImpl.class
 com\veganet\easytransport\service\PassageService.class
 com\veganet\easytransport\entities\Station.class
+com\veganet\easytransport\pushNotification\helpers\AndroidPushNotificationsService.class
 com\veganet\easytransport\controller\DriverplanningController.class
+com\veganet\easytransport\insertPosition\InsertionExecutorService.class
 com\veganet\easytransport\controller\TransportController.class
 com\veganet\easytransport\entities\Positions.class
 com\veganet\easytransport\controller\AlertController.class
 com\veganet\easytransport\entities\Passage.class
 com\veganet\easytransport\config\JsonDateSerializer.class
+com\veganet\easytransport\pushNotification\helpers\HeaderRequestInterceptor.class
 com\veganet\easytransport\entities\Company.class
 com\veganet\easytransport\service\PositionService.class
 com\veganet\easytransport\dao\impl\RelatedtoDaoImpl.class
@@ -57,6 +61,7 @@ com\veganet\easytransport\service\JourneyplanningService.class
 com\veganet\easytransport\dao\impl\AbstractHibernateDao.class
 com\veganet\easytransport\dao\DriverplanningDao.class
 com\veganet\easytransport\config\JavaConfigurator.class
+com\veganet\easytransport\service\PushService.class
 com\veganet\easytransport\dao\StationDao.class
 com\veganet\easytransport\dao\impl\JourneylocalisationDaoImpl.class
 com\veganet\easytransport\service\AbstractService.class
@@ -70,7 +75,6 @@ com\veganet\easytransport\controller\PositionController.class
 com\veganet\easytransport\dao\TransportDao.class
 com\veganet\easytransport\dao\JourneyplanningDao.class
 com\veganet\easytransport\entities\Journeylocalisation.class
-com\veganet\easytransport\config\CORSFilter.class
 com\veganet\easytransport\dao\LineDao.class
 com\veganet\easytransport\service\DriverplanningService.class
 com\veganet\easytransport\service\FavoriteService.class

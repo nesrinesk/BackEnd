@@ -80,7 +80,6 @@ public class UserController {
     }
 
     // public List<User> getDriversByCompany(int id)
-
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getDriversByCompany/{id}", method = RequestMethod.GET)
@@ -94,17 +93,18 @@ public class UserController {
         return list;
     }
 // public User getCompanyAdmin(int id) 
-   @Produces(MediaType.APPLICATION_JSON)
+
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @RequestMapping(value = "/getCompanyAdmin/{id}", method = RequestMethod.GET)
     public User getCompanyAdmin(@PathVariable int id) {
         logger.info("getting all drivers");
 
         User list = userService.getCompanyAdmin(id);
-       
+
         return list;
-    }  
-    
+    }
+
 //travelers
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -189,13 +189,15 @@ public class UserController {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setFrom("Administrator");
+            helper.setFrom("Administrateur");
             helper.setTo(user.getEmail());
-            helper.setSubject("Registration confirmation");
+            helper.setSubject("Votre compte EasyTransport");
 
-            String text = "Thank you for your registration. Your login details are:<br />"
-                    + "username:<b>" + user.getUserName() + "</b><br />"
-                    + "password:<b>" + user.getPassword() + "</b>";
+            String text = "Bonjour " + user.getFirstName() + " " + user.getLastName() + ",<br />"
+                    + "Merci pour votre inscription sur EasyTransport <br />"
+                    + "Utilisez les paramètres d'accès suivants pour vous connecter au site: <br />"
+                    + "Nom d'utilisateur:<b>" + user.getUserName() + "</b><br />"
+                    + "Mot de passe:<b>" + user.getPassword() + "</b>";
 
             helper.setText(text, true);
             mailSender.send(message);

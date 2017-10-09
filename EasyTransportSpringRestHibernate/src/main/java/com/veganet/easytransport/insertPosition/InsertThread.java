@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import static java.time.LocalDateTime.now;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -82,7 +83,7 @@ public class InsertThread extends Thread {
         double course = 250;
         int nbPosition = 0;
         java.util.Date date = new java.util.Date();
-
+        int id = 8025;
 //        Transport device = transportDao.findOne(device_id);
 //        System.out.println("transport name " + device.getName());
 //        Driverplanning driverplanning = driverplanningDao.searchByTrain(device.getName()); // searchByTrain(device.getName());
@@ -126,8 +127,9 @@ public class InsertThread extends Thread {
                     //logitude = logitude + 0.001;
                     int rs = stmt.executeUpdate("INSERT INTO `positions` ( `altitude`, `course`,`latitude`, `longitude`, `other`, `POWER`, "
                             + "`speed`, `time`, `valid`, `device_id`) VALUES"
-                            + "(0, " + course + ", " + latitude + ", " + longitude + ", '<info><sat>5</sat><acc>true</acc><mcc>605</mcc><mnc>2</mnc><lac>130</lac><cell>1352</cell><index>536</index><ip>197.7.13.6</ip></info>', 0, 0, '" + timestamp + "', 1,  1);");
+                            + "("+0+", " + course + ", " + latitude + ", " + longitude + ", '<info><sat>5</sat><acc>true</acc><mcc>605</mcc><mnc>2</mnc><lac>130</lac><cell>1352</cell><index>536</index><ip>197.7.13.6</ip></info>', 0, 0, '" + timestamp + "', 1,  1);");
                     // System.out.println(" insertion done");
+                           // id++;
                     System.out.println("test");
                     //   System.out.println("station long " + LoginController.stationStartLong);
                     //   System.out.println("station lat " + LoginController.stationStartLat);
@@ -187,10 +189,34 @@ public class InsertThread extends Thread {
                                 System.out.print("start " + diffMinutes + " minutes,  ");
                                 System.out.print("start " + diffSeconds + " seconds.");
                                 //   System.out.println("retard : ");
-                                String updateTableSQL = "UPDATE transport SET DELAY = "+diffMinutes+" WHERE TRANSPORT_ID = "+device_id;
+                               // String updateTableSQL = "UPDATE transport SET DELAY = "+diffMinutes+" AND REALTIMESTART= "+ timestamp+" WHERE TRANSPORT_ID = "+device_id;
 
-                              int rs2= stmt.executeUpdate(updateTableSQL);
+                            //  int rs2= stmt.executeUpdate(updateTableSQL);
+/*
+                                  for (Station col : LoginController.linesStation) {
+                                   Boolean test3 = checkPositionInsideCircle(longitude, latitude, col.getLongitude(), col.getLatitude(), radius);
+                            System.out.println("Station start test 3 " + test);
 
+                            if (test3 == false) {
+                                System.out.println("Station start test in => out");
+
+                                java.sql.Timestamp thTime = new java.sql.Timestamp(LoginController.startDate.getTime());
+                                long diff = Math.abs(timestamp.getTime() - thTime.getTime());
+                                System.out.println("theorique time " + thTime);
+                                System.out.println("creation time " + timestamp);
+                                System.out.print("start " + diff + " long,  ");
+
+                                long diffSeconds = diff / 1000;
+                                int diffMinutes = (int) (diff / (60 * 1000));
+                                long diffHours = diff / (60 * 60 * 1000);
+                                System.out.print("start " + diffHours + " hr,  ");
+
+                                System.out.print("start " + diffMinutes + " minutes,  ");
+                                System.out.print("start " + diffSeconds + " seconds.");
+                                //   System.out.println("retard : ");
+                                String updateTableSQL = "UPDATE transport SET DELAY = "+diffMinutes+" AND REALTIMESTART= "+ timestamp+" WHERE TRANSPORT_ID = "+device_id;
+ 
+                              */
                     System.out.println(" update transport delay done");
                   
                             }
@@ -293,6 +319,26 @@ public class InsertThread extends Thread {
 
         //out => in check False then true 
         //lors de chaque insert tester la position actuelle avec la précedante
+    }
+     public String sumTime(String myTime, int min) {
+        //     String myTime = "14:10";
+      //  Format formatter = new SimpleDateFormat("HH:mm");
+        //String myTime = formatter.format(time);
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+        java.util.Date d;
+        try {
+            d = df.parse(myTime);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(d);
+            cal.add(Calendar.MINUTE, min);
+            String newTime = df.format(cal.getTime());
+            return newTime;
+
+        } catch (ParseException ex) {
+            Logger.getLogger(DriverplanningDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
+
     }
 
 }

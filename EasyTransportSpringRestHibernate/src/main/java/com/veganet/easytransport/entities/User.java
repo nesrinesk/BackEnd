@@ -25,6 +25,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  *
@@ -66,6 +67,10 @@ public class User implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
 
+    @Size(max = 254)
+    @Column(name = "JETON")
+    private String jeton;
+    
     @Column(name = "ACCESS_LEVEL")
     private String accessLevel;
 
@@ -178,6 +183,15 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
+    public String getJeton() {
+        return jeton;
+    }
+
+    public void setJeton(String jeton) {
+        this.jeton = jeton;
+    }
+
+    
     public String getPassword() {
         return password;
     }
@@ -379,4 +393,8 @@ public class User implements Serializable {
         return true;
     }
 
+   /* public void setPassword(BCryptPasswordEncoder passwordEncoder) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+*/
 }

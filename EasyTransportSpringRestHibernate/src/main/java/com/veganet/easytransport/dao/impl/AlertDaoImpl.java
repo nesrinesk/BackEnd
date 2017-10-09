@@ -42,10 +42,13 @@ public class AlertDaoImpl extends AbstractHibernateDao<Alert> implements AlertDa
     }
     
     public Alert add(Alert t) {
+         Date date= new Date();
         Session session = this.sessionFactory.getCurrentSession();
         t.setVisibility((short) 0);
-        t.setSeen((short) 0);
+       // t.setSeen((short) 0);
         t.setType((short) 1);
+       
+        t.setCreationDate(date);
         session.persist(t);
         
         return t;
@@ -101,7 +104,6 @@ public class AlertDaoImpl extends AbstractHibernateDao<Alert> implements AlertDa
         
         Session session = this.sessionFactory.getCurrentSession();
         Company companyId = (Company) session.get(Company.class, id);
-        
         List<Alert> list = session.createQuery("SELECT t FROM Alert t "
                 + "WHERE t.visibility = :visibility and t.type = :type")
                 .setParameter("visibility", visibility)
@@ -150,12 +152,13 @@ public class AlertDaoImpl extends AbstractHibernateDao<Alert> implements AlertDa
         
         Session session = this.sessionFactory.getCurrentSession();
         Company companyId = (Company) session.get(Company.class, id);
-        
-        List<Alert> list = session.createQuery("SELECT t FROM Alert t "
-                + "WHERE t.seen = 0")
+        System.out.println("company "+companyId.getCompanyId());
+        List<Alert> list = session.createQuery("SELECT t FROM Alert t WHERE t.seen = 0")
                 .list();
         for (Alert u : list) {
-            if ((u.getAddedBy().getCompanyId().equals(companyId))) {
+            if (u.getAddedBy().getCompanyId().equals(companyId)) {
+                System.out.println("u "+u.getAlertId());
+                System.out.println("test "+u.getAddedBy().getCompanyId().equals(companyId));
                 finalList.add(u);
             }
         }

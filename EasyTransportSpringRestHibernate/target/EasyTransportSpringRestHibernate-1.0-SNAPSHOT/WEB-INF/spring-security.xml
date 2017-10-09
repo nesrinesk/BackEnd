@@ -22,8 +22,8 @@
         <intercept-url pattern="/users/getUsers" access="hasRole('ROLE_SADMIN')"/>
         <intercept-url pattern="/users/getAllSuperAdmins" access="hasRole('ROLE_SADMIN')"/>
         <intercept-url pattern="/users/getAllAdmins" access="hasRole('ROLE_SADMIN')"/>
-       <!-- <intercept-url pattern="/users/getAllDrivers" access="hasAnyRole('ROLE_SADMIN', 'ROLE_ADMIN', 'ROLE_DRIVER')"/>
-       -->
+        <!-- <intercept-url pattern="/users/getAllDrivers" access="hasAnyRole('ROLE_SADMIN', 'ROLE_ADMIN', 'ROLE_DRIVER')"/>
+        -->
         <intercept-url pattern="/users/getAllTravelers" access="hasRole('ROLE_SADMIN')"/>
 
         <intercept-url pattern="/users/addUser" access="permitAll"/>
@@ -58,6 +58,8 @@
             <jdbc-user-service data-source-ref="dataSource"                    
                                users-by-username-query="select USER_NAME , PASSWORD , STATUS from user where USER_NAME=?"   
                                authorities-by-username-query="select USER_NAME ,ACCESS_LEVEL from user where USER_NAME=?"  />
+           <password-encoder hash="bcrypt" />
+
         </authentication-provider>
     </authentication-manager>
     

@@ -9,12 +9,16 @@ import com.veganet.easytransport.entities.Driverplanning;
 import com.veganet.easytransport.entities.Station;
 import com.veganet.easytransport.entities.User;
 import com.veganet.easytransport.insertPosition.InsertThread;
+import com.veganet.easytransport.insertPosition.InsertionExecutorService;
 import com.veganet.easytransport.service.DriverplanningService;
 import com.veganet.easytransport.service.TransportService;
 import com.veganet.easytransport.service.UserService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,14 +60,16 @@ public class LoginController {
     TransportService transportService;
     @Autowired
     DriverplanningService driverplanningService;
+    @Autowired
+    InsertionExecutorService insertionExecutorService;
 
     public static String device_name;
     public static Driverplanning journey;
     public static String startStation;
     public static String endStation;
     public static ArrayList<ArrayList<Double>> listOLists;
-    public static ArrayList<Double> singleList;
     public static List<Station> linesStation;
+    public static List<Integer> linesStationDelay;
     public static Double stationStartLong;
     public static Double stationStartLat;
     public static Double stationEndLong;
@@ -89,24 +95,50 @@ public class LoginController {
             logger.info("connectedUserName " + connectedUserName);
             //thread preparation
 
-           device_name = transportService.findOne(deice_id).getName();
-            System.out.println("device_name "+device_name);
+            device_name = transportService.findOne(deice_id).getName();
+            System.out.println("device_name " + device_name);
             journey = driverplanningService.searchByTrain(device_name);
+            //start 
             startStation = journey.getJourneyId().getStationStartId().getStationName();
-            System.out.println("startStation "+startStation);
-            stationStartLong=journey.getJourneyId().getStationStartId().getLongitude();
-            stationStartLat=journey.getJourneyId().getStationStartId().getLatitude();
+            System.out.println("startStation " + startStation);
+            stationStartLong = journey.getJourneyId().getStationStartId().getLongitude();
+            stationStartLat = journey.getJourneyId().getStationStartId().getLatitude();
+            //end
             endStation = journey.getJourneyId().getStationEndId().getStationName();
-            stationEndLong= journey.getJourneyId().getStationEndId().getLongitude();
-            stationEndLat= journey.getJourneyId().getStationEndId().getLatitude();
-            startDate= journey.getJourneyId().getDateStart();
-            linesStation = driverplanningService.searchStations(startStation, endStation);
-       //  new Thread(new InsertThread()).start();
+            System.out.println("endStation " + endStation);
+            stationEndLong = journey.getJourneyId().getStationEndId().getLongitude();
+            stationEndLat = journey.getJourneyId().getStationEndId().getLatitude();
+            //date 
+            startDate = journey.getJourneyId().getDateStart();
+           
+            new Thread(new InsertThread()).start();
+
         } catch (Exception e) {
             SecurityContextHolder.getContext().setAuthentication(null);
             logger.error("Failure in autoLogin", e);
         }
     }
+    /*   ExecutorService executor = Executors.newFixedThreadPool(5);
+            
+     for (int i = 0; i < 10; i++) {
+     InsertionExecutorService work = new InsertionExecutorService();
+     executor.execute(work);
+     }
+     executor.shutdown();
+
+     try {
+     if (executor.awaitTermination(60, TimeUnit.SECONDS)) {
+     System.out.println("Completed units of work successfully.");
+     } else {
+     System.err.println("Failed to execute in allowed time period.");
+     }
+     } catch (InterruptedException e) {
+     e.printStackTrace(System.err);
+     }
+     // new Thread(new InsertionExecutorService()).start();
+     // insertionExecutorService.run();
+        
+     */
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public void logoutPage(HttpServletRequest request, HttpServletResponse response) {

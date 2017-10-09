@@ -102,8 +102,9 @@ public class LineController {
     @Consumes(MediaType.APPLICATION_JSON)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Integer add(@RequestBody Line line) {
-        logger.info("creating new : {}");
+        logger.info("creating new line: {}");
         lineService.add(line);
+        line.setIndex(0);
         logger.info("id : {}" + line.getLineId());
         return line.getLineId();
     }

@@ -14,6 +14,7 @@ import java.util.Random;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -22,6 +23,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("userDao")
 public class UserDaoImpl extends AbstractHibernateDao<User> implements UserDao {
+
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -67,6 +70,10 @@ public class UserDaoImpl extends AbstractHibernateDao<User> implements UserDao {
         Session session = this.sessionFactory.getCurrentSession();
         user.setIsdeleted((short) 0);
         user.setStatus((short) 1);
+        System.out.println("passwordEncoder.encode(user.getPassword()) " + passwordEncoder.encode(user.getPassword()));
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //user.setPassword(passwordEncoder);
         session.persist(user);
         return user;
     }

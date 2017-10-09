@@ -40,6 +40,15 @@ public class CompanyDaoImpl extends AbstractHibernateDao<Company> implements Com
         return c;
     }
 
+     public Company findCompanyByName(String companyName) {
+        Session session = this.sessionFactory.getCurrentSession();
+
+         List<Company> list =   session.createQuery("SELECT s FROM Company s WHERE s.companyName = :companyName")
+                .setParameter("companyName", companyName).list();
+        Company rs =list.get(0);
+        System.out.println("rs.getStationName()" + rs.getCompanyName());
+        return rs;
+    }
     public List<Company> getCompanies() {
         // short isdeleted = (short) 0;
         Session session = this.sessionFactory.getCurrentSession();
